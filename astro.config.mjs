@@ -1,13 +1,24 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightThemeNova from 'starlight-theme-nova';
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'Documentación Integra',
+			logo: {
+                src: './src/assets/LOGO-INTEGRA.png',
+                alt: 'Integra Online SAS',
+                replacesTitle: false,
+            },
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			plugins: [starlightThemeNova()],
+			defaultLocale: 'root',
+            locales: {
+                root: { label: 'Español', lang: 'es' },
+            },
 			sidebar: [
 				{
 					label: 'Guides',
@@ -18,8 +29,18 @@ export default defineConfig({
 				},
 				{
 					label: 'Reference',
+					collapsed: true,
 					autogenerate: { directory: 'reference' },
 				},
+				{
+					label: 'Contratos',
+					autogenerate: { directory: 'Contratos' },
+				},
+				{
+					label: 'Git y Github',
+					badge: { text: 'Nuevo', variant: 'tip' },
+					autogenerate: { directory: 'Git_Github' },
+				}
 			],
 		}),
 	],

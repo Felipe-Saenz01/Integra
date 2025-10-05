@@ -1,0 +1,58 @@
+---
+title: Cambio de vigencia de contratos
+description: Proceso para cambiar la vigencia de los contratos en el sistema INTEGRA
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+El siguiente paso a paso describe el proceso que se ha realizado a las respuestas de soportes que solicitan correciones de errores en las fechas de las vigencias de contratos
+
+## Paso a paso
+<Steps>
+
+1. Identificar el contrato con la vigencia a cambiar dentro de `CONTRATOS.INFORMACION_GENERAL` y dentro de la base de datos correspondiente.
+
+    ```sql
+    use NOMBRE_BASE_DE_DATOS;
+
+    SELECT * FROM CONTRATOS.INFORMACION_GENERAL 
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    ```
+
+2. Mover el contrato a una tabla temporal para realizar el cambio de vigencia.
+
+    ```sql
+    SELECT * INTO #tempContrato FROM CONTRATOS.INFORMACION_GENERAL 
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    ```
+3. Actualizar la vigencia del contrato en la tabla temporal.
+
+    ```sql
+    UPDATE #tempContrato
+    SET Vigencia_Contrato='nueva_vigencia'
+    ```
+4. Registrar el cambio de la tabla temporal a la tabla `CONTRATOS.INFORMACION_GENERAL`
+
+    ```sql
+    INSERT INTO CONTRATOS.INFORMACION_GENERAL
+    SELECT * FROM #tempContrato 
+    ```
+
+5. Eliminar el contrato con la vigencia anterior.
+
+    ```sql
+    DELETE FROM CONTRATOS.INFORMACION_GENERAL 
+    WHERE Numero_Contrato='numero_contrato_a_buscar' 
+    AND Vigencia_Contrato='vigencia_anterior'
+    ```
+
+6. Actualizar la cesiones asociadas al contrato en la tabla `CONTRATOS.CESIONES`
+
+    ```sql
+    UPDATE CONTRATOS.CESIONES
+    SET Vigencia_Contrato='nueva_vigencia'
+    WHERE Numero_Contrato='numero_contrato_a_buscar' 
+    AND Vigencia_Contrato='vigencia_anterior'
+    ```
+
+</Steps>
