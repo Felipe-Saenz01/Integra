@@ -9,7 +9,8 @@ export default defineConfig({
 		starlight({
 			title: 'Documentación Integra',
 			logo: {
-                src: './src/assets/LOGO-INTEGRA.png',
+				dark: './src/assets/logo-blanco.png',
+				light: './src/assets/logo_integra.png', // Path to your logo file
                 alt: 'Integra Online SAS',
                 replacesTitle: false,
             },
