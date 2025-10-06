@@ -5,6 +5,8 @@ import starlightThemeNova from 'starlight-theme-nova';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://Felipe-Saenz01.github.io',
+	base: '/Documentacion_Integra',
 	integrations: [
 		starlight({
 			title: 'Documentación Integra',
@@ -14,6 +16,7 @@ export default defineConfig({
                 alt: 'Integra Online SAS',
                 replacesTitle: false,
             },
+			favicon: '/favicon.ico',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			plugins: [starlightThemeNova()],
 			defaultLocale: 'root',
