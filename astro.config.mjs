@@ -5,7 +5,7 @@ import starlightThemeNova from 'starlight-theme-nova';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://Felipe-Saenz01.github.io',
+	site: 'https://Felipe-Saenz01.github.io/Documentacion_Integra',
 	base: '/Documentacion_Integra',
 	integrations: [
 		starlight({
