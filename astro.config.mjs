@@ -17,7 +17,6 @@ export default defineConfig({
                 replacesTitle: false,
             },
 			favicon: '/favicon.ico',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			plugins: [starlightThemeNova()],
 			defaultLocale: 'root',
             locales: {
@@ -25,16 +24,12 @@ export default defineConfig({
             },
 			sidebar: [
 				{
-					label: 'Guides',
+					label: 'Guias',
+					collapsed: true,
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Example Guide', slug: 'guides/example' },
 					],
-				},
-				{
-					label: 'Reference',
-					collapsed: true,
-					autogenerate: { directory: 'reference' },
 				},
 				{
 					label: 'Contratos',

@@ -1,0 +1,26 @@
+---
+title: Iniciar un Repositorio de Git
+description: Pasos para iniciar un nuevo repositorio de Git
+---
+import { FileTree } from '@astrojs/starlight/components';
+
+Iniciar un nuevo repositorio de Git es un proceso sencillo, se requiere utilizar el siguiente comando en la carpeta 
+*raiz* del proyecto:
+
+```bash 
+git init
+```
+
+Iniciando el repositorio con la creacion de un archivo `.git` en la carpeta del proyecto,
+(el cual generalmente esta oculto en el caso de usar windows por la misma configuracion de este)
+
+<FileTree>
+- proyecto
+    - .git/  Carpeta de información del repositorio Git
+    - assets/
+    - pages/
+    - scripts/
+    - ...
+
+</FileTree>
+
