@@ -51,7 +51,8 @@ git branch -l
 ## Cambiar de rama
 Para cambiar/navegar entre ramas se utiliza el siguiente comando:
 ```bash
-git checkout nombre_rama
+git checkout nombre_rama    #forma antigua de cambiar de rama
+git switch nombre_rama      #nueva forma de cambiar de rama
 ```
 
 ![Ejeplo navegacion/cambio entre ramas](../../../assets/Git_Github/git-checkout-branch.png)
