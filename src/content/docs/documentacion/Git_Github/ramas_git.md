@@ -8,7 +8,7 @@ sidebar:
 
 Los **Branch** (Ramas) en git son uno de los elementos mas importantes de git ya que esta es la línea de vida de cambios de nuestro proyecto, a la que podemos derivar otra línea de vida temporal en la cual poder realizar otros cambios, presentando una gran versatilidad en situaciones que queremos probar un código y no queremos dañar la estructura actual de nuestro proyecto o en situaciones de trabajo colaborativo donde queremos evitar estropear el trabajo de otra persona.
 
-![Diagrama de Git](../../../assets/Git_Github/diagrama-commits-git.png)
+![Diagrama de Git](@assets/Git_Github/diagrama-commits-git.png)
 
 Cuando [Iniciamos un repositorio](/Documentacion_Integra/git_github/iniciar_repositorio) este nos crea una rama por defecto según la configuración establecida en la instalación de git en el equipo, las ultimas versiones dejan la rama principal como **main**, versiones anteriores la rama por defecto es **master**
 
@@ -26,7 +26,7 @@ git branch nombre_rama
 ```
 Este comando crea una rama nueva que va a empezar a partir del ultimo commit de la rama en la que se esta situado
 
-![Diagrama creacion nueva rama](../../../assets/Git_Github/diagrama-git-branch.png)
+![Diagrama creacion nueva rama](@assets/Git_Github/diagrama-git-branch.png)
 
 ## Git FLow (flujo de trabajo)
 
@@ -37,7 +37,7 @@ En Yopal hemos estado usando un flujo de trabajo de ramas principales estaticas:
 2. **pre_produccion:** esta rama es donde se unifican, prueban y validan los cambios realizados en las ramas de desarrollo.
 3. **main:** la rama principal en la que se pasan las nuevas funcionalidades listas para ser entragadas al jefe de desarrollo.
 
-![Diagrama flujo de trabajo en Yopal](../../../assets/Git_Github/Git-Flow-Capacitacion.png)
+![Diagrama flujo de trabajo en Yopal](@assets/Git_Github/Git-Flow-Capacitacion.png)
 
 
 ## Ver ramas locales
@@ -45,7 +45,7 @@ Con el siguiente comando se puede ver las ramas que estan de forma local en el p
 ```bash
 git branch -l
 ```
-![Ejemplo de visualizacion ramas locales de git](../../../assets/Git_Github/git-branch-ejemplo.png)
+![Ejemplo de visualizacion ramas locales de git](@assets/Git_Github/git-branch-ejemplo.png)
 
 
 ## Cambiar de rama
@@ -55,7 +55,7 @@ git checkout nombre_rama    #forma antigua de cambiar de rama
 git switch nombre_rama      #nueva forma de cambiar de rama
 ```
 
-![Ejeplo navegacion/cambio entre ramas](../../../assets/Git_Github/git-checkout-branch.png)
+![Ejeplo navegacion/cambio entre ramas](@assets/Git_Github/git-checkout-branch.png)
 
 :::caution
 Es importante tener en cuenta que antes de cambiar a otra rama, no deben existir modificaciones pendientes por guardar, en caso de tener modificaciones por guardar al cambiar de rama, las modificaciones tambien cambian de rama, algo que puede llegar a presentar conflictos.
