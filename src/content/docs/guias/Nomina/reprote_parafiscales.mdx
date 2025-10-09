@@ -1,0 +1,167 @@
+---
+title: "Reporte de Nómina Actual e Histórico de Parafiscales"
+description: "Generación de reportes consolidados y detallados de aportes parafiscales, permitiendo consultar la nómina actual (prenómina) o históricos de meses y años anteriores, con filtros por tipo de liquidación y tipo de trabajador."
+sidebar:
+  label: "Reporte Parafiscales"
+lastUpdated: 2025-10-09
+tableOfContents: false
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Esta vista permite generar reportes sobre los aportes parafiscales de los trabajadores, mostrando información sobre bases de cotización, porcentajes aplicados y valores calculados. El sistema ofrece dos modalidades de consulta: **Consolidado** (agrupado por empresa y centro de costo) y **Detallado** (registro individual por trabajador).
+
+## Objetivo
+
+Facilitar la consulta, análisis y generación de reportes de aportes parafiscales tanto para la nómina del mes en curso (prenómina) como para nóminas procesadas en meses o años anteriores (histórico), permitiendo segmentar la información por tipo de liquidación y categoría de trabajador.
+
+## Acceso y navegación
+
+- **Módulo:** Nómina
+- **Ruta de acceso:** Menú principal → Nómina → Reportes → Reporte Parafiscales
+- **Permisos requeridos:** Acceso al módulo de nómina con permisos de consulta de reportes
+
+{/* ![captura](./images/reporte_parafiscales_01.png) */}
+
+## Funcionalidades principales
+
+### Filtros de búsqueda
+
+La vista cuenta con varios filtros que permiten personalizar la información del reporte:
+
+- **Tipo de Reporte**: Permite seleccionar entre dos modalidades:
+  - **CONSOLIDADO**: Muestra información agrupada por sede, empresa y concepto de aporte
+  - **DETALLADO**: Presenta información individual de cada trabajador con sus respectivos aportes
+
+- **Tipo de Nómina**: Define el origen de los datos a consultar:
+  - **PRENOMINA**: Consulta la nómina del mes actual en proceso
+  - **NOMINA ESPECIFICA**: Permite consultar nóminas históricas de meses y años anteriores
+
+- **AÑO**: Campo desplegable que se activa al seleccionar "Nómina Específica". Permite elegir el año de la nómina histórica a consultar.
+
+- **MES INICIAL**: Campo desplegable que se activa al seleccionar "Nómina Específica". Permite elegir el mes de la nómina histórica a consultar (Enero a Diciembre).
+
+- **Tipo Liquidación**: Filtra por el tipo de proceso de liquidación realizado (ej: nómina mensual, vacaciones, prima, cesantías, etc.). Este filtro se actualiza dinámicamente según el tipo de nómina y periodo seleccionado.
+
+- **Tipo de Trabajador**: Permite seleccionar uno o varios tipos de cotizantes (ej: Dependiente, SENA, Aprendiz, etc.). Este campo es de selección múltiple y obligatorio para generar el reporte.
+
+{/* ![captura](./images/reporte_parafiscales_02.png) */}
+
+### Botones de acción
+
+- **Generar**: Procesa los filtros seleccionados y carga los datos en la tabla de resultados. Valida que se haya seleccionado al menos un tipo de trabajador y un tipo de reporte.
+
+- **Imprimir**: Genera un reporte imprimible en formato PDF con la información visualizada en la tabla, incluyendo encabezados informativos sobre los filtros aplicados.
+
+### Tabla de resultados
+
+La tabla muestra los registros obtenidos según los filtros aplicados. Sus características incluyen:
+
+- **Paginación**: Permite navegar entre páginas con opciones de 5, 10, 20, 50, 100 o 200 registados por página
+- **Búsqueda**: Campo de búsqueda general para filtrar información dentro de los resultados
+- **Exportación**: Botón para exportar los datos a formato Excel
+- **Columnas visibles**: Permite mostrar u ocultar columnas según necesidad
+- **Totales**: Pie de tabla con totales calculados para columnas numéricas (base y valor de aportes)
+
+#### Columnas del reporte CONSOLIDADO:
+
+- Sede (código)
+- Nombre Sede
+- Centro Costo (visible solo para entidades de servicios públicos)
+- Nombre Centro Costo (visible solo para entidades de servicios públicos)
+- Nit (empresa)
+- Empresa (nombre)
+- Año
+- Mes
+- Concepto (código)
+- Nombre Concepto
+- Base (valor base de cotización)
+- Porcentaje (porcentaje aplicado)
+- Valor Aportes (valor calculado del aporte)
+
+#### Columnas del reporte DETALLADO:
+
+- T. Cotizante (tipo de trabajador)
+- Tipo Liquidación
+- Cédula (número de documento)
+- Nombre Trabajador
+- Año
+- Mes
+- Nombre Sede
+- Centro Costo (visible solo para entidades de servicios públicos)
+- Nombre Centro Costo (visible solo para entidades de servicios públicos)
+- Nit (empresa)
+- Empresa (nombre)
+- Concepto (código)
+- Nombre Concepto
+- Base (valor base de cotización)
+- Porcentaje (porcentaje aplicado)
+- Valor Aportes (valor calculado del aporte)
+
+{/* ![captura](./images/reporte_parafiscales_03.png) */}
+
+## Flujo de uso paso a paso
+
+### Consulta de prenómina (nómina actual)
+<Steps>
+1. Acceder al módulo de Reportes Parafiscales
+2. Seleccionar el **Tipo de Reporte** deseado (Consolidado o Detallado)
+3. Verificar que **Tipo de Nómina** esté configurado en "PRENOMINA" (opción por defecto)
+4. Seleccionar el **Tipo Liquidación** correspondiente (ej: Nómina mensual)
+5. Seleccionar uno o varios **Tipos de Trabajador** en el campo de selección múltiple
+6. Presionar el botón **Generar**
+7. El sistema carga los datos en la tabla de resultados
+8. Revisar la información y utilizar las herramientas de búsqueda o filtrado si es necesario
+9. Si se requiere, presionar **Imprimir** para generar el documento PDF
+</Steps>
+{/* ![captura](./images/reporte_parafiscales_04.png) */}
+
+### Consulta de nómina histórica
+<Steps>
+1. Acceder al módulo de Reportes Parafiscales
+2. Seleccionar el **Tipo de Reporte** deseado (Consolidado o Detallado)
+3. Cambiar **Tipo de Nómina** a "NOMINA ESPECIFICA"
+4. Aparecerán los campos **AÑO** y **MES INICIAL**
+5. Seleccionar el año deseado en el campo **AÑO**
+6. Seleccionar el mes deseado en el campo **MES INICIAL**
+7. Esperar a que se actualice la lista de **Tipo Liquidación** disponibles
+8. Seleccionar el **Tipo Liquidación** correspondiente
+9. Seleccionar uno o varios **Tipos de Trabajador**
+10. Presionar el botón **Generar**
+11. Revisar los resultados en la tabla
+12. Utilizar las opciones de exportación o impresión según necesidad
+</Steps>
+{/* ![captura](./images/reporte_parafiscales_05.png) */}
+
+## Errores comunes y recomendaciones
+
+### Validaciones del sistema
+
+- **"Debe seleccionar al menos un tipo de trabajador"**: Este mensaje aparece al intentar generar o imprimir el reporte sin haber seleccionado ningún tipo de trabajador. **Solución**: Seleccionar al menos una opción en el campo "Tipo de Trabajador".
+
+- **"Debe seleccionar al menos un tipo de reporte"**: Aparece cuando no se ha seleccionado el tipo de reporte (Consolidado o Detallado). **Solución**: Seleccionar una opción en el campo "Tipo de Reporte".
+
+### Recomendaciones de uso
+
+- **Cambio de filtros**: Cada vez que se modifique el año, mes o tipo de liquidación, la tabla se limpia automáticamente. Esto es normal y requiere presionar nuevamente el botón "Generar".
+
+- **Selección de múltiples trabajadores**: Para seleccionar varios tipos de trabajadores, mantener presionada la tecla `Ctrl` (Windows/Linux) o `Cmd` (Mac) mientras se hace clic en las opciones.
+
+- **Tiempos de carga**: Reportes con grandes volúmenes de datos (especialmente el detallado con múltiples tipos de trabajadores) pueden tomar algunos segundos en generarse.
+
+- **Diferencia entre reportes**: 
+  - Use el reporte **Consolidado** cuando necesite información resumida por empresa, sede o concepto
+  - Use el reporte **Detallado** cuando requiera verificar información específica de trabajadores individuales
+
+- **Exportación a Excel**: Para análisis más detallados o procesamiento posterior de datos, utilice la opción de exportación a Excel disponible en la barra de herramientas de la tabla.
+
+## Notas técnicas
+
+- Los campos de año y mes se inicializan automáticamente con la fecha actual del sistema cuando se selecciona "Prenómina"
+- Las opciones de Tipo Liquidación y Tipo Trabajador se cargan dinámicamente desde la base de datos según los parámetros seleccionados previamente
+- Los totales en el pie de tabla se calculan automáticamente para las columnas de Base y Valor Aportes
+- Las columnas de Centro de Costo solo son visibles para entidades configuradas como tipo "Servicios Públicos" (tipo\_entidad = 5)
+- El formato de valores monetarios incluye separadores de miles y decimales automáticamente
+- Los porcentajes se muestran con el símbolo "%" al final del valor numérico
+
+{/* ![captura](./images/reporte_parafiscales_06.png) */}

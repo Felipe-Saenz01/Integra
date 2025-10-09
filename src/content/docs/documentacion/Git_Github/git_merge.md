@@ -12,7 +12,7 @@ La fusión de ramas es un proceso importante, ya que permite que el proceso de i
 git merge nombre_rama
 ```
 
-![Diagrama merge de ramas de git](../../../assets/Git_Github/diagrama-git-merge.png)
+![Diagrama merge de ramas de git](@assets/Git_Github/diagrama-git-merge.png)
 
 ## Conflictos en el merge
 
@@ -20,4 +20,4 @@ Hay muchas situaciones en las que se pueden presentar conflictos a la hora de re
 
 Este conflicto lo que va a hacer es poner ambos cambios en el archivo y aqui la persona que esta realizando el merge debe decidir si ambos cambios se quedan o si se descarta alguno, luego de decidir se debe crear otro commit que seria la resolución del conflicto.
 
-![Diagrama merge de ramas de git](../../../assets/Git_Github/diagrama-git-merge-conflicto.png)
+![Diagrama merge de ramas de git](@assets/Git_Github/diagrama-git-merge-conflicto.png)
