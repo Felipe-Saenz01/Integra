@@ -1,49 +1,147 @@
-# Starlight Starter Kit: Basics
+# 📖 Documentación Integra
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Este repositorio contiene la documentación y guías explicativas del software financiero **Integra**, construidas con [Astro Starlight](https://starlight.astro.build/).
+
+El sitio está desplegado en **GitHub Pages** y ofrece información organizada en secciones con guías, imágenes y videos de apoyo.
+
+---
+
+## 🚀 Requisitos previos
+
+Asegúrate de tener instalado en tu máquina:
+
+- [Node.js](https://nodejs.org/) versión 18 o superior
+- [npm](https://www.npmjs.com/)
+
+---
+
+## 📥 Descarga e instalación
+
+Clona el repositorio:
+
+```bash
+git clone git@github.com:Felipe-Saenz01/Documentacion_Integra.git
+cd Documentacion_Integra
+```
+
+Instala las dependencias:
+
+```bash
+npm install
+```
+
+---
+
+## 🖥️ Levantar el proyecto en local
+
+Ejecuta el entorno de desarrollo:
+
+```bash
+npm run dev
+```
+
+Esto abrirá el sitio en `http://localhost:4321`.
+
+---
+
+## 📂 Estructura del proyecto
+
+La estructura básica es la siguiente:
 
 ```
-npm create astro@latest -- --template starlight
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
+Documentacion_Integra/
+├── public/                     # Archivos estáticos (favicon, logos, etc.)
 ├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+│   ├── content/docs/           # Contenido del aplicativo
+│   │   ├── documentacion/      # Cerpeta para la documentación
+│   │   │   ├── seccion1/
+│   │   │   │   ├── introduccion.md
+│   │   │   │   ├── contenido.md
+│   │   │   │   ...
+│   │   │   ├── seccion2/
+│   │   │   │   ├── introduccion.md
+│   │   │   │   ├── contenido.md
+│   │   │   │   ...
+│   │   ├── Guias/              # Carpeta para las guias del aplicativo
+│   │   │   ├── seccion1/
+│   │   │   │   ├── introduccion.md
+│   │   │   │   ├── contenido.md
+│   │   │   │   ...
+│   │   │   ├── seccion2/
+│   │   │   │   ├── introduccion.md
+│   │   │   │   ├── contenido.md
+│   │   │   │   ...
+│   ├── assets/          # Imágenes, videos u otros recursos
+│   │   ├── seccion1/
+│   │   ├── seccion2/
+│   │   └── ...
+│   └── config.ts        # Configuración de Astro Starlight
+└── astro.config.mjs     # Configuración del proyecto Astro
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+---
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## 📝 Crear una nueva vista o sección
 
-Static assets, like favicons, can be placed in the `public/` directory.
+1. Dirígete a la carpeta `src/content/docs/documentacion`.
+2. Crea un archivo nuevo en formato Markdown (`.md` o `.mdx`):
 
-## 🧞 Commands
+   ```bash
+   src/content/docs/documentacion/seccion/nueva-seccion.md
+   src/content/docs/guias/seccion/nueva-seccion.md
+   ```
 
-All commands are run from the root of the project, from a terminal:
+3. Añade el frontmatter (encabezado de metadatos) al inicio del archivo:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+   ```markdown
+   ---
+   title: "Nueva Sección"
+   description: "Descripción breve de la sección"
+   ---
 
-## 👀 Want to learn more?
+   ## Bienvenido a la nueva sección 🚀
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+   Aquí puedes escribir contenido en **Markdown**.
+   ```
+
+4. Si necesitas imágenes para esta sección, guárdalas en `src/assets/nueva-seccion/` y referencia así:
+
+   ```markdown
+   ![Texto alternativo](@assets/nueva-seccion/imagen.png)
+   ```
+
+5. Para videos de YouTube, usa el siguiente iframe:
+
+    ```mdx
+    import { ShowcaseYouTube } from 'starlight-showcases'
+
+    <ShowcaseYouTube 
+    entries={[
+        {
+        href: 'link_del_video',
+        title: 'Titulo del video',
+        },
+    ]}
+    />
+    ```
+
+El framework con el que se desarrolló el aplicativo cuenta con varios componentes y configuraciones , por lo tanto, puedes revisar la [documentación oficial de Astro Starlight](https://starlight.astro.build/) para más detalles.
+
+---
+
+## 🌐 Despliegue en GitHub Pages
+
+Este proyecto está configurado para desplegar en GitHub Pages. Este cuenta con un scriopt de despliegue automático en la carpeta `.github\workflows\deploy.yml`.
+El sitio se encuentra en:
+
+👉 [https://felipe-saenz01.github.io/Documentacion_Integra](https://felipe-saenz01.github.io/Documentacion_Integra)
+
+Todos los cambios que se hagan en la rama `main` se desplegarán automáticamente.
+
+---
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas.  
+Para sugerencias o reportar errores, abre un [Issue](../../issues).
+
