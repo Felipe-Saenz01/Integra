@@ -1,0 +1,96 @@
+---
+title: Reporte Sistema Integral de Auditoría (SIA)
+description: Uso del sistema integral de auditoría SIA
+sidebar:
+    label: Reportes SIA
+lastUpdated: 2025-10-10
+tableOfContents: false
+
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Este reporte permite consultar y analizar la información registrada en el Sistema Integral 
+de Auditoría (SIA), facilitando la revisión de eventos, transacciones y actividades relacionadas 
+con la seguridad y el cumplimiento normativo dentro de la organización.
+
+## Acceso y navegación
+
+Para el acceso a este reporte, debes seguir la siguiente Ruta:
+- **Informes Entidades → Reportes → Informes Entidades → Contraloria Departamental → Informe SIA Mensual y Anual**
+
+![[Ubicacion barra lateral]](@assets/guias_usuarios/informes_entidades/navegacion_reporte_entidades_SIA.png)
+
+
+## Paso a paso uso
+
+Al entrar al reporte, se presentan varias opciones y filtros para visualizar e impresión 
+dinamicamente del informe generado.
+
+![Vsta inicial del reporte SIA](@assets/guias_usuarios/informes_entidades/Opciones_informe_SIA.png)
+
+### Filtros disponibles
+
+<Steps>
+1. **Vigencia:** este campo no se puede modificar, ya que el sistema lo asigna automáticamente 
+   según la vigencia actual del sistema.
+2. **Tipo Reporte:** este campo permite selecionar que tipo de reporte se desea generar, se pueden
+    encontrar las siguientes opciones:
+
+    - **F01_AGR CATÁLOGO DE CUENTAS**
+    - **F02A-AGR RESUMEN DE CAJA MENOR**
+    - **F05A-AGR PROPIEDAD PLANTA Y EQUIPO ADQUISICIONES Y BAJAS**
+    - **F05B-AGR PROPIEDAD PLANTA Y EQUIPO - INVENTARIOS**
+    - **F02B-AGR REALCION DE GASTOS DE CAJA**
+    - **F03-AGR CUENTAS BANCARIAS**
+    - **F06-AGR EJECUCION PPTAL DE INGRESOS**
+    - **F07-AGR PRESUPUESTO DE GASTOS**
+    - **F09-AGR EJECUCION PAC DE LA VIGENCIA**
+    - **F08A-AGR MODIFICACIONES AL PRESUPUESTO DE INGRESOS**
+    - **F08B-AGR MODIFICACIONES AL PRESUPUESTO DE EGRESOS**
+    - **F20-13 A-AGR CONTRATOS**
+    - **F22-CDA EQUIPOS DE COMPUTO**
+    - **F21A_CGS. -FORMATO 21A. CULTURA**
+    - **F13B_CGS --FORMATO 13B. INGRESOS POR ESTAMPILLAS**
+    - **F17C1 PROPOSITO GENERAL**
+    - **F17C2. S.G.P. RECURSOS TRANSFERIDOS**
+    - **F11A VIGENCIAS FUTURAS**
+    - **F19_CGS  COMPORTAMIENTO INGRESOS DEL MUNICIPIO**
+    - **F28_CGDC. INFORME DE RENTAS POR COBRAR**
+    - **F20_13B_AGR ACCIONES DE CONTROL A LA CONTRATACIÓN**
+    - **F07B_CDN RELACIÓN DE PAGOS**
+    - **F06A_CDN RELACIÓN DE INGRESOS**
+    - **F03_CDN MOVIMIENTOS DE BANCOS**
+    - **F14A3_AGR TALENTO HUMANO PAGOS POR NIVEL**
+    - **F14A1_AGR TALENTO HUMANOS FUNCIONARIOS POR NIVEL**
+    - **F14A2_AGR TALENTO HUMANO NOMBRAMIENTOS**
+    - **F14A4_AGR TALENTO HUMANO CESANTÍAS**
+    - **F11_AGR EJECUCIÓN PRESUPUESTAL DE CUENTAS POR PAGAR**
+    - **F10_AGR EJECUCIÓN DE RESERVAS PRESUPUESTALES**
+3. **Tipo de Informe:** este campo permite seleccionar el formato de periodos en los que se desea geberar
+    el reporte, se pueden encontrar las siguientes opciones:
+    - **Infore Bimestral:** el reporte se genera cada dos meses indicados.
+    - **Informe Anual:** el reporte se genera para todo el año.
+4. **Bimestre:** este campo solo se habilita si se selecciona la opción de Informe Bimestral en el campo anterior, 
+   permitiendo seleccionar el bimestre deseado para generar el reporte.
+</Steps>
+
+:::note
+Los filtro de **Tipo de Informe** y **Bimestre** solo se habilitan para ciertos tipos de reportes,
+dependiendo del reporte seleccionado, estos campos pueden aparecer y desaparecer.
+:::
+
+
+### Generación del reporte
+Una vez seleccionados los filtros deseados, se debe presionar el botón **Generar** para que el sistema
+procede a generar el reporte con la información correspondiente a los filtros seleccionados.
+
+### Visualización e impresión
+Cuando la generación del reporte se completa, el sistema muestra la informacion en una grilla
+lista para su revisión. Si se desea imprimir el reporte, se debe presionar el botón **Imprimir**,
+ubicado al lado del boton de generar, este comenzará el proceso de descarga de la informacion en 
+formato de **CSV**.
+
+
+
+

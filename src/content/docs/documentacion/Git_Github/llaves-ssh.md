@@ -12,8 +12,6 @@ sin necesidad de ingresar usuario y contraseña en cada operación.
 
 ## Generar una nueva llave SSH
 
-En Windows (PowerShell):
-
 ```powershell
 ssh-keygen -t ed25519 -C "tu-email@example.com"
 ```

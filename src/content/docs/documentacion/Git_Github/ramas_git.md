@@ -10,7 +10,7 @@ Los **Branch** (Ramas) en git son uno de los elementos mas importantes de git ya
 
 ![Diagrama de Git](@assets/Git_Github/diagrama-commits-git.png)
 
-Cuando [Iniciamos un repositorio](/Documentacion_Integra/git_github/iniciar_repositorio) este nos crea una rama por defecto según la configuración establecida en la instalación de git en el equipo, las ultimas versiones dejan la rama principal como **main**, versiones anteriores la rama por defecto es **master**
+Cuando [Iniciamos un repositorio](/Integra/git_github/iniciar_repositorio) este nos crea una rama por defecto según la configuración establecida en la instalación de git en el equipo, las ultimas versiones dejan la rama principal como **main**, versiones anteriores la rama por defecto es **master**
 
 :::note
 Despues de los eventos de racismo del 2020 en Estados Unidos y las iniciativas como **Blac lives Matter**

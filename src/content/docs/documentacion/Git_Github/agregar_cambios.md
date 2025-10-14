@@ -6,7 +6,7 @@ sidebar:
     order: 5
 ---
 
-Una vez se tienen los cambios realizados, el primer requisito para realizar un commit es tener los cambios trackeados en el área de **staging** siguiendo [el diagrama de trabajo](/Documentacion_Integra/documentacion/git_github/inicio#como-funciona-git), esto se logra con el comando:
+Una vez se tienen los cambios realizados, el primer requisito para realizar un commit es tener los cambios trackeados en el área de **staging** siguiendo [el diagrama de trabajo](/Integra/documentacion/git_github/inicio#como-funciona-git), esto se logra con el comando:
 
 ```bash
 git add nombre_archivo  #Añade los archivos nombrados

@@ -8,7 +8,7 @@ import starlightUtils from "@lorenzo_lewis/starlight-utils";
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://Felipe-Saenz01.github.io/Documentacion_Integra',
-	base: '/Documentacion_Integra',
+	base: '/Integra',
 	vite: {
 		resolve: {
 			alias: {
@@ -67,6 +67,10 @@ export default defineConfig({
 						{
 							label: 'Nomina',
 							autogenerate: { directory: 'guias/Nomina' },
+						},
+						{
+							label: 'Reportes Entidades',
+							autogenerate: { directory: 'guias/reportes_entidades' },
 						}
 					],
 				},
