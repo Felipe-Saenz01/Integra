@@ -71,6 +71,13 @@ export default defineConfig({
 						{
 							label: 'Reportes Entidades',
 							autogenerate: { directory: 'guias/reportes_entidades' },
+						},
+						{
+							label: 'Contabilidad',
+							items:[
+								{ label: 'Macroprocesos', autogenerate: { directory: 'guias/contabilidad/macroprocesos' } },
+								{ label: 'Auditoria', autogenerate: { directory: 'guias/contabilidad/auditoria' } },
+							]
 						}
 					],
 				},

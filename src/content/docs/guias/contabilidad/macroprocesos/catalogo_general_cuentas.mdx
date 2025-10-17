@@ -1,0 +1,120 @@
+---
+title: Catálogo General de Cuentas
+description: Administración, creación y edición del Plan Único de Cuentas (PUC) utilizado para la contabilidad y el registro de transacciones financieras en el sistema.
+template: doc
+sidebar:
+    label: Catálogo general de Cuentas
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+ 
+<CardGrid stagger>
+    <Card title="Propósito" icon="open-book">
+        El **Catálogo General de Cuentas** es la herramienta fundamental para administrar las 
+        cuentas contables (Plan Único de Cuentas o PUC) utilizadas en todas las transacciones 
+        financieras de la entidad.
+    </Card>
+    <Card title="Función Clave" icon="pencil">
+        Permite a los usuarios crear nuevas cuentas auxiliares, editar las existentes y deshabilitar 
+        aquellas que ya no están vigentes, asegurando la integridad y la estructura jerárquica de la 
+        contabilidad.
+    </Card>
+</CardGrid>
+
+---
+
+## Acceso y navegación
+
+Para el acceso a este reporte, debes seguir la siguiente Ruta:
+
+- **Contabilidad → Macroprocesos → Catálogo General de Cuentas**
+
+![Vista Catalogo General Cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_tabla.png)
+:::note
+El acceso a esta funcionalidad requiere permisos de administrador, dado el impacto directo en 
+la estructura financiera del sistema. Si no tienes los permisos necesarios, contacta al administrador del sistema de su entidad.
+:::
+---
+
+## Funcionalidades principales
+
+La interfaz se divide en dos secciones principales: la **Tabla de Resultados** y el **Modal de Gestión de Cuentas**.
+
+### Tabla de Resultados: Catálogo General
+
+La tabla es el punto de inicio para la consulta y las acciones sobre las cuentas. Permite buscar, filtrar, exportar y realizar acciones rápidas sobre cada registro.
+
+| Elemento | Descripción |
+| :--- | :--- |
+| **Buscar** | Campo superior para buscar por `CUENTA` o `NOMBRE`. |
+| **Exportación** | Botones para exportar la tabla a formatos como **Excel**, **CSV** y **TXT**. |
+| **Columnas Clave** | `OPCIONES`, `CUENTA`, `NOMBRE`, `NIVEL`, `NATURALEZA`, `TIPO CORRIENTE`   |
+| **Opciones** | Columna que contiene los botones de acción para cada cuenta. |
+
+### Elementos Interactivos (Opciones)
+
+Cada fila de la tabla incluye tres acciones rápidas, visibles bajo la columna **Opciones**:
+
+-   **Nuevo** (`.nuevo`): **Función principal.** Permite crear una nueva cuenta (subcuenta o auxiliar) dependiente del registro padre seleccionado. Abre el modal de gestión con el código de la cuenta padre precargado para extender la codificación.
+-   **Editar** (`.edit`): Permite modificar los atributos de la cuenta seleccionada, como el nombre, la naturaleza o el estado. El campo `CUENTA` (código) se deshabilita para evitar cambios en la clave principal.
+-   **Eliminar** (`.remove`): Inicia el proceso de borrado. **Validación:** El sistema impedirá la eliminación si la cuenta tiene **niveles inferiores** (subcuentas) asociadas, para proteger la integridad contable.
+
+### Modal de Gestión de Cuentas
+
+Este formulario se utiliza tanto para la creación (`Nuevo`) como para la modificación (`Editar`) de las cuentas.
+
+| Campo | Descripción | Validaciones / Dependencias |
+| :--- | :--- | :--- |
+| **Código (`CUENTA`)** | Campo numérico para la codificación de la cuenta (máx. 16 caracteres). | **Creación:** Se valida que el código no exista. Se compara la longitud con la **Plantilla** configurada en parámetros. **Edición:** El campo está **deshabilitado**. |
+| **Nombre (`NOMBRE`)** | Nombre descriptivo de la cuenta (máx. 300 caracteres). | Campo obligatorio. |
+| **Nivel (`NIVEL`)** | Nivel jerárquico de la cuenta. | Se calcula automáticamente en la creación según la `Plantilla` y el código ingresado. |
+| **Terceros (`TERCERO`)** | **PASAR SALDOS INICIALES CON TERCEROS?** Seleccione *Sí* o *No*. | **Dependencia:** Este campo se deshabilita en edición si la cuenta no es de nivel **Auxiliar** (`NIVEL != "A"`). |
+| **Naturaleza** | Define si la cuenta es de **Débito** o **Crédito**. | Campo obligatorio. |
+| **Tipo Corriente** | Clasifica la cuenta como **Corriente** o **No Corriente**. | Campo obligatorio. |
+| **Estado (`ESTADO`)** | Define la vigencia de la cuenta (**Vigente** o **No Vigente**). | **Dependencia:** Si se selecciona **Vigente**, el campo `Observaciones` se limpia y se deshabilita. |
+| **Observaciones** | Detalle sobre el estado o el uso de la cuenta (máx. 500 caracteres). | Se habilita solo si el **Estado** es **No Vigente**. |
+
+---
+
+## Flujo de uso paso a paso: Creación de una nueva subcuenta
+
+El flujo típico se inicia desde la tabla principal, seleccionando la cuenta padre a la cual se le desea agregar un nivel inferior (subcuenta o auxiliar).
+
+<Steps>
+1.  **Localizar la Cuenta Padre:** En la Tabla de Resultados, utilice los filtros o la barra de búsqueda para encontrar la cuenta contable de la cual desea que dependa el nuevo registro.
+2.  **Iniciar la Creación:** En la columna **Opciones** de la cuenta padre, presione el botón **<i class="fa fa-plus"></i> Nuevo**.
+3.  **Apertura del Formulario:** El sistema despliega el **Modal de Gestión de Cuentas**. El campo `Código` aparecerá parcialmente precargado con el código de la cuenta padre (dependiendo de la lógica de la plantilla contable).
+4.  **Ingresar el Código de la Nueva Cuenta:** Complete el campo **Código** con la extensión numérica de la subcuenta que desea crear. El sistema verifica que la longitud sea coherente con la `Plantilla` y que la cuenta superior sea válida.
+5.  **Completar Datos Generales:** Ingrese el **Nombre** de la nueva cuenta.
+6.  **Configurar Atributos Contables:** Seleccione la **Naturaleza** (Débito/Crédito) y el **Tipo Corriente** (Corriente/No Corriente).
+7.  **Definir Vigencia:** Seleccione el **Estado** como `Vigente`.
+8.  **Guardar la Cuenta:** Presione el botón **Guardar** en el pie del modal.
+9.  **Confirmación y Actualización:** El sistema procesa la transacción, valida la información y, en caso de éxito, la tabla principal se actualiza automáticamente con el nuevo registro.
+</Steps>
+
+---
+
+## Errores comunes y recomendaciones
+
+| Mensaje de Error / Alerta | Causa Potencial | Solución Recomendada |
+| :--- | :--- | :--- |
+| **"Cuenta Ya Existe; Transacción Cancelada"** | El código de cuenta ingresado ya está registrado en el PUC. | Verifique la tabla de resultados para encontrar la cuenta o ingrese un código único que siga la secuencia de la cuenta padre. |
+| **"La longitud del Código NO corresponde con el de la Plantilla"** | El código no cumple con la estructura jerárquica definida en los Parámetros de Contabilidad (ejemplo: se esperaba 4 dígitos y se ingresaron 5). | Revise la estructura de la Plantilla e ingrese la cantidad exacta de dígitos requeridos para ese nivel jerárquico. |
+| **"El Código Superior... NO Existe o es Auxiliar"** | Se está intentando crear una cuenta bajo un código padre que no existe o que ya está marcado como cuenta **Auxiliar** (`NIVEL = "A"`) y no puede tener más dependencias. | Seleccione una cuenta padre de un nivel superior (ej. Nivel 4 en lugar de Nivel 5 Auxiliar) para crear la nueva subcuenta. |
+| **"Cuenta NO puede ser Eliminada. Tiene Niveles Inferiores"** | La cuenta que se intenta eliminar es padre de otras cuentas. | Debe eliminar primero todas las cuentas dependientes (niveles inferiores) antes de poder eliminar la cuenta padre. |
+| **Recomendación: Cuenta No Vigente** | Una cuenta se marca como `No Vigente`. | Asegúrese de diligenciar las **Observaciones** para dejar constancia de la razón de la deshabilitación. |
+
+---
+
+## Notas técnicas (funcionales)
+
+* **Plantilla Contable:** La lógica de creación de cuentas se rige por una **Plantilla** predefinida en los `Parámetros de Contabilidad`. Esta plantilla dicta la longitud que debe tener el código en cada nivel, siendo crucial para la validación y el correcto funcionamiento del PUC.
+* **Validación de Nivel Superior:** Durante la creación, el sistema verifica que la cuenta padre (`lsCodigoSuperior`) exista y no sea de tipo auxiliar, lo cual es vital para mantener la **integridad jerárquica** de los registros contables.
+* **Gestión de Estados:** El estado (`ESTADO`) y las **Observaciones** se gestionan dinámicamente: la observación es obligatoria y se habilita solo cuando se marca una cuenta como **No Vigente**.
+
+{/* ![captura](./images/catalogo_cuentas_02.png)*/}
+{/* ![captura](./images/catalogo_cuentas_03.png)*/}
