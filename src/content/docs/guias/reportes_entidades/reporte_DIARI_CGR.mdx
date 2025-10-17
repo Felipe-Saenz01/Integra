@@ -1,0 +1,132 @@
+---
+title: Reportes DIARI CGR
+description: Guía para la generación de los reportes DIARI requeridos por la Contraloría General de la República (CGR).
+template: doc
+sidebar:
+  label: Reportes DIARI CGR
+lastUpdated: 2025-10-17
+tableOfContents: true
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+Esta vista permite generar los reportes financieros, presupuestales y de contratación en el formato **DIARI**, exigido por la **Contraloría General de la República (CGR)**. La herramienta consolida la información de la entidad para un periodo específico y la presenta en una tabla interactiva, lista para su revisión y exportación en múltiples formatos.
+
+## Acceso y navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta en el menú principal del sistema:
+
+**Informes Entidades → Reporte → Informes Entidades → Contraloría General de la República → Reportes DIARI**
+
+<Aside type="note" title="Permisos">
+Generalmente, los roles con acceso a módulos de Contabilidad, Presupuesto y Tesorería tendrán permiso para generar estos reportes.
+</Aside>
+
+![Vsta inicial del reporte SIA](@assets/guias_usuarios/informes_entidades/DIARI_CGR/reportes_diari_CGR_00.png)
+## Funcionalidades principales
+
+La interfaz se compone de un panel de filtros para definir los criterios del reporte y una tabla dinámica para visualizar y exportar los resultados.
+
+### Panel de Filtros
+
+Antes de generar un reporte, debes especificar los siguientes parámetros:
+
+- **Campo “AÑO”**: Menú desplegable para seleccionar el año fiscal del cual se extraerá la información. Es un campo obligatorio.
+- **Campo “Mes”**: Menú desplegable para seleccionar el mes de corte del reporte (Enero a Diciembre). Es un campo obligatorio.
+- **Campo “Tipo Reporte”**: Permite elegir uno de los 12 tipos de reportes DIARI disponibles. La selección de un tipo de reporte determinará las columnas y la estructura de los datos que se mostrarán.
+
+### Botones y Acciones
+
+- **Botón “Generar”**: Una vez seleccionados los filtros, este botón inicia la consulta a la base de datos y carga los resultados en la tabla.
+- **Tabla de Resultados**: Muestra los datos del reporte generado. Incluye las siguientes herramientas interactivas:
+    - **Búsqueda**: Un campo para filtrar registros dinámicamente.
+    - **Paginación**: Navegación entre páginas cuando los resultados son numerosos.
+    - **Selector de paginación**: Permite elegir cuántos registros mostrar por página o seleccionar la opción de ver todos los registros (necesario para una exportación completa).
+    - **Exportar**: Permite descargar los datos en formatos **MS-Excel, CSV o TXT**.
+    - **Visibilidad de Columnas**: Permite ocultar o mostrar columnas según la necesidad del usuario.
+    - **Refrescar**: Vuelve a cargar los datos de la tabla con los filtros actuales.
+    - **Imprimir**: Abre una vista de impresión con los datos de la tabla.
+
+![Vsta inicial del reporte SIA](@assets/guias_usuarios/informes_entidades/DIARI_CGR/reportes_diari_CGR_01.png)
+
+### Tipos de Reporte y su Estructura
+
+A continuación se detallan los 12 reportes que puedes generar y las columnas de datos que contiene cada uno.
+
+<CardGrid>
+    <Card title="1. Ejecución Presupuestal de Ingresos">
+    Contiene el detalle de la ejecución de ingresos, desde el presupuesto inicial hasta los recaudos acumulados.
+    </Card>
+    <Card title="2. Relación de Ingresos">
+    Lista los recaudos de ingresos, detallando tercero, concepto, valor y cuenta bancaria asociada.
+    </Card>
+    <Card title="3. Ejecución Presupuestal de Gastos">
+    Presenta un panorama completo de la ejecución de gastos, incluyendo apropiaciones, CDP, compromisos, obligaciones y pagos.
+    </Card>
+    <Card title="4. Relación de CDPs">
+    Detalla los Certificados de Disponibilidad Presupuestal (CDP) expedidos, incluyendo su valor y objeto.
+    </Card>
+    <Card title="5. Relación de Compromisos">
+    Muestra los compromisos adquiridos, vinculando el CDP, beneficiario, valor y tipo de gasto.
+    </Card>
+    <Card title="6. Relación de Obligaciones">
+    Enumera las obligaciones causadas a partir de los compromisos, con su valor y beneficiario.
+    </Card>
+    <Card title="7. Relación de Pagos">
+    Detalla los pagos efectuados, incluyendo egreso, descuentos, neto pagado y beneficiario.
+    </Card>
+    <Card title="8. Libro Mayor y Balance">
+    Presenta los saldos y movimientos (débito y crédito) de las cuentas contables para el periodo.
+    </Card>
+    <Card title="9. Estado de Situación Financiera">
+    Refleja los saldos de las cuentas que componen el estado de situación financiera de la entidad.
+    </Card>
+    <Card title="10. Estado de Resultados">
+    Muestra los saldos de las cuentas de ingresos, gastos y costos que conforman el estado de resultados.
+    </Card>
+    <Card title="11. Auxiliar con Saldos">
+    Proporciona un detalle a nivel de movimiento por tercero para cada cuenta contable, con débitos y créditos.
+    </Card>
+    <Card title="12. Contratación">
+    Ofrece un informe exhaustivo con más de 50 campos sobre los contratos de la entidad.
+    </Card>
+</CardGrid>
+
+
+## Flujo de uso paso a paso
+
+Para generar y descargar un reporte, sigue estos pasos:
+
+<Steps>
+1. **Seleccionar Filtros**
+   Elige el **Año**, **Mes** y **Tipo de Reporte** deseado en el panel de filtros.
+
+2. **Generar Reporte**
+   Haz clic en el botón **Generar**. El sistema procesará la solicitud y mostrará una previsualización de los datos en la tabla.
+
+3. **Revisar la Información**
+   Utiliza las herramientas de la tabla (búsqueda, paginación) para verificar que los datos son correctos.
+
+4. **Preparar para Descarga**
+   Antes de exportar, es crucial que selecciones la opción de paginación que muestra **todos los registros**. De lo contrario, solo se descargará la página visible actualmente.
+
+5. **Exportar el Archivo**
+   Haz clic en el botón de exportación y elige el formato que prefieras: **CSV, MS-Excel o TXT**. El archivo se descargará en tu equipo.
+</Steps>
+
+![Vsta inicial del reporte SIA](@assets/guias_usuarios/informes_entidades/DIARI_CGR/reportes_diari_CGR_02.png)
+
+## Errores comunes y recomendaciones
+
+<Aside type="caution" title="Posibles Inconvenientes">
+- **No se genera el reporte**: Si al presionar "Generar" no ocurre nada, verifica que los tres campos de filtro (Año, Mes, Tipo de Reporte) tengan un valor seleccionado. Son obligatorios.
+- **La tabla aparece vacía**: Si la tabla no muestra registros, significa que no existen datos que coincidan con los criterios de búsqueda para el periodo seleccionado.
+- **El archivo exportado está incompleto**: Esto ocurre cuando no se selecciona la opción de ver **todos** los registros en la paginación de la tabla antes de exportar. Asegúrate de hacerlo para obtener el reporte completo.
+</Aside>
+
+## Notas técnicas
+
+- La generación de cada reporte depende de la información registrada en los módulos de **Contabilidad**, **Presupuesto** y **Tesorería**.
+- El sistema realiza consultas en tiempo real a la base de datos a través de los servicios `SP_CONTABILIDAD_REPORTESCONTABILIDAD.php` y `SP_CONTABILIDAD_REPORTESCONTABILIDAD_HISTORICO.php`.
+- La estructura de columnas de la tabla se construye dinámicamente en función del **Tipo de Reporte** seleccionado, ya que la información proviene de diferentes orígenes de datos.
+- El reporte **"Auxiliar con saldos"** puede tardar más en generarse debido a que maneja un volumen de datos potencialmente muy alto y requiere una consulta previa para optimizar la carga.
