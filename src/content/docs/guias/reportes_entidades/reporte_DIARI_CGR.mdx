@@ -5,7 +5,7 @@ template: doc
 sidebar:
   label: Reportes DIARI CGR
 lastUpdated: 2025-10-17
-tableOfContents: true
+tableOfContents: false
 ---
 
 import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
@@ -53,7 +53,7 @@ Antes de generar un reporte, debes especificar los siguientes parámetros:
 
 A continuación se detallan los 12 reportes que puedes generar y las columnas de datos que contiene cada uno.
 
-<CardGrid>
+<CardGrid stagger>
     <Card title="1. Ejecución Presupuestal de Ingresos">
     Contiene el detalle de la ejecución de ingresos, desde el presupuesto inicial hasta los recaudos acumulados.
     </Card>
