@@ -1,0 +1,130 @@
+---
+title: Reporte: Libro Auxiliar por Tercero
+description: Guía para generar y consultar el reporte de libro auxiliar, detallando movimientos contables por cuenta y tercero dentro de un rango de fechas específico.
+template: doc
+sidebar:
+  label: Libro Auxiliar por Tercero
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+## Propósito y Función Clave
+
+El Libro Auxiliar por Tercero es una herramienta fundamental en la gestión contable. Su objetivo principal es desglosar los saldos de las cuentas mayores (como Cuentas por Cobrar, Cuentas por Pagar o Impuestos) para mostrar exactamente qué transacciones corresponden a cada persona o entidad (tercero).
+
+<CardGrid>
+	<Card title="Conciliación Precisa" icon="pencil">
+		Permite comparar los registros internos de la empresa con los extractos o facturas de terceros (clientes, proveedores, bancos) para identificar y corregir discrepancias.
+	</Card>
+	<Card title="Soporte para Auditorías" icon="search">
+		Ofrece el detalle documental necesario para verificar y soportar cualquier transacción durante una auditoría interna o externa.
+	</Card>
+    <Card title="Gestión de Cartera y Proveedores" icon="users">
+        Facilita el seguimiento detallado de saldos, pagos y deudas con cada cliente o proveedor, mejorando la gestión de cobros y pagos.
+    </Card>
+	<Card title="Control Fiscal" icon="notebook">
+		Es esencial para la preparación de informes y declaraciones de impuestos que requieren información detallada por NIT del tercero.
+	</Card>
+</CardGrid>
+
+
+Este reporte permite consultar los movimientos contables detallados de una o varias cuentas, agrupados y filtrados por un tercero (NIT) específico o todos los terceros. Su propósito es ofrecer una vista granular de las transacciones (débitos y créditos) para facilitar análisis, conciliaciones y auditorías contables.
+
+![Vsta inicial del reporte libro auxiliar por tercero](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarPorTerceros/reportes_libro_auxiliar_por_terceros_00.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Auxiliar por Terceros**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en dos áreas principales: el panel de filtros para definir los criterios de búsqueda y la barra de acciones para generar, imprimir o exportar los resultados.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Centro de Costo" icon="building">
+        Campo que se asigna automáticamente según el centro de costo asociado al usuario que ha iniciado sesión. No es editable.
+    </Card>
+    <Card title="Rango de Fechas" icon="calendar">
+        **Fecha Desde** y **Fecha Hasta**: Campos obligatorios para definir el período de tiempo exacto de la consulta.
+    </Card>
+    <Card title="Rango de Cuentas" icon="document">
+        **Cuenta Inicial** y **Cuenta Final**: Permiten filtrar por un rango de cuentas contables.
+        - Si ambas son iguales, se buscará solo esa cuenta.
+        - Si no conoces el número, presiona la tecla **F2** en el campo para abrir una ventana de búsqueda de cuentas.
+    </- Card>
+    <Card title="Filtro por Tercero (NIT)" icon="user">
+        **Nit**: Permite buscar los movimientos asociados a un tercero específico.
+        - Si ingresas **0**, el sistema buscará los movimientos de **todos** los terceros disponibles para las cuentas seleccionadas.
+        - Presiona **F2** para buscar un tercero si no conoces el NIT.
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Opciones
+
+Una vez definidos los filtros, puedes interactuar con los siguientes elementos:
+
+-   **Checkbox “Organizar por Tercero?”**: Si se marca esta casilla, el reporte impreso agrupará los movimientos primero por cuenta y luego por NIT. Si no se marca, se organizará únicamente por los movimientos de la cuenta.
+-   **Botón `Generar`**: Ejecuta la consulta con los filtros especificados y carga los resultados en la tabla inferior.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Abre una vista de impresión formateada del reporte. La organización de los datos dependerá del checkbox anterior.
+-   **Botones de Exportación**: La tabla de resultados incluye opciones para descargar la información en diferentes formatos, como **Excel, CSV, TXT y PDF**.
+
+![Vsta inicial del reporte libro auxiliar por tercero](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarPorTerceros/reportes_libro_auxiliar_por_terceros_01.png)
+
+### Tabla de Resultados
+
+La tabla muestra el detalle de cada movimiento y está compuesta por las siguientes columnas:
+* Fecha
+* Número y Clase del Comprobante
+* Nombre del Comprobante
+* Cuenta y Nombre de la Cuenta
+* NIT y Nombre del Tercero
+* Débito, Crédito, Neto y Saldo
+* Concepto del movimiento
+* Datos de Conciliación (si aplica)
+
+En la parte superior de cada agrupación (por cuenta o tercero) se muestra el **saldo inicial**, y en el pie de la tabla se calculan los **totales** para las columnas Débito, Crédito y Neto.
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del Libro Auxiliar por Terceros como se indicó anteriormente.
+
+2.  **Configurar Filtros**
+    Completa los campos del formulario. Como mínimo, debes especificar el rango de fechas (`Fecha Desde` y `Fecha Hasta`) y el rango de cuentas (`Cuenta Inicial` y `Cuenta Final`).
+
+3.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. El sistema procesará la solicitud y mostrará los resultados en la tabla en la parte inferior de la pantalla.
+
+4.  **Analizar Resultados**
+    Revisa la información en la tabla. Puedes usar las herramientas de búsqueda y paginación de la tabla para navegar entre los datos.
+
+5.  **Imprimir o Exportar**
+    - Si deseas una copia física o un PDF formateado, asegúrate de que el checkbox **"Organizar por Tercero?"** esté configurado a tu gusto y haz clic en **`Imprimir`**.
+    - Si necesitas los datos para trabajarlos en otro software, utiliza los botones de exportación para descargarlos en el formato que prefieras.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Campos Obligatorios**: Los campos `Fecha Desde`, `Fecha Hasta` y `Cuenta Inicial` son requeridos para poder generar el reporte. El sistema no te permitirá continuar si están vacíos.
+-   **Búsqueda de Todos los Terceros**: Para obtener un reporte completo de todos los terceros relacionados con una cuenta, introduce el número `0` en el campo `Nit`.
+-   **Límite de Impresión**: La función de `Imprimir` está optimizada para reportes de hasta **1000 registros**. Si tu consulta supera este límite, el sistema te mostrará una alerta y deberás usar las opciones de **exportación** (Excel, CSV) para obtener la información completa.
+</Aside>
+
+![Vsta inicial del reporte libro auxiliar por tercero](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarPorTerceros/reportes_libro_auxiliar_por_terceros_02.png)
+![Vsta inicial del reporte libro auxiliar por tercero](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarPorTerceros/reportes_libro_auxiliar_por_terceros_03.png)
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) no imprime directamente la tabla visible, sino que invoca un generador de reportes del lado del servidor (`reporte_LibroAuxiliarPorTercero.php`) que formatea los datos de una manera optimizada para la visualización en papel o PDF.
+-   Los totales de las columnas `DEBITO`, `CREDITO` y `NETO` se calculan dinámicamente en el pie de la tabla (`footer`) después de que los datos son cargados.
+
+
