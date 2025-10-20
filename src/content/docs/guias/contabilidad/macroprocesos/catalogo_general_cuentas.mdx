@@ -11,16 +11,16 @@ tableOfContents: false
 import { Steps } from '@astrojs/starlight/components';
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
- 
+
 <CardGrid stagger>
     <Card title="Propósito" icon="open-book">
-        El **Catálogo General de Cuentas** es la herramienta fundamental para administrar las 
-        cuentas contables (Plan Único de Cuentas o PUC) utilizadas en todas las transacciones 
+        El **Catálogo General de Cuentas** es la herramienta fundamental para administrar las
+        cuentas contables (Plan Único de Cuentas o PUC) utilizadas en todas las transacciones
         financieras de la entidad.
     </Card>
     <Card title="Función Clave" icon="pencil">
-        Permite a los usuarios crear nuevas cuentas auxiliares, editar las existentes y deshabilitar 
-        aquellas que ya no están vigentes, asegurando la integridad y la estructura jerárquica de la 
+        Permite a los usuarios crear nuevas cuentas auxiliares, editar las existentes y deshabilitar
+        aquellas que ya no están vigentes, asegurando la integridad y la estructura jerárquica de la
         contabilidad.
     </Card>
 </CardGrid>
@@ -35,7 +35,7 @@ Para el acceso a este reporte, debes seguir la siguiente Ruta:
 
 ![Vista Catalogo General Cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_tabla.png)
 :::note
-El acceso a esta funcionalidad requiere permisos de administrador, dado el impacto directo en 
+El acceso a esta funcionalidad requiere permisos de administrador, dado el impacto directo en
 la estructura financiera del sistema. Si no tienes los permisos necesarios, contacta al administrador del sistema de su entidad.
 :::
 ---
@@ -55,13 +55,6 @@ La tabla es el punto de inicio para la consulta y las acciones sobre las cuentas
 | **Columnas Clave** | `OPCIONES`, `CUENTA`, `NOMBRE`, `NIVEL`, `NATURALEZA`, `TIPO CORRIENTE`   |
 | **Opciones** | Columna que contiene los botones de acción para cada cuenta. |
 
-### Elementos Interactivos (Opciones)
-
-Cada fila de la tabla incluye tres acciones rápidas, visibles bajo la columna **Opciones**:
-
--   **Nuevo** (`.nuevo`): **Función principal.** Permite crear una nueva cuenta (subcuenta o auxiliar) dependiente del registro padre seleccionado. Abre el modal de gestión con el código de la cuenta padre precargado para extender la codificación.
--   **Editar** (`.edit`): Permite modificar los atributos de la cuenta seleccionada, como el nombre, la naturaleza o el estado. El campo `CUENTA` (código) se deshabilita para evitar cambios en la clave principal.
--   **Eliminar** (`.remove`): Inicia el proceso de borrado. **Validación:** El sistema impedirá la eliminación si la cuenta tiene **niveles inferiores** (subcuentas) asociadas, para proteger la integridad contable.
 
 ### Modal de Gestión de Cuentas
 
@@ -69,13 +62,13 @@ Este formulario se utiliza tanto para la creación (`Nuevo`) como para la modifi
 
 | Campo | Descripción | Validaciones / Dependencias |
 | :--- | :--- | :--- |
-| **Código (`CUENTA`)** | Campo numérico para la codificación de la cuenta (máx. 16 caracteres). | **Creación:** Se valida que el código no exista. Se compara la longitud con la **Plantilla** configurada en parámetros. **Edición:** El campo está **deshabilitado**. |
-| **Nombre (`NOMBRE`)** | Nombre descriptivo de la cuenta (máx. 300 caracteres). | Campo obligatorio. |
-| **Nivel (`NIVEL`)** | Nivel jerárquico de la cuenta. | Se calcula automáticamente en la creación según la `Plantilla` y el código ingresado. |
-| **Terceros (`TERCERO`)** | **PASAR SALDOS INICIALES CON TERCEROS?** Seleccione *Sí* o *No*. | **Dependencia:** Este campo se deshabilita en edición si la cuenta no es de nivel **Auxiliar** (`NIVEL != "A"`). |
+| **Código** | Campo numérico para la codificación de la cuenta (máx. 16 caracteres). | **Creación:** Se valida que el código no exista. Se compara la longitud con la **Plantilla** configurada en parámetros. **Edición:** El campo está **deshabilitado**. |
+| **Nombre** | Nombre descriptivo de la cuenta (máx. 300 caracteres). | Campo obligatorio. |
+| **Nivel** | Nivel jerárquico de la cuenta. | Se calcula automáticamente en la creación según la `Plantilla` y el código ingresado. |
+| **Terceros** | **PASAR SALDOS INICIALES CON TERCEROS?** Seleccione *Sí* o *No*. | **Dependencia:** Este campo se deshabilita en edición si la cuenta no es de nivel **Auxiliar** (`NIVEL != "A"`). |
 | **Naturaleza** | Define si la cuenta es de **Débito** o **Crédito**. | Campo obligatorio. |
 | **Tipo Corriente** | Clasifica la cuenta como **Corriente** o **No Corriente**. | Campo obligatorio. |
-| **Estado (`ESTADO`)** | Define la vigencia de la cuenta (**Vigente** o **No Vigente**). | **Dependencia:** Si se selecciona **Vigente**, el campo `Observaciones` se limpia y se deshabilita. |
+| **Estado** | Define la vigencia de la cuenta (**Vigente** o **No Vigente**). | **Dependencia:** Si se selecciona **Vigente**, el campo `Observaciones` se limpia y se deshabilita. |
 | **Observaciones** | Detalle sobre el estado o el uso de la cuenta (máx. 500 caracteres). | Se habilita solo si el **Estado** es **No Vigente**. |
 
 ---
@@ -86,8 +79,11 @@ El flujo típico se inicia desde la tabla principal, seleccionando la cuenta pad
 
 <Steps>
 1.  **Localizar la Cuenta Padre:** En la Tabla de Resultados, utilice los filtros o la barra de búsqueda para encontrar la cuenta contable de la cual desea que dependa el nuevo registro.
-2.  **Iniciar la Creación:** En la columna **Opciones** de la cuenta padre, presione el botón **<i class="fa fa-plus"></i> Nuevo**.
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_buscar.png)
+2.  **Iniciar la Creación:** En la columna **Opciones** de la cuenta padre, presione el botón **Nuevo** `+`.
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_nueva_cuenta.png)
 3.  **Apertura del Formulario:** El sistema despliega el **Modal de Gestión de Cuentas**. El campo `Código` aparecerá parcialmente precargado con el código de la cuenta padre (dependiendo de la lógica de la plantilla contable).
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_modal.png)
 4.  **Ingresar el Código de la Nueva Cuenta:** Complete el campo **Código** con la extensión numérica de la subcuenta que desea crear. El sistema verifica que la longitud sea coherente con la `Plantilla` y que la cuenta superior sea válida.
 5.  **Completar Datos Generales:** Ingrese el **Nombre** de la nueva cuenta.
 6.  **Configurar Atributos Contables:** Seleccione la **Naturaleza** (Débito/Crédito) y el **Tipo Corriente** (Corriente/No Corriente).
