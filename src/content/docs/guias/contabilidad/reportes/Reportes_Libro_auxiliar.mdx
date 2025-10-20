@@ -1,0 +1,94 @@
+---
+title: Libro Auxiliar
+description: Guía para generar y consultar el reporte de libro auxiliar, que detalla todos los movimientos (débitos y créditos) de una cuenta contable específica en un período determinado.
+template: doc
+sidebar:
+  label: Libro Auxiliar
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+Este reporte muestra el movimiento detallado de una única cuenta contable dentro de un rango de fechas específico. Su función principal es permitir a los usuarios auditar, verificar y analizar todas las transacciones que han afectado a una cuenta, mostrando un historial completo de débitos, créditos y el saldo acumulado.
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Auxiliar**
+</Aside>
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliar/reportes_libro_auxiliar_00.png)
+
+## Funcionalidades Principales
+
+La interfaz se compone de un panel de filtros para definir la consulta y una tabla de resultados con herramientas de exportación e impresión.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Centro de Costo" icon="building">
+        Este campo se rellena automáticamente con el centro de costo asociado al usuario que ha iniciado sesión y no es editable.
+    </Card>
+    <Card title="Cuenta" icon="document">
+        Campo **obligatorio** donde debes especificar el número de la cuenta contable que deseas consultar. Si no conoces el código, presiona la tecla **F2** para abrir una ventana de búsqueda de cuentas.
+    </Card>
+    <Card title="Rango de Fechas" icon="calendar">
+        **Fecha Desde** y **Fecha Hasta**: Campos **obligatorios** para definir el período de tiempo exacto para el cual deseas ver los movimientos de la cuenta.
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Una vez definidos los filtros, este botón ejecuta la consulta y carga todos los movimientos correspondientes en la tabla de resultados.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Genera una versión del reporte formateada para impresión física o para guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas integradas para descargar los datos en múltiples formatos, como **Excel, CSV, TXT y PDF**.
+
+La tabla de resultados muestra un desglose de cada transacción con las siguientes columnas:
+* Año, Mes, Día
+* Comprobante y Concepto
+* NIT y Nombre del Tercero
+* Saldo Inicial
+* Valor Débito y Valor Crédito
+* Saldo final del movimiento
+
+En el pie de la tabla se calculan automáticamente los **totales** para las columnas de Valor Débito y Valor Crédito.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliar/reportes_libro_auxiliar_01.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Libro Auxiliar** como se indicó en la sección de acceso.
+
+2.  **Configurar los Filtros**
+    Introduce la **Cuenta** que deseas consultar y define el rango de fechas con la **Fecha Desde** y **Fecha Hasta**.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. El sistema procesará la solicitud y cargará los resultados en la tabla inferior.
+
+4.  **Analizar y Exportar**
+    Revisa la información en la tabla. Si lo necesitas, utiliza los botones de la barra de herramientas de la tabla para buscar, filtrar o exportar los datos al formato deseado.
+
+5.  **Imprimir**
+    Si requieres una copia física, haz clic en el botón **`Imprimir`** para obtener una vista optimizada del reporte.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Campos Obligatorios**: Para generar el reporte, es indispensable que completes los campos `Cuenta`, `Fecha Desde` y `Fecha Hasta`. El sistema no ejecutará la consulta si alguno de estos campos está vacío.
+-   **La Cuenta no es Auxiliar**: El sistema validará que la cuenta ingresada sea de tipo "Auxiliar" (es decir, una cuenta que puede recibir movimientos). Si ingresas una cuenta de nivel superior (o "de mayor"), se mostrará un mensaje de error indicando que la cuenta no es válida para este reporte.
+-   **Búsqueda de Cuentas**: Si no estás seguro del número de cuenta, usa la tecla **F2** en el campo `Cuenta`. Es la forma más rápida y segura de seleccionar la cuenta correcta.
+</Aside>
+
+## Notas Técnicas
+
+-   La función de impresión (`Imprimir`) no se limita a capturar la pantalla, sino que invoca un script del lado del servidor (`reporte_LibroAuxiliar.php`) para generar un documento formateado y limpio con los datos de la tabla.
+-   Los totales de las columnas de débito y crédito se calculan dinámicamente en el pie de la tabla (`footer`) una vez que los datos de la consulta han sido cargados.
+
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliar/reportes_libro_auxiliar_02.png)
