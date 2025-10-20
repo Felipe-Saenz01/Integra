@@ -1,5 +1,5 @@
 ---
-title: Reporte: Libro Auxiliar por Tercero
+title: Libro Auxiliar por Tercero
 description: Guía para generar y consultar el reporte de libro auxiliar, detallando movimientos contables por cuenta y tercero dentro de un rango de fechas específico.
 template: doc
 sidebar:
@@ -9,6 +9,7 @@ tableOfContents: false
 ---
 
 import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
 ## Propósito y Función Clave
 
 El Libro Auxiliar por Tercero es una herramienta fundamental en la gestión contable. Su objetivo principal es desglosar los saldos de las cuentas mayores (como Cuentas por Cobrar, Cuentas por Pagar o Impuestos) para mostrar exactamente qué transacciones corresponden a cada persona o entidad (tercero).
@@ -58,7 +59,7 @@ La interfaz se divide en dos áreas principales: el panel de filtros para defini
         **Cuenta Inicial** y **Cuenta Final**: Permiten filtrar por un rango de cuentas contables.
         - Si ambas son iguales, se buscará solo esa cuenta.
         - Si no conoces el número, presiona la tecla **F2** en el campo para abrir una ventana de búsqueda de cuentas.
-    </- Card>
+    </Card>
     <Card title="Filtro por Tercero (NIT)" icon="user">
         **Nit**: Permite buscar los movimientos asociados a un tercero específico.
         - Si ingresas **0**, el sistema buscará los movimientos de **todos** los terceros disponibles para las cuentas seleccionadas.
