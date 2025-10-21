@@ -1,0 +1,92 @@
+---
+title: Balance de Prueba
+description: Guía para generar un Balance de Prueba, un informe que verifica la igualdad entre los débitos y créditos totales del libro mayor, asegurando la exactitud de los registros contables.
+template: doc
+sidebar:
+  label: Balance de Prueba
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Balance de Prueba es un informe contable interno que lista el saldo de cada cuenta del libro mayor en un momento específico. Su objetivo principal es verificar que la suma total de los débitos sea igual a la suma total de los créditos, demostrando que los registros contables son matemáticamente correctos. Es una herramienta fundamental para asegurar la fiabilidad de la información financiera.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_balance_prueba_00.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Balance de Prueba**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros altamente personalizable y una sección de resultados con herramientas de visualización, exportación e impresión.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Datos Generales" icon="building">
+        - **Centro de Costo**: Se asigna automáticamente según el usuario logueado.
+        - **Título Informe**: Permite personalizar el título que aparecerá en el reporte impreso. Por defecto es "BALANCE DE PRUEBA".
+    </Card>
+    <Card title="Rango de Cuentas" icon="document">
+        **Cuenta Inicio** y **Cuenta Termina**: Define el rango de cuentas a incluir.
+        - Para un reporte completo, deja los valores por defecto (`1` y `9999...`).
+        - Si no conoces un código, presiona **F2** para abrir el buscador de cuentas.
+    </Card>
+    <Card title="Período y Nivel" icon="calendar">
+        - **Mes-Desde** y **Mes-Hasta**: Especifica el rango de meses (1 a 12) para la consulta.
+        - **Nivel**: Define el nivel de detalle de las cuentas a mostrar en el reporte (de 1 a 9).
+    </Card>
+    <Card title="Opciones Adicionales" icon="check-circle">
+        - **¿Saldo Anterior?**: Si se marca, el reporte incluirá una columna con los saldos de las cuentas antes del período seleccionado. **Activado por defecto**.
+        - **¿Discriminado?**: Si se marca, el reporte mostrará un desglose más detallado (no implementado en el código visible, funcionalidad futura).
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con todos los filtros seleccionados y muestra los datos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y muestra una versión del balance optimizada para ser impresa o guardada como PDF.
+-   **Opciones de Exportación**: La tabla de resultados permite descargar la información en formatos como **Excel, CSV o TXT**.
+-   **Tabla de Resultados**: Muestra el balance con las columnas: `CUENTA`, `NOMBRE CUENTA`, `SALDO ANTERIOR`, `DEBITOS`, `CREDITOS` y `SALDO FINAL`. La tabla cuenta con herramientas para paginar, ordenar y ocultar columnas.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_balance_prueba_01.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Balance de Prueba**. Los datos del Centro de Costo se cargarán automáticamente.
+
+2.  **Personalizar Filtros**
+    Ajusta el **Título del Informe** si lo deseas. Define el rango de **cuentas**, el período de **meses** y el **nivel** de detalle. Activa o desactiva las casillas de `Saldo Anterior` según tu necesidad.
+
+3.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con los resultados que coincidan con tus criterios.
+
+4.  **Analizar y Exportar**
+    Revisa la información en la tabla. En el pie de la tabla verás la validación de **"SUMAS IGUALES"**. Si necesitas los datos en otro programa, usa las opciones de exportación.
+
+5.  **Imprimir Informe**
+    Para obtener un documento formal, haz clic en el botón **`Imprimir`** y se generará el reporte con el título que especificaste.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Reporte Completo**: Para asegurar que el balance incluya todas las cuentas y cuadre correctamente, es recomendable dejar el rango de cuentas con sus valores por defecto (`Cuenta Inicio: 1`, `Cuenta Termina: 9999...`).
+-   **Uso de F2**: La forma más eficiente y segura de seleccionar una cuenta específica sin cometer errores de digitación es usar la tecla **F2** en los campos de cuenta para abrir el Plan Único de Cuentas (PUC).
+-   **Campos Obligatorios**: Los rangos de meses y el nivel son campos requeridos para que la consulta pueda ejecutarse correctamente.
+</Aside>
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_balance_prueba_02.png)
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) no es una simple captura de pantalla. Ejecuta un script del lado del servidor (`reporte_balance_prueba.php`) que toma los datos de la tabla y los formatea en un documento profesional.
+-   Los totales en el pie de página para las columnas de Débitos y Créditos se calculan dinámicamente para verificar que las sumas sean iguales, cumpliendo el principio de partida doble.
+
