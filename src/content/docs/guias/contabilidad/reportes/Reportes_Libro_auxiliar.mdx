@@ -16,9 +16,7 @@ Este reporte muestra el movimiento detallado de una única cuenta contable dentr
 
 Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
 
-<Aside type="note" title="Ruta de Navegación">
-  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Auxiliar**
-</Aside>
+**Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Auxiliar**
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliar/reportes_libro_auxiliar_00.png)
 
@@ -28,14 +26,14 @@ La interfaz se compone de un panel de filtros para definir la consulta y una tab
 
 ### Panel de Filtros
 
-<CardGrid>
-    <Card title="Centro de Costo" icon="building">
+<CardGrid stagger>
+    <Card title="Centro de Costo" icon="laptop">
         Este campo se rellena automáticamente con el centro de costo asociado al usuario que ha iniciado sesión y no es editable.
     </Card>
     <Card title="Cuenta" icon="document">
         Campo **obligatorio** donde debes especificar el número de la cuenta contable que deseas consultar. Si no conoces el código, presiona la tecla **F2** para abrir una ventana de búsqueda de cuentas.
     </Card>
-    <Card title="Rango de Fechas" icon="calendar">
+    <Card title="Rango de Fechas" icon="list-format">
         **Fecha Desde** y **Fecha Hasta**: Campos **obligatorios** para definir el período de tiempo exacto para el cual deseas ver los movimientos de la cuenta.
     </Card>
 </CardGrid>
@@ -84,11 +82,6 @@ En el pie de la tabla se calculan automáticamente los **totales** para las colu
 -   **La Cuenta no es Auxiliar**: El sistema validará que la cuenta ingresada sea de tipo "Auxiliar" (es decir, una cuenta que puede recibir movimientos). Si ingresas una cuenta de nivel superior (o "de mayor"), se mostrará un mensaje de error indicando que la cuenta no es válida para este reporte.
 -   **Búsqueda de Cuentas**: Si no estás seguro del número de cuenta, usa la tecla **F2** en el campo `Cuenta`. Es la forma más rápida y segura de seleccionar la cuenta correcta.
 </Aside>
-
-## Notas Técnicas
-
--   La función de impresión (`Imprimir`) no se limita a capturar la pantalla, sino que invoca un script del lado del servidor (`reporte_LibroAuxiliar.php`) para generar un documento formateado y limpio con los datos de la tabla.
--   Los totales de las columnas de débito y crédito se calculan dinámicamente en el pie de la tabla (`footer`) una vez que los datos de la consulta han sido cargados.
 
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliar/reportes_libro_auxiliar_02.png)
