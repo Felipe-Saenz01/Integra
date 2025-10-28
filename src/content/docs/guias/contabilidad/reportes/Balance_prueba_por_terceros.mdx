@@ -1,0 +1,102 @@
+---
+title: Reporte: Balance de Prueba por Terceros
+description: Guía para generar un Balance de Prueba detallado por tercero (NIT), permitiendo verificar saldos contables y conciliar cuentas a nivel de entidad.
+template: doc
+sidebar:
+  label: Balance de Prueba por Terceros
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+Este reporte es una versión especializada del Balance de Prueba. Su objetivo no solo es verificar que los débitos y créditos totales sean iguales, sino también **desglosar los saldos de las cuentas por cada tercero (NIT)** involucrado en las transacciones.
+
+Es una herramienta fundamental para la conciliación de cuentas que manejan terceros, como cuentas por pagar, cuentas por cobrar o impuestos.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePruebaPorTerceros/reportes_balance_prueba_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Balance de Prueba por Terceros**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros para definir la consulta y una tabla de resultados que incluye la información del tercero.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Datos Generales" icon="building">
+        - **Centro de Costo**: Se asigna automáticamente según el usuario logueado.
+        - **Título Informe**: Permite personalizar el título que aparecerá en el reporte impreso.
+    </Card>
+    <Card title="Rango de Cuentas" icon="document">
+        **Cuenta Inicio** y **Cuenta Termina**: Define el rango de cuentas a incluir.
+        - Para un reporte completo, deja los valores por defecto (`1` y `9999...`).
+        - Presiona **F2** para abrir el buscador de cuentas.
+    </Card>
+    <Card title="Período y Nivel" icon="calendar">
+        - **Mes-Desde** y **Mes-Hasta**: Especifica el rango de meses (1 a 12) para la consulta.
+        - **Nivel**: Define el nivel de detalle de las cuentas a mostrar (de 1 a 9).
+    </Card>
+    <Card title="Opciones Adicionales" icon="check-circle">
+        - **¿Saldo Anterior?**: Marcada por defecto. Incluye los saldos de las cuentas antes del período seleccionado.
+        - **¿Discriminado?**: Si se marca, el reporte genera un desglose más detallado de los movimientos por tercero.
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con todos los filtros seleccionados y muestra los datos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y muestra una versión del balance optimizada para ser impresa o guardada como PDF, incluyendo el título personalizado.
+-   **Opciones de Exportación**: La tabla de resultados permite descargar la información en formatos como **Excel, CSV o TXT**.
+
+La tabla de resultados es la funcionalidad clave. A diferencia del balance de prueba normal, esta tabla añade dos columnas esenciales al final de cada fila de movimiento:
+
+-   **`Nit`**: Muestra el NIT del tercero asociado a la transacción.
+-   **`Nombre Tercero`**: Muestra el nombre o razón social correspondiente a ese NIT.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePruebaPorTerceros/reportes_balance_prueba_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Balance de Prueba por Terceros**. Los datos del Centro de Costo se cargarán automáticamente.
+
+2.  **Personalizar Filtros**
+    Ajusta el **Título del Informe**. Define el rango de **cuentas** (se recomienda dejar por defecto para un balance completo), el período de **meses** y el **nivel** de detalle.
+
+3.  **Seleccionar Opciones**
+    Asegúrate de que la casilla `¿Saldo Anterior?` esté marcada si deseas ver el arrastre. Marca `¿Discriminado?` si necesitas el máximo nivel de detalle por tercero.
+
+4.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con los resultados.
+
+5.  **Analizar y Exportar**
+    Revisa la información en la tabla. Ahora puedes ver qué tercero está asociado a cada movimiento de cuenta. Utiliza las opciones de exportación si necesitas trabajar los datos externamente.
+
+6.  **Imprimir Informe**
+    Para obtener un documento formal, haz clic en el botón **`Imprimir`**.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Reporte Completo**: Para asegurar que el balance incluya todas las cuentas y terceros, es recomendable dejar el rango de cuentas con sus valores por defecto (`Cuenta Inicio: 1`, `Cuenta Termina: 9999...`).
+-   **Uso de F2**: La forma más eficiente y segura de seleccionar una cuenta específica sin cometer errores de digitación es usar la tecla **F2** en los campos de cuenta para abrir el Plan Único de Cuentas (PUC).
+-   **Cuentas sin Tercero**: Es normal que muchas cuentas (ej. cuentas de patrimonio o gastos generales que no se asignan a un NIT) aparezcan en el reporte sin información en las columnas `Nit` o `Nombre Tercero`.
+</Aside>
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) invoca un script específico del lado del servidor (`Reporte_balance_prueba_terceros.php`) para formatear los datos correctamente, incluyendo el detalle por tercero.
+-   Marcar la casilla `¿Discriminado?` cambia el tipo de consulta enviada al servidor (utiliza `Tran=31` en lugar de `Tran=23`) para solicitar un conjunto de datos más granular.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePruebaPorTerceros/reportes_balance_prueba_03.png)
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePruebaPorTerceros/reportes_balance_prueba_04.png)
