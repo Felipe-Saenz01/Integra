@@ -29,7 +29,7 @@ El siguiente paso a paso describe el proceso que se ha realizado a las respuesta
 
     ```sql
     UPDATE #tempContrato
-    SET Vigencia_Contrato='nueva_vigencia'
+    SET Vigencia_Contrato=nueva_vigencia
     ```
 4. Registrar el cambio de la tabla temporal a la tabla `CONTRATOS.INFORMACION_GENERAL`
 
@@ -37,22 +37,51 @@ El siguiente paso a paso describe el proceso que se ha realizado a las respuesta
     INSERT INTO CONTRATOS.INFORMACION_GENERAL
     SELECT * FROM #tempContrato 
     ```
+5. Verificar si el contrato tiene cesiones asociadas en la tabla `CONTRATOS.CESIONES`
 
-5. Eliminar el contrato con la vigencia anterior.
+    ```sql
+    SELECT * FROM CONTRATOS.CESIONES 
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    ```
+6. Si el contrato tiene cesiones asociadas, proceder a actualizar la vigencia en la tabla `CONTRATOS.CESIONES`
+
+    ```sql
+    UPDATE CONTRATOS.CESIONES
+    SET Vigencia_Contrato=nueva_vigencia
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    AND Vigencia_Contrato=vigencia_anterior
+    ```
+
+7. Eliminar el contrato con la vigencia anterior.
 
     ```sql
     DELETE FROM CONTRATOS.INFORMACION_GENERAL 
     WHERE Numero_Contrato='numero_contrato_a_buscar' 
-    AND Vigencia_Contrato='vigencia_anterior'
+    AND Vigencia_Contrato=vigencia_anterior
     ```
 
-6. Actualizar la cesiones asociadas al contrato en la tabla `CONTRATOS.CESIONES`
+8. Actualizar la `FechaContrato` en la tabla `CONTRATOS.INFORMACION_GENERAL` y la `Fecha_Cesion`
+    en la tabla `CONTRATOS.CESIONES` si es necesario, para que coincidan con la nueva vigencia.
+
+    :::note
+    Recuerde que el campo `FechaContrato` es de tipo `SMALLDATETIME`y el campo `Fecha_Cesion` es de tipo `DATE`, por lo que la fecha debe ser ingresada en el formato adecuado.
+    
+    - `AAAA-MM-DD HH:MM:SS` → `SMALLDATETIME`.
+    - `AAAA-MM-DD` → `DATE`.
+    :::
 
     ```sql
+    UPDATE CONTRATOS.INFORMACION_GENERAL
+    SET FechaContrato=CAST('YYYY-MM-DDT00:00:00' AS smalldatetime); -- Fecha correspondiente a la nueva vigencia
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    AND Vigencia_Contrato=nueva_vigencia
+
     UPDATE CONTRATOS.CESIONES
-    SET Vigencia_Contrato='nueva_vigencia'
-    WHERE Numero_Contrato='numero_contrato_a_buscar' 
-    AND Vigencia_Contrato='vigencia_anterior'
+    SET Fecha_Cesion=CAST('YYYY-MM-DD' AS DATE) -- Fecha correspondiente a la nueva vigencia
+    WHERE Numero_Contrato='numero_contrato_a_buscar'
+    AND Vigencia_Contrato=nueva_vigencia
     ```
+
+   
 
 </Steps>
