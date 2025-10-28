@@ -1,0 +1,93 @@
+---
+title: Libro de Bancos
+description: Guía para generar el Libro de Bancos, un registro detallado de todos los movimientos (entradas y salidas) de una cuenta bancaria específica para conciliación.
+template: doc
+sidebar:
+  label: Libro de Bancos
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Libro de Bancos es un registro contable auxiliar que detalla todas las transacciones de una cuenta bancaria específica de la empresa. Su función es llevar un control preciso de los movimientos de dinero, registrando entradas (depósitos) y salidas (cheques, transferencias) para conciliar el saldo contable interno con los extractos bancarios.
+
+![Vsta inicial del reporte Libro de Bancos](@assets/guias_usuarios/contabilidad/reportes/LibrodeBancos/reportes_libro_de_bancos_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro de Bancos**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se compone de un panel de filtros para seleccionar la cuenta y el período, y una tabla de resultados que detalla los movimientos.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Centro de Costo" icon="building">
+        Este campo se rellena automáticamente con el centro de costo asociado al usuario que ha iniciado sesión y no es editable.
+    </Card>
+    <Card title="Cuenta de Bancos" icon="bank">
+        Campo **obligatorio** donde debes especificar el número de la cuenta de banco que deseas consultar.
+        - Si no conoces el código, presiona la tecla **F2** para abrir una ventana de búsqueda de cuentas.
+        - Al seleccionar una cuenta, el campo "Nombre Cuenta bancos" se rellenará automáticamente.
+    </Card>
+    <Card title="Rango de Fechas" icon="calendar">
+        **Fecha Desde** y **Fecha Hasta**: Campos **obligatorios** para definir el período de tiempo exacto para el cual deseas ver los movimientos de la cuenta.
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con los filtros seleccionados y carga todos los movimientos de la cuenta bancaria en la tabla de resultados.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Genera una versión del reporte formateada para impresión física o para guardar como PDF.
+-   **Tabla de Resultados**: Muestra un desglose de cada transacción con las siguientes columnas:
+    * Año, Mes, Día
+    * Nit y Nombre (del tercero)
+    * Concepto de la transacción
+    * Inicial (Saldo inicial del período)
+    * Valor Débito (Entradas)
+    * Valor Crédito (Salidas)
+    * Saldo (Saldo final del movimiento)
+-   **Herramientas de la Tabla**: La tabla incluye opciones integradas para **exportar** (Excel, CSV, TXT), mostrar u ocultar columnas y refrescar los datos.
+
+![Vsta inicial del reporte Libro de Bancos](@assets/guias_usuarios/contabilidad/reportes/LibrodeBancos/reportes_libro_de_bancos_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Libro de Bancos**. El Centro de Costo se cargará automáticamente.
+
+2.  **Configurar los Filtros**
+    Introduce la **Cuenta de Bancos** (presiona **F2** si necesitas buscarla) y define el rango de fechas con la **Fecha Desde** y **Fecha Hasta**.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. El sistema procesará la solicitud y cargará los resultados en la tabla inferior.
+
+4.  **Analizar y Exportar**
+    Revisa los movimientos, saldos y totales en la tabla. Si lo necesitas, utiliza los botones de la barra de herramientas de la tabla para exportar los datos.
+
+5.  **Imprimir**
+    Si requieres una copia física para conciliación, haz clic en el botón **`Imprimir`**.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Validación de Cuenta">
+-   **Cuenta Inválida**: Este reporte solo funciona con cuentas contables definidas como "Bancos" (por ejemplo, las que inician con el código `1110`). Si introduces una cuenta que no es de bancos (como una cuenta de gastos o de clientes), el sistema mostrará un mensaje de error y no te permitirá generar el reporte.
+-   **Campos Obligatorios**: Para generar el reporte, es indispensable que completes los campos `Cuenta Bancos`, `Fecha Desde` y `Fecha Hasta`.
+</Aside>
+
+## Notas Técnicas
+
+-   La función de impresión (`Imprimir`) no se limita a capturar la pantalla, sino que invoca un script del lado del servidor (`reporte_libroBancos.php`) para generar un documento formateado y limpio con los datos de la tabla.
+-   El sistema valida activamente que la cuenta ingresada pertenezca a los grupos contables de bancos (ej. `1110`, `1132`, `1137`) antes de permitir la consulta.
+
+![Vsta inicial del reporte Libro de Bancos](@assets/guias_usuarios/contabilidad/reportes/LibrodeBancos/reportes_libro_de_bancos_03.png)
+![Vsta inicial del reporte Libro de Bancos](@assets/guias_usuarios/contabilidad/reportes/LibrodeBancos/reportes_libro_de_bancos_04.png)
