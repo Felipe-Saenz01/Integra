@@ -1,0 +1,101 @@
+---
+title: Libro de Terceros
+description: Guía para generar el Libro de Terceros, un reporte auxiliar que detalla los movimientos y saldos contables de un tercero (cliente, proveedor) específico o de todos.
+template: doc
+sidebar:
+  label: Libro de Terceros
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Libro de Terceros es un libro auxiliar de contabilidad que detalla las transacciones realizadas con una entidad externa específica, como un cliente, proveedor o empleado. Permite un seguimiento detallado del movimiento de cuentas por cada persona o empresa (identificada por su NIT) con la que la compañía tiene una relación económica.
+
+![Vsta inicial del reporte Libro de terceros](@assets/guias_usuarios/contabilidad/reportes/LibroTerceros/reportes_libro_tercero_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro de Terceros**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros para definir el tercero y el período, y una tabla de resultados con los movimientos contables.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Centro de Costo" icon="building">
+        Este campo se rellena automáticamente con el centro de costo asociado al usuario que ha iniciado sesión y no es editable.
+    </Card>
+    <Card title="Nit Tercero" icon="user">
+        Permite filtrar el reporte para un NIT específico.
+        - **Para todos los terceros**: Deja el valor por defecto (`0`).
+        - **Para un tercero específico**: Ingresa el NIT. El campo "Nombre Tercero" se actualizará para confirmar.
+        - Presiona **F2** para abrir un buscador de terceros.
+    </Card>
+    <Card title="Rango de Meses" icon="calendar">
+        **Mes Desde** y **Mes Hasta**: Define el período (1-12) a consultar. Si ambos campos tienen el mismo mes, la consulta se limitará a ese mes.
+    </Card>
+    <Card title="Opciones de Reporte" icon="check-circle">
+        - **Nivel de Balance (1-9)**: Define el nivel de detalle de las cuentas que se mostrarán en el reporte.
+        - **¿Imprimir Discriminado?**: Afecta el nivel de detalle del reporte que se genera al presionar `Imprimir`.
+    </Card>
+</CardGrid>
+
+![Vsta inicial del reporte Libro de terceros](@assets/guias_usuarios/contabilidad/reportes/LibroTerceros/reportes_libro_tercero_02.png)
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con los filtros seleccionados y carga los resultados en la tabla inferior.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Abre una vista de impresión formateada del reporte, lista para imprimir o guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas integradas para descargar los datos en formatos como **Excel, CSV y TXT**.
+
+La tabla de resultados muestra el detalle de los movimientos y está compuesta por las siguientes columnas:
+* Cuenta
+* Nombre (Nombre de la cuenta)
+* Dia
+* Saldo Anterior
+* Debito
+* Credito
+* Saldo Final
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Libro de Terceros**. El Centro de Costo se cargará automáticamente.
+
+2.  **Configurar Filtros**
+    - Introduce el **Nit Tercero** que deseas consultar. Si quieres ver todos los terceros, déjalo en `0`.
+    - Selecciona el rango de meses (`Mes Desde` y `Mes Hasta`).
+    - Define el **Nivel de Balance** deseado.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. El sistema procesará la solicitud y cargará los resultados en la tabla.
+
+4.  **Analizar y Exportar**
+    Revisa la información en la tabla. Puedes usar las herramientas de la tabla para buscar, filtrar o **exportar** los datos a Excel, CSV o TXT.
+
+5.  **Imprimir**
+    Si requieres una copia física, haz clic en el botón **`Imprimir`** para obtener una vista optimizada del reporte.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Reporte de Todos los Terceros**: Para obtener un reporte consolidado de todos los terceros, es fundamental asegurarse de que el campo `Nit Tercero` contenga el valor `0` antes de presionar "Generar".
+-   **Búsqueda de Terceros**: Si no estás seguro del NIT, la forma más eficiente y segura de seleccionarlo es usando la tecla **F2** en el campo `Nit Tercero` para abrir la ventana de búsqueda.
+-   **Campos Obligatorios**: Los rangos de meses y el nivel de balance son necesarios para que la consulta se ejecute correctamente.
+</Aside>
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) no es una simple captura de pantalla. Invoca un script del lado del servidor (`reporte_libroTerceros.php`) que toma los datos de la tabla y los formatea en un documento optimizado.
+-   El sistema está configurado para que, al cargar la página, se busque automáticamente el nombre del tercero asociado al NIT "0" (generalmente "TODOS").
+
+![Vsta inicial del reporte Libro de terceros](@assets/guias_usuarios/contabilidad/reportes/LibroTerceros/reportes_libro_tercero_03.png)
