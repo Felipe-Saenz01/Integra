@@ -1,0 +1,151 @@
+---
+title: Administración de Comprobantes Contables
+description: Consulta, creación, edición y gestión de los comprobantes contables dentro del módulo de contabilidad.
+template: doc
+sidebar:
+    label: Comprobantes
+lastUpdated: 2025-10-31
+tableOfContents: false
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+    <Card title="Propósito" icon="list-format">
+        Este módulo es el centro operativo del registro de transacciones. Permite la administración 
+        completa de los **Comprobantes Contables**, que son los documentos fuente que respaldan cada 
+        movimiento en el sistema.
+    </Card>
+    <Card title="Usuarios" icon="approve-check">
+        Los usuarios pueden consultar cualquier comprobante, generar nuevos comprobantes, 
+        y realizar acciones clave como Adición, Modificación y Eliminación.
+    </Card>
+</CardGrid>
+
+
+
+## Acceso y navegación
+
+La ruta típica de acceso es:
+
+- **Contabilidad → Macroprocesos → Comprobantes**
+
+![Vista general administracion de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/administracion_comprobantes.png)
+
+---
+
+## Funcionalidades principales
+
+La interfaz se compone de un **Formulario encabezado** superior y una **Tabla de Resultados** 
+inferior. La gestión detallada se realiza mediante un **Modal de Comprobantes**.
+
+### 1. Formulario Encabezado
+
+El encabezado de la vista se muestra un formulario con la información del ultimo comprobante creado.
+Debajo de este están los botones de navegación, los cuales permiten moverse entre los registros.
+
+![Vista general encabezado y botones de navegación](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_encabezado.png)
+
+El encabezado muestra la siguiente informacion:
+
+-   **Clase**: Código numérico que define el tipo de comprobante (e.g., 1=Ingresos, 2=Pagos, 
+    4=Notas de Contabilidad) dependiendo de la parametrización del sistema.
+-   **Número**: Número secuencial del comprobante.
+-   **Fecha**: Fecha específica de la transacción.
+-   **Centro de Costo**: Nombre del centro de costo asociado al comprobante.
+-   **Cuenta**: Nombre de la cuenta asociada al comprobante.
+-   **Tercero**: El Tercero (proveedor, cliente, empleado) asociado al comprobante.
+-   **Concepto**: El concepto o descripcion registrado en el comprobante.
+
+
+### 2. Buscar Comprobante
+
+Para buscar comprobantes específicos, utiliza la ventanan de filtros busqueda invocada usando el 
+boton de busqueda.
+
+![Vista general boton de busqueda de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_ruta_busqueda.png)
+
+
+### 3. Tabla de Registros
+
+La tabla muestra los comprobantes existentes con columnas clave para su identificación:
+- **Cuenta:** Número de cuenta contable.
+- **Concepto:** Descripción del comprobante.
+- **Débitos:** valor debito del comprobante.
+- **Crédito:** valor crédito del comprobante.
+- **Nit/Cedula:** Cedula asociada al comprobante.
+- **Pie de tabla:** Resumen de la informacion de los comprobantes, incluyendo totales de débitos, créditos y la diferencia.
+
+
+## Flujo de uso paso a paso: Creación de un Comprobante
+
+<Aside type="caution" title="Nota Importante">
+    Es importante tener en cuenta que el sistema solo permite la creación manual de comprobantes de
+    tipo Notas contables (Clase `4`). Los comprobantes de Ingresos, Pagos y otros tipos se generan automáticamente
+    a través de los módulos específicos de gestión financiera del sistema.
+</Aside>
+
+<Steps>
+1.  Presiona el botón **Nuevo Comprobante**.
+    ![Vista general boton de busqueda de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_ruta_nuevo-comprobante.png)
+    
+2.  El sistema limpiará el formulario de encabezado y ubicará automáticamente información de  
+    `clase de comprobante` y `número del comprobante` a la espera de que ingrese la fecha
+
+    ![Vista inicio de creacion de un nuevo comprobante](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_nuevo_comprobante.png)
+
+    Ingrese la fecha y luego presione la tecla `TAP` o `TABULADOR` hasta que el sistema muestre 
+    una alerta de confirmación para crear el nuevo comprobante.
+
+    ![Vista alerta confirmación creacion comprobante](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_nuevo_comprobante_confirmacion.png)
+
+    Se creará el nuevo comprobante y se mostrará un registro por defecto en la tabla de movimientos.
+
+    ![Vista alerta confirmación creacion comprobante](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_nuevo_comprobante_registro.png)
+</Steps>
+
+## Flujo de uso paso a paso: Modificacion de Comprobantes
+<Steps>
+1.  Presione el boton de desbloquear para habilitar los botones de `Adicionar`, `Editar`, `Eliminar`. 
+    Esto también deshabilitará los botones debajo del encabezado.
+    ![Vista boton desbloquear registros](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_ruta_desbloquear_registros.png)
+    
+2.  Una vez desbloqueado, es posible seleccionar registros y presionar los botones de `Adicionar` y `Editar`.
+    ![Vista botones inferiores para modificar registros de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_modificar_adicionar.png)
+
+    Esto abrirá el formulario para adicionar o editar los registros del comprobante.
+    ![Vista botones inferiores para modificar registros de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_modal_modificar_adicionar.png)
+
+3.  Finalizadas las modificaciones necesarias, recuerda bloquear de nuevo los registros para evitar 
+    cambios accidentales y poder navegar nuevamente entre comprobantes.
+    
+    ![Vista botones inferiores para modificar registros de comprobantes](@assets/guias_usuarios/contabilidad/macroprocesos/comprobantes/comprobantes_bloquear.png)
+
+</Steps>
+
+
+
+## Errores comunes y recomendaciones
+
+<Aside type="danger" title="Restricciones de Periodo Contable">
+La funcionalidad de **Nuevo Comprobante** y **Desbloquear** puede inhabilitarse automáticamente por validaciones del sistema.
+</Aside>
+
+-   **Comprobante No Cuadrado:**
+    -   **Problema:** Al intentar guardar, el sistema indica que los débitos y créditos no coinciden.
+    -   **Recomendación:** Revise la tabla de movimientos y ajuste los valores hasta que el total de Débitos y Créditos sea exactamente igual.
+-   **Creación/Desbloqueo Inhabilitado:**
+    -   **Problema:** Los botones **Nuevo Comprobante** y **Desbloquear** aparecen inactivos (deshabilitados).
+    -   **Causa Funcional:** Esto ocurre si:
+        1.  El **Cierre Anual** (`CIERREANUAL`) está activo (el año contable está cerrado).
+        2.  El **Período Presentado** (`PERIODOPRESENTADO`) es mayor al mes actual (se ha cerrado el mes contable).
+    -   **Solución:** Contacte al administrador del sistema para verificar y, si es necesario, revertir el cierre del periodo contable.
+
+---
+
+## Notas técnicas (funcionales)
+
+* **Integración Contable:** La creación de un comprobante está totalmente integrada al **Catálogo General de Cuentas (PUC)**. Cada línea de detalle debe utilizar una cuenta vigente.
+* **Consecutivo Automático:** El sistema tiene una lógica para buscar el último comprobante registrado (`buscarUltimoComprobante`) y sugerir automáticamente el número siguiente, asegurando que el consecutivo sea correcto.

@@ -10,9 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.36.0",
+    "@astrojs/starlight": "^0.36.1",
     "@lorenzo_lewis/starlight-utils": "^0.3.2",
-    "astro": "^5.6.1",
+    "astro": "^5.15.3",
     "sharp": "^0.34.2",
     "starlight-showcases": "^0.3.0",
     "starlight-theme-nova": "^0.9.5"

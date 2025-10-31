@@ -33,7 +33,7 @@ Para el acceso a este reporte, debes seguir la siguiente Ruta:
 
 - **Contabilidad → Macroprocesos → Catálogo General de Cuentas**
 
-![Vista Catalogo General Cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_tabla.png)
+![Vista Catalogo General Cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_cuentas/catalogo_general_cuenta_tabla.png)
 :::note
 El acceso a esta funcionalidad requiere permisos de administrador, dado el impacto directo en
 la estructura financiera del sistema. Si no tienes los permisos necesarios, contacta al administrador del sistema de su entidad.
@@ -79,11 +79,11 @@ El flujo típico se inicia desde la tabla principal, seleccionando la cuenta pad
 
 <Steps>
 1.  **Localizar la Cuenta Padre:** En la Tabla de Resultados, utilice los filtros o la barra de búsqueda para encontrar la cuenta contable de la cual desea que dependa el nuevo registro.
-    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_buscar.png)
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_cuentas/catalogo_general_cuenta_buscar.png)
 2.  **Iniciar la Creación:** En la columna **Opciones** de la cuenta padre, presione el botón **Nuevo** `+`.
-    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_nueva_cuenta.png)
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_cuentas/catalogo_general_cuenta_nueva_cuenta.png)
 3.  **Apertura del Formulario:** El sistema despliega el **Modal de Gestión de Cuentas**. El campo `Código` aparecerá parcialmente precargado con el código de la cuenta padre (dependiendo de la lógica de la plantilla contable).
-    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_general_cuenta_modal.png)
+    ![Vista busqueda de cuentas](@assets/guias_usuarios/contabilidad/macroprocesos/catalogo_cuentas/catalogo_general_cuenta_modal.png)
 4.  **Ingresar el Código de la Nueva Cuenta:** Complete el campo **Código** con la extensión numérica de la subcuenta que desea crear. El sistema verifica que la longitud sea coherente con la `Plantilla` y que la cuenta superior sea válida.
 5.  **Completar Datos Generales:** Ingrese el **Nombre** de la nueva cuenta.
 6.  **Configurar Atributos Contables:** Seleccione la **Naturaleza** (Débito/Crédito) y el **Tipo Corriente** (Corriente/No Corriente).
@@ -112,5 +112,3 @@ El flujo típico se inicia desde la tabla principal, seleccionando la cuenta pad
 * **Validación de Nivel Superior:** Durante la creación, el sistema verifica que la cuenta padre (`lsCodigoSuperior`) exista y no sea de tipo auxiliar, lo cual es vital para mantener la **integridad jerárquica** de los registros contables.
 * **Gestión de Estados:** El estado (`ESTADO`) y las **Observaciones** se gestionan dinámicamente: la observación es obligatoria y se habilita solo cuando se marca una cuenta como **No Vigente**.
 
-{/* ![captura](./images/catalogo_cuentas_02.png)*/}
-{/* ![captura](./images/catalogo_cuentas_03.png)*/}
