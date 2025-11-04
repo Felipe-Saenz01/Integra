@@ -1,0 +1,94 @@
+
+---
+title: Libro Mayor
+description: Guía para generar el Libro Mayor, un reporte que agrupa saldos (anterior, movimiento, final) por cuenta para un mes específico.
+template: doc
+sidebar:
+  label: Libro Mayor
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Libro Mayor es un registro contable que agrupa y clasifica todas las transacciones de la empresa por cuenta específica. Muestra el saldo de cada cuenta (anterior, movimientos del mes y final), ofreciendo una visión detallada del estado financiero de la empresa para un período determinado.
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Mayor**
+</Aside>
+
+![Vsta inicial del reporte Libro Mayor](@assets/guias_usuarios/contabilidad/reportes/LibroMayor/reportes_libro_mayor_01.png)
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros para definir el período y el nivel de detalle, y una tabla de resultados con los saldos consolidados.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Datos de la Empresa" icon="building">
+        - **Centro de Costo**: Se asigna automáticamente según el centro de costo del usuario logueado.
+        - **Razón Social**: Se rellena automáticamente con el nombre del centro de costo.
+    </Card>
+    <Card title="Filtros del Reporte" icon="calendar">
+        - **Mes**: Campo **obligatorio** (1-12) para definir el mes específico que se desea consultar.
+        - **Nivel del Libro (1-3)**: Define el nivel de agrupación de las cuentas (ej. 1 para Clase, 3 para Subcuenta).
+    </Card>
+    <Card title="Personalización" icon="pencil">
+        - **Título del Informe**: Permite cambiar el título que aparecerá en el reporte impreso. El valor por defecto es "LIBRO MAYOR".
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con el mes y nivel seleccionados y carga los saldos de las cuentas en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Abre una vista de impresión formateada del reporte, lista para imprimir o guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas integradas para descargar los datos en **Excel, CSV y TXT**.
+
+La tabla de resultados tiene una estructura especial que desglosa los saldos de cada cuenta en tres momentos clave:
+
+-   **Cuenta y Nombre**: Identificación de la cuenta contable.
+-   **Saldos Anteriores**: Columnas de Débito y Crédito que muestran el saldo acumulado *antes* del mes seleccionado.
+-   **Movimientos del Mes**: Columnas de Débito y Crédito que totalizan las transacciones ocurridas *durante* el mes seleccionado.
+-   **Saldo Final**: Columnas de Débito y Crédito que muestran el saldo resultante al final del mes.
+
+![Vsta inicial del reporte Libro Mayor](@assets/guias_usuarios/contabilidad/reportes/LibroMayor/reportes_libro_mayor_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Libro Mayor**. Los datos del Centro de Costo y Razón Social se cargarán automáticamente.
+
+2.  **Configurar Filtros**
+    - Selecciona el **Mes** que deseas consultar (ej. `6` para Junio).
+    - Ajusta el **Nivel del Libro** (1, 2 o 3) según el detalle requerido.
+    - Modifica el **Título del Informe** si es necesario.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. La tabla se llenará con los datos contables, mostrando los saldos agrupados por cuenta.
+
+4.  **Analizar y Exportar**
+    Revisa los saldos por cuenta. La tabla mostrará el arrastre (Saldo Anterior), el movimiento del mes y el Saldo Final. Los totales se calcularán en el pie de página.
+
+5.  **Imprimir o Guardar**
+    Utiliza el botón **`Imprimir`** para un PDF formal o las opciones de la tabla para **exportar** a Excel, CSV o TXT.
+</Steps>
+
+![Vsta inicial del reporte Libro Mayor](@assets/guias_usuarios/contabilidad/reportes/LibroMayor/reportes_libro_mayor_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Campos Obligatorios">
+- Para generar el reporte, es indispensable que completes los campos `Mes` y `Nivel del Libro`. El formulario no permitirá generar la consulta si están vacíos.
+- El **Nivel del Libro** está limitado a un valor entre 1 y 3.
+</Aside>
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) invoca un script del lado del servidor (`reportelibroMayor_Balance.php`) que genera un documento formateado con el título especificado.
+-   Al presionar `Generar`, el sistema utiliza el valor del campo `Mes` para establecer tanto el mes inicial como el mes final de la consulta.
