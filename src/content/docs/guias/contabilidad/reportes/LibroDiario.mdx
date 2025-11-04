@@ -1,0 +1,83 @@
+---
+title: Libro Diario
+description: Guía para generar el Libro Diario, un registro cronológico de todas las transacciones (débitos y créditos) de la empresa en un período de tiempo.
+template: doc
+sidebar:
+  label: Libro Diario
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Libro Diario es un registro cronológico fundamental donde se anotan todas las transacciones económicas de la empresa (compras, ventas, pagos, cobros). Sigue el principio de la partida doble, registrando el débito y el crédito de cada operación. Su propósito es mantener un control detallado de la actividad financiera, servir de base para otros registros como el Libro Mayor y cumplir con obligaciones legales y fiscales.
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Libro Diario**
+</Aside>
+
+![Vsta inicial del reporte Libro Diario](@assets/guias_usuarios/contabilidad/reportes/LibroDiario/reportes_libro_diario_01.png)
+
+## Funcionalidades Principales
+
+La interfaz es directa, compuesta por un panel de filtros para definir el período y una tabla de resultados que totaliza los movimientos.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Centro de Costo" icon="building">
+        Este campo se rellena automáticamente con el centro de costo asociado al usuario que ha iniciado sesión. No es editable.
+    </Card>
+    <Card title="Rango de Fechas" icon="calendar">
+        **Fecha Desde** y **Fecha Hasta**: Campos **obligatorios** para definir el período de tiempo exacto del cual se desea extraer el libro diario.
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con el rango de fechas y carga los resultados en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Abre una vista de impresión formateada del reporte, lista para imprimir o guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas integradas para descargar los datos en formatos **Excel, CSV y TXT**.
+-   **Tabla de Resultados**: Muestra los asientos contables agrupados por cuenta. Las columnas son:
+    * `CUENTA`
+    * `NOMBRE` (Nombre de la cuenta)
+    * `DÉBITO`
+    * `CRÉDITO`
+-   **Pie de Tabla**: La tabla calcula y muestra automáticamente los **totales** para las columnas `DÉBITO` y `CRÉDITO`, permitiendo verificar que las sumas sean iguales.
+
+![Vsta inicial del reporte Libro Diario](@assets/guias_usuarios/contabilidad/reportes/LibroDiario/reportes_libro_diario_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Libro Diario**. El Centro de Costo se cargará automáticamente.
+
+2.  **Seleccionar Período**
+    Define el rango de fechas deseado utilizando los campos `Fecha Desde` y `Fecha Hasta`.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. El sistema procesará la solicitud y cargará los resultados en la tabla, mostrando los movimientos totales por cuenta.
+
+4.  **Verificar y Exportar**
+    Revisa la información. Verifica los totales de Débito y Crédito en el pie de la tabla para asegurar que cuadren.
+
+5.  **Imprimir o Guardar**
+    Utiliza el botón **`Imprimir`** para obtener una copia física/PDF o usa las opciones de la tabla para **exportar** a Excel, CSV o TXT.
+</Steps>
+![Vsta inicial del reporte Libro Diario](@assets/guias_usuarios/contabilidad/reportes/LibroDiario/reportes_libro_diario_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Campos Obligatorios">
+Para generar el reporte, es indispensable que completes los campos `Fecha Desde` y `Fecha Hasta`. El sistema no ejecutará la consulta si alguno de estos campos está vacío.
+</Aside>
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) no es una captura de pantalla. Invoca un script del lado del servidor (`reporte_libroDiario.php`) que toma los datos de la tabla y los formatea en un documento optimizado para impresión.
+
