@@ -1,0 +1,100 @@
+---
+title: Estado de Situación Financiera
+description: Guía para generar el Estado de Situación Financiera (Balance General), un informe jerárquico que muestra los saldos de Activo, Pasivo y Patrimonio a un mes de corte.
+template: doc
+sidebar:
+  label: Estado Situación Financiera
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El Estado de Situación Financiera (también conocido como Balance General) es un informe contable que muestra la posición financiera de la empresa (sus Activos, Pasivos y Patrimonio) en un momento específico.
+
+Este reporte presenta los saldos en una estructura jerárquica, mostrando el valor de cada cuenta en una columna específica que corresponde a su nivel contable (limitado de Nivel 1 a 4).
+
+![Vsta inicial del reporte Estado de Situación Financiera](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinanciera/reportes_EstadodeSituaciónFinanciera_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **ESTADO DE SITUACIÓN FINANCIERA**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros para definir el período y el nivel de detalle, y una tabla de resultados con una estructura de niveles.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Datos de la Empresa" icon="building">
+        - **Centro de Costo**: Se asigna automáticamente según el centro de costo del usuario logueado.
+        - **Razón Social**: Se rellena automáticamente con el nombre del centro de costo.
+    </Card>
+    <Card title="Filtros del Reporte" icon="calendar">
+        - **Mes**: Campo **obligatorio** (1-12) para definir el mes de corte para el cual se generará el balance.
+        - **Nivel del Libro (1-4)**: Campo **obligatorio** que define el nivel máximo de detalle (limitado a 4) de las cuentas a incluir.
+    </Card>
+    <Card title="Personalización" icon="pencil">
+        - **Título del Informe**: Permite cambiar el título que aparecerá en el reporte impreso. El valor por defecto es "ESTADO DE SITUACIÓN FINANCIERA".
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con el mes y nivel seleccionados y carga los saldos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Abre una vista de impresión formateada del reporte, lista para imprimir o guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas para descargar los datos en **Excel, CSV y TXT**.
+
+### Estructura de la Tabla de Resultados
+
+Esta tabla tiene un formato especial para mostrar la jerarquía del balance. El saldo final de una cuenta se mostrará únicamente en la columna que corresponde a su nivel contable (Nivel 1, 2, 3 o 4).
+
+-   **`Cuenta` y `Nombre`**: Identificación de la cuenta contable.
+-   **`Saldo Anterior` (Nivel 4)**: Muestra el saldo final de las cuentas que son de **Nivel 4**.
+-   **`Debito` (Nivel 3)**: Muestra el saldo final de las cuentas que son de **Nivel 3**.
+-   **`Credito` (Nivel 2)**: Muestra el saldo final de las cuentas que son de **Nivel 2**.
+-   **`Saldo` (Nivel 1)**: Muestra el saldo final de las cuentas que son de **Nivel 1** (Clase).
+
+<Aside type="note" title="¿Cómo leer la tabla?">
+El saldo de una cuenta (calculado como Saldo Anterior + Débito + Crédito del período) aparecerá **solo en una** de las cuatro columnas de saldo, aquella que coincida con el nivel jerárquico de la cuenta.
+</Aside>
+
+![Vsta inicial del reporte Estado de Situación Financiera](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinanciera/reportes_EstadodeSituaciónFinanciera_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Estado de Situación Financiera**. Los datos del Centro de Costo se cargarán automáticamente.
+
+2.  **Configurar Filtros**
+    - Selecciona el **Mes** de corte (ej. `12` para Diciembre).
+    - Ajusta el **Nivel del Libro** (entre 1 y 4).
+    - Modifica el **Título del Informe** si es necesario.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. La tabla se llenará con los datos, mostrando los saldos de las cuentas en sus columnas de nivel correspondientes.
+
+4.  **Analizar y Exportar**
+    Revisa la información. Observa cómo los saldos se distribuyen en las 4 columnas según su nivel jerárquico (Nivel 1, 2, 3 o 4).
+
+5.  **Imprimir o Guardar**
+    Utiliza el botón **`Imprimir`** para un PDF formal o las opciones de la tabla para **exportar** a Excel, CSV o TXT.
+</Steps>
+![Vsta inicial del reporte Estado de Situación Financiera](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinanciera/reportes_EstadodeSituaciónFinanciera_03.png)
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Campos Obligatorios">
+- Para generar el reporte, es indispensable que completes los campos `Mes` y `Nivel del Libro`.
+- El **Nivel del Libro** está estrictamente limitado a un valor entre 1 y 4.
+</Aside>
+
+## Notas Técnicas
+
+-   La funcionalidad de impresión (`Imprimir`) invoca un script del lado del servidor (`reporte_Estadosituacion_Financiera.php`) que genera un documento formateado con el título especificado.
+-   La lógica de visualización (`validarSaldo`) calcula el saldo final de la cuenta y lo muestra solo en la columna que coincide con el nivel de dicha cuenta (Nivel 1, 2, 3 o 4), a pesar de los nombres de las columnas en el HTML (`Saldo Anterior`, `Debito`, `Credito`).
