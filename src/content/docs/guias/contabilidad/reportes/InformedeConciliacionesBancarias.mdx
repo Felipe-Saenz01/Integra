@@ -1,0 +1,100 @@
+---
+title: Informe de Conciliaciones Bancarias
+description: Guía para generar un informe que compara saldos contables (libros) con saldos bancarios (extractos) para identificar y explicar diferencias.
+template: doc
+sidebar:
+  label: Informe Conciliaciones
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+Este informe es un documento que compara los registros contables de la empresa con los movimientos bancarios reflejados en un estado de cuenta del banco. Su objetivo es asegurar la precisión de la información financiera al identificar y explicar las diferencias entre los dos registros, como depósitos en tránsito o cargos bancarios no registrados.
+
+![Vsta inicial del reporte Informe de Conciliaciones Bancarias](@assets/guias_usuarios/contabilidad/reportes/InformedeConciliacionesBancarias/reportes_InformedeConciliacionesBancarias_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Informe Conciliaciones Bancarias**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se compone de un panel de filtros para seleccionar la cuenta y el período, y una tabla de resultados que resume el estado de las conciliaciones.
+
+![Vsta inicial del reporte Informe de Conciliaciones Bancarias](@assets/guias_usuarios/contabilidad/reportes/InformedeConciliacionesBancarias/reportes_InformedeConciliacionesBancarias_02.png)
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Mes" icon="calendar">
+        Permite seleccionar el mes específico (Enero, Diciembre) o "Todos" para consultar las conciliaciones.
+    </Card>
+    <Card title="Banco" icon="bank">
+        Un menú desplegable **obligatorio** para seleccionar la entidad bancaria (identificada por su NIT) que se desea consultar.
+    </Card>
+    <Card title="Código Contable" icon="document">
+        El número de la cuenta contable asociada al banco.
+        - Al ingresarlo, el campo "Nombre" se cargará automáticamente.
+        - Presiona **F2** para buscar la cuenta (requiere haber seleccionado un Banco primero).
+    </Card>
+</CardGrid>
+![Vsta inicial del reporte Informe de Conciliaciones Bancarias](@assets/guias_usuarios/contabilidad/reportes/InformedeConciliacionesBancarias/reportes_InformedeConciliacionesBancarias_03.png)
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`** (con título "Generar Tabla"): Ejecuta la consulta con los filtros seleccionados y carga los resultados en la tabla.
+-   **Opciones de Exportación**: La tabla principal permite descargar los datos en formatos **Excel, CSV y TXT**.
+
+### Tabla de Resultados
+
+La tabla muestra un resumen del estado de conciliación por cada cuenta bancaria que coincida con los filtros.
+
+-   **Columnas de Datos**:
+    * `razon social` (Nombre del banco)
+    * `Nit Banco`
+    * `Año` y `Mes`
+    * `Cuenta Bancaria` y `NOMBRE` (de la cuenta)
+    * `Saldo Final Bancos` (Saldo en los libros de la empresa)
+    * `Saldo Final Extracto` (Saldo reportado por el banco)
+    * `Documentos X Conciliar`
+    * `Diferencia X Conciliar` (Diferencia neta entre libros y extracto)
+
+-   **Acciones por Fila**: A diferencia de otros reportes, las acciones de impresión son **por fila** y aparecen en la primera columna:
+    * <i class="fa fa-print"></i> **(Imprimir)**: Genera el reporte de conciliación estándar para esa cuenta y mes.
+    * <i class="fa fa-file-text-o"></i> **(Imprimir Conciliación)**: Genera una versión más detallada del reporte de conciliación.
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Informe Conciliaciones Bancarias**.
+
+2.  **Configurar Filtros**
+    - Selecciona el **Mes** a consultar.
+    - Selecciona el **Banco** del menú desplegable. **Este paso es obligatorio**.
+    - Escribe el **Código Contable** o presiona **F2** para buscarlo (si dejas este campo vacío, probablemente buscará todas las cuentas del banco).
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con un resumen de las conciliaciones que coincidan con tus filtros.
+
+4.  **Analizar y Exportar/Imprimir**
+    - Revisa la tabla para ver las diferencias por conciliar.
+    - Si deseas imprimir el reporte detallado de una cuenta específica, haz clic en los iconos de impresora <i class="fa fa-print"></i> o <i class="fa fa-file-text-o"></i> en la fila correspondiente.
+    - Si deseas exportar la tabla resumen, usa las opciones de exportación de la barra de herramientas.
+</Steps>
+![Vsta inicial del reporte Informe de Conciliaciones Bancarias](@assets/guias_usuarios/contabilidad/reportes/InformedeConciliacionesBancarias/reportes_InformedeConciliacionesBancarias_04.png)
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Dependencia de Filtros">
+-   **"Falta el Banco"**: Para usar la búsqueda de cuentas con la tecla **F2**, **primero debes seleccionar un Banco** en el menú desplegable. De lo contrario, el sistema mostrará un mensaje de error.
+-   **"Cuenta no válida"**: Si ingresas un código contable que no está asociado con el banco seleccionado, el sistema mostrará el error "El codigo contable no se encuentra en ninguna cuenta del banco seleccionado" y no te permitirá continuar.
+</Aside>
+
+## Notas Técnicas
+
+-   La tabla de resultados añade dinámicamente dos botones de impresión por cada fila (`botonImprimir`). Cada botón invoca un script de reporte detallado (`reporte_conciliaciones.php`) pasando los parámetros específicos de la fila seleccionada (Año, Mes, Cuenta, etc.).
+-   La consulta principal se ejecuta con `Tran=19`, enviando los parámetros de Mes, Banco y Cuenta.
