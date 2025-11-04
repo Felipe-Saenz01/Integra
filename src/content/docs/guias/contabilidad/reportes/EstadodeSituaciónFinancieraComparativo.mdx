@@ -1,0 +1,89 @@
+---
+title: Estado de Situación Financiera Comparativo
+description: Guía para generar un Estado de Situación Financiera (Balance General) que compara los saldos de un trimestre actual contra el período anterior.
+template: doc
+sidebar:
+  label: E.S.F. Comparativo
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+Este informe contable presenta las cifras del balance general (Activos, Pasivos y Patrimonio) de la empresa en dos períodos consecutivos, lado a lado. Su objetivo es permitir un análisis de la evolución financiera, comparando los saldos de un trimestre seleccionado contra los del período anterior (generalmente el cierre del año anterior).
+
+![Vsta inicial del reporte Estado de Situación Financiera Comparativo](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinancieraComparativo/reportes_EstadodeSituaciónFinancieraComparativo_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Libros Contables** → **Estado de Situacion Financiera Comparativo**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz de este reporte es directa y se centra en un único filtro de período.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Elija Trimestre" icon="calendar">
+        Menú desplegable **obligatorio** para seleccionar el período que se desea consultar. Las opciones disponibles son:
+        * Primer Trimestre
+        * Segundo Trimestre
+        * Tercer Trimestre
+        * Cuarto Trimestre
+    </Card>
+</CardGrid>
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Buscar`** (ID: `Generar`): Ejecuta la consulta y genera el reporte comparativo para el trimestre seleccionado.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara una versión del reporte optimizada para impresión o para guardar como PDF.
+-   **Opciones de Exportación**: La tabla de resultados incluye herramientas integradas para descargar los datos en **Excel, CSV y TXT**.
+
+### Tabla de Resultados
+
+La tabla que se genera es dinámica y sus columnas de saldos cambiarán dependiendo del trimestre seleccionado. La estructura general es:
+
+-   **`CUENTA`**: Código de la cuenta contable.
+-   **`NOMBRE`**: Nombre de la cuenta contable.
+-   **`SALDO [PERÍODO ACTUAL]`**: Muestra el saldo al cierre del trimestre seleccionado (p.ej., `SALDO 31 MAR 2025` si se elige el Primer Trimestre).
+-   **`SALDO [PERÍODO ANTERIOR]`**: Muestra el saldo al cierre del período de comparación (p.ej., `SALDO 31 DIC 2024`).
+-   **`VARIACION ABSOLUTA`**: La diferencia monetaria entre los dos saldos.
+
+![Vsta inicial del reporte Estado de Situación Financiera Comparativo](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinancieraComparativo/reportes_EstadodeSituaciónFinancieraComparativo_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Estado de Situacion Financiera Comparativo**.
+
+2.  **Seleccionar Período**
+    Selecciona el **Trimestre** que deseas analizar en el menú desplegable.
+
+3.  **Generar el Reporte**
+    Haz clic en el botón **`Buscar`** (cuyo ID es `Generar`).
+
+4.  **Analizar y Exportar**
+    El sistema procesará la solicitud y cargará la tabla con los saldos de los dos períodos y sus variaciones. Revisa los datos.
+
+5.  **Imprimir o Guardar**
+    Utiliza el botón **`Imprimir`** para obtener un PDF formal o las opciones de la tabla para **exportar** a Excel, CSV o TXT.
+</Steps>
+
+![Vsta inicial del reporte Estado de Situación Financiera Comparativo](@assets/guias_usuarios/contabilidad/reportes/EstadodeSituaciónFinancieraComparativo/reportes_EstadodeSituaciónFinancieraComparativo_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Campo Obligatorio">
+Es indispensable seleccionar un **Trimestre** antes de presionar el botón `Buscar`. El reporte no se generará sin esta selección.
+</Aside>
+
+## Notas Técnicas
+
+-   La estructura de las columnas de la tabla (específicamente las fechas de los saldos) se genera dinámicamente. El script (`CargarNomina`) consulta la base de datos (`Tran=17`) y construye las columnas de la tabla basándose en la respuesta del servidor.
+-   La funcionalidad de impresión (`Imprimir`) invoca un script de reporte específico del lado del servidor (`reporte_Comparativo_Situacion_Financiera.php`) para formatear los datos.
