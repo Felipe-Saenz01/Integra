@@ -1,13 +1,59 @@
 ---
-title: Validación Catálogo de Cuentas
-description: Guia de uso de auditoria para la validación del catálogo de cuentas.
+title: Validación del Catálogo de Cuentas (PUC)
+description: Herramienta de diagnóstico que ejecuta validaciones críticas sobre la estructura jerárquica y codificación del Plan Único de Cuentas (PUC) para asegurar la integridad contable.
 template: doc
 sidebar:
     label: Validación Catálogo de Cuentas
-
-lastUpdated: 2025-10-17
+lastUpdated: 2025-11-04
 tableOfContents: false
 ---
 
-hola
-{/*  */}
+import { Steps } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+    <Card title="Objetivo" icon="approve-check-circle">
+        Este módulo de auditoría es crucial para el cierre de periodos contables, ya que 
+        realiza una revisión de la estructura completa del **Plan Único de Cuentas (PUC)**.
+    </Card>
+    <Card title="Resultado" icon="document">
+        El resultado de este proceso es un informe detallado que identifica errores o inconsistencias 
+        en la codificación y la jerarquía de las cuentas, las cuales deben ser corregidas antes de 
+        realizar cualquier cierre definitivo.
+    </Card>
+</CardGrid>
+
+---
+
+## Acceso y navegación
+
+Para el acceso a este reporte, debes seguir la siguiente Ruta:
+
+- **Contabilidad → Auditoria → Validación Catálogo de Cuentas**
+
+![Imagen vista general de la funcionalidad de la auditoría validacion PUC](@assets/guias_usuarios/contabilidad/auditoria/validacion_puc/validacion_puc_vista.png)
+
+---
+
+## Funcionalidades principales
+
+La vista es simple y orientada a la acción. Su único propósito es iniciar el procedimiento de auditoría y presentar la lista de criterios que serán evaluados.
+
+### 1. Criterios de Validación
+
+Antes de ejecutar, la interfaz enlista los cuatro aspectos fundamentales que el sistema audita en el PUC. Estos son los errores que el usuario debe buscar y corregir si aparecen en el reporte:
+
+1.  **Códigos Contables Repetidos:** Verifica que no existan dos cuentas diferentes con el mismo código.
+2.  **Longitud de Código vs. Plantilla:** Revisa que la longitud numérica del código de cada cuenta sea coherente con la estructura definida en la **Plantilla Contable** (parámetros de configuración).
+3.  **Existencia de Nivel Superior:** Asegura que toda cuenta que no sea de `Clase` o `Grupo` tenga un código padre registrado en el sistema.
+4.  **Nivel Superior no Auxiliar:** Valida que una cuenta de nivel superior (padre) no esté marcada como **Auxiliar**, ya que una cuenta Auxiliar no debe tener subcuentas dependientes.
+
+### 2. Botón de Validación
+
+-   **Botón “Validar”**: Este es el único elemento interactivo que inicia la auditoría.
+    -   Al presionarlo, el sistema realizará las validaciones e inmediatamente dará los resultados 
+        de esta para su posterior visualización.
+
+![Imagen vista del boton de validar](@assets/guias_usuarios/contabilidad/auditoria/validacion_puc/validacion_puc_validar.png)
+

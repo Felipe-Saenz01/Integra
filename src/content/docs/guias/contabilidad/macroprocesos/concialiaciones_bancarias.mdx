@@ -1,0 +1,186 @@
+---
+title: Conciliaciones Bancarias
+description: Proceso de auditoría mensual para comparar y conciliar los movimientos registrados en el software (Libro Contable) con los reportados en el extracto emitido por el banco.
+template: doc
+sidebar:
+    label: Conciliaciones Bancarias
+lastUpdated: 2025-11-04
+tableOfContents: false
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+import { ShowcaseYouTube } from 'starlight-showcases'
+
+
+<Card title="Objetivo Funcional" icon="open-book">
+    El módulo de **Conciliaciones Bancarias** es una herramienta esencial para el control 
+    financiero, permitiendo confrontar el saldo y los movimientos de una cuenta bancaria 
+    específica en un período determinado (mes) contra el registro contable interno del sistema. 
+    El objetivo es identificar y justificar cualquier diferencia entre el **Libro Contable** y 
+    el **Extracto Bancario**.
+</Card>
+
+<ShowcaseYouTube 
+  entries={[
+    {
+      href: 'https://youtu.be/tDaYKtuJ2UQ?si=JxiPkzVgxXzfbGlB',
+      title: 'Grabación Capacitación Conciliaciones Bancarias 01/10/2025',
+    },
+  ]}
+/>
+
+## Acceso y navegación
+
+Para el acceso a este reporte, debes seguir la siguiente Ruta.
+
+**Contabilidad → Macroprocesos → Conciliaciones Bancarias**
+
+![Vista inicial Conciliaciones bancarias](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_conciliaciones_bancarias.png)
+
+---
+
+## Funcionalidades principales
+
+La interfaz está dividida en dos áreas clave: **Libro Contable** y **Datos del Extracto Bancario**.
+
+### 1. Libro Contable - Contexto de la Conciliación
+
+Esta sección define el contexto de la conciliación, esta dividida en 3 partes:
+- Cargue del libro contable
+- Informacion de saldos
+- Movimientos registrados en el sistema
+
+<Steps>
+
+1. **Cargue del Libro Contable** 
+    
+    Primero se debe buscar el libro contable interno del sistema a conciliar para el mes y 
+    cuenta bancaria deseados utilizando el filtro.
+
+    - **Año:** El campo está deshabilitado y se asigna automáticamente al año actual del sistema. 
+    - **Mes:** Se selecciona el mes deseado en la lista desplegable. 
+
+    ![Vista filtro/formulario de libro bancario](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/filtro_conciliaciones_bancarias.png)
+    - **Código Contable:** Al ingresar el número, el sistema verifica su existencia. Al presionar **F2**, 
+    se despliega un **Modal de Consulta** para buscar la cuenta, y su nombre (`NOMBRE_CUENTA`) se carga 
+    automáticamente al lado del campo, confirmando que la cuenta existe y está vigente. 
+
+    ![Vista seleccion de cuenta bancaria](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/filtro_conciliaciones_bancarias_seleccion.png)
+2. **Visualizar Informacion** 
+
+    Al presionar el boton `Cargar Libro`, el sistema busca los saldos iniciales, débitos, créditos y 
+    saldos finales del Libro Contable y los movimientos sin conciliar. 
+    
+    ![Vista seleccion de cuenta bancaria](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/filtro_conciliaciones_bancarias_aplicado.png)
+
+
+    <Aside type="note" title="¿Que tipos de movimientos estan por conciliar?">
+    El sistema, según el **origen del movimiento**, puede realizar la **conciliación de manera automática o manual**.  
+
+    Por ejemplo, los movimientos generados a través de **pasarelas de pago** como **PSE** o por **descarga de archivos planos** de los bancos se **conciliarán automáticamente**, ya que el sistema puede confirmar que dichos movimientos provienen directamente del banco.  
+
+    En cambio, los movimientos **creados mediante recibos de caja**, **descargas manuales** u otros procesos similares **no se concilian automáticamente**, ya que no existe certeza de que estos correspondan a operaciones reales del banco.  
+
+    Estos movimientos aparecerán en la **grilla de conciliación** para que el usuario los revise y concilie manualmente.
+    </Aside>
+</Steps>
+
+
+### 2. Datos del Extracto Bancario
+
+Esta sección requiere que el usuario ingrese la información financiera tal como aparece en 
+el documento oficial emitido por la entidad bancaria en el mes consultado, este tiene dos apartados:
+
+-  **Información del Extracto Bancario:** Aquí se ingresan los saldos reportados por el banco.
+-  **Movimientos Manuales:** Permite agregar movimientos que no fueron generados por el sistema.
+
+<Steps>
+1. **Ingresar Información del Extracto Bancario:**
+
+    El usuario debe ingresar manualmente los valores de **Saldo Inicial**, **Débitos**, 
+    **Créditos** y **Saldo Final** tal como aparecen en el extracto bancario.
+
+    ![Vista informacion del extracto bancario](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_conciliaciones_extracto_bancario.png)
+
+2. **Movimientos Manuales:**
+
+    <Aside type="note" title="¿Cuándo usar Movimientos Manuales?">
+    En algunos casos pueden existir transacciones que no fueron registradas directamente por el sistema, 
+    ya que no se utilizó una pasarela de pago como PSE, no se generó la factura correspondiente o se 
+    realizó una transferencia directa a la cuenta bancaria.
+    </Aside>
+    <Aside type='caution' title='Politicas de Conciliacion'>
+    En estas situaciones, INTEGRA no tiene la capacidad de identificar automáticamente dichos movimientos
+    a lo que se hace indispensable que la entidad tenga una política clara de conciliación bancaria para manejar
+    estos casos y evitar discrepancias en los saldos.
+    </Aside>
+
+    **INTEGRA cuenta con dos alternativas:**
+
+    1. **Registrar un movimiento Bancario:** puedes usar el apartado de [Comprobantes](/Integra/guias/contabilidad/macroprocesos/comprobantes/#flujo-de-uso-paso-a-paso-creación-de-un-comprobante)
+        en el cual registrar un comprobante de clase 4 que identifique el ingreso del capital
+        ya bien sea por una cuenta por identificar o la opcion mas apropiada segun el caso.
+
+    2. **Agregar Movimiento al Extracto:**
+        Presiona el botón **`+`** para desplegar un formulario para agregar movimientos al extracto.
+
+        ![Vista ubicacion boton agregar movimiento de extracto](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_conciliaciones_agregar_movimiento.png)
+        
+        Ingresa la **Dia**, el valor en **Débito**, **Crédito** y **Concepto** según corresponda.
+    
+        ![Vista formulario modal agregar movimiento de extracto](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_conciliaciones_agregar_movimiento_modal.png)
+
+
+
+    <Aside type='caution' title='Diferencias y Recomendaciones'>
+    La principal diferencia entre ambos procesos radica en su impacto contable.
+    Al registrar un comprobante, se genera un movimiento contable que afecta los saldos del libro. 
+    En cambio, al agregar un movimiento al extracto, este solo cumple una función de apoyo para la 
+    conciliación, sin alterar los saldos contables.
+
+    **INTEGRA recomienda utilizar comprobantes contables de clase 4, ya que en la mayoría de los casos 
+    estos movimientos terminan siendo incorporados en la contabilidad. Por lo tanto, salvo que la 
+    entidad cuente con una política interna que lo restrinja, se aconseja registrar los movimientos 
+    mediante comprobantes contables.**
+    </Aside>
+        
+</Steps>
+
+---
+
+## Flujo de uso paso a paso conciliacion
+
+Una vez que se ha cargado el libro contable y se han ingresado los datos del extracto bancario,
+el proceso de conciliación se realiza siguiendo estos pasos:
+
+<Steps>
+1.  **Identificar cuenta a conciliar**
+    Cuando se tenga claro el movimiento a conciliar y se revise en el extracto bancario,
+    puede dar clic al campo conciliado del registro, esto pasará automaticamente ese movimiento
+    a conciliado, el cual puede verificar con el boton `Mostrar Conciliados`.
+
+    ![Vista campo conciliar movimiento](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_concilar_movimiento.png)
+
+
+2.  **Verificar conciliacion:**
+    
+    Una vez haya presionado el boton `Mostrar Conciliados`, puede verificar los movimientos
+    que ha conciliado y en caso de haber cometido un error, puede desmarcar el movimiento
+    para que vuelva a estar disponible en la grilla anterior.
+
+    ![Vista campo conciliar movimiento](@assets/guias_usuarios/contabilidad/macroprocesos/conciliaciones/vista_verificar_conciliacion_movimiento.png)
+
+</Steps>
+
+---
+
+## Errores comunes y recomendaciones
+
+-   **Cuenta Bancaria No Encontrada:**
+    -   **Problema:** Al ingresar la cuenta o al usar F2, el sistema no la reconoce.
+    -   **Solución:** Verifique en el **Catálogo General de Cuentas** que la cuenta exista, sea de naturaleza bancaria y esté marcada como **Vigente**.
+-   **Recarga de Datos:**
+    -   **Recomendación:** Si realiza alguna corrección o cambio en un comprobante después de cargar el libro, asegúrese de presionar nuevamente **Cargar Libro** para refrescar los **Datos del Libro Contable**.
+

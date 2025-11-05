@@ -75,9 +75,9 @@ export default defineConfig({
 						{
 							label: 'Contabilidad',
 							items:[
-								{ label: 'Macroprocesos', autogenerate: { directory: 'guias/contabilidad/macroprocesos' } },
-								{ label: 'Auditoria', autogenerate: { directory: 'guias/contabilidad/auditoria' } },
-								{ label: 'Reportes', autogenerate: { directory: 'guias/contabilidad/reportes' } },
+								{ label: 'Macroprocesos',collapsed: true, autogenerate: { directory: 'guias/contabilidad/macroprocesos' } },
+								{ label: 'Auditoria',collapsed: true, autogenerate: { directory: 'guias/contabilidad/auditoria' } },
+								{ label: 'Reportes',collapsed: true, autogenerate: { directory: 'guias/contabilidad/reportes' } },
 							]
 						},
 					],
