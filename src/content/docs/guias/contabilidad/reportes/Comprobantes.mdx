@@ -1,0 +1,116 @@
+---
+title: Comprobantes
+description: Guía para consultar, detallar y exportar los comprobantes contables registrados en el sistema por vigencia.
+template: doc
+sidebar:
+  label: Comprobantes
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El módulo de **Comprobantes** es una herramienta de consulta y auditoría. Permite a los usuarios revisar todos los documentos contables (comprobantes) registrados en el sistema para un período o vigencia específica.
+
+Esta vista facilita el acceso al detalle de cada transacción, mostrando los encabezados de los comprobantes y, al seleccionar uno, desplegando todos sus movimientos contables (débito y crédito) asociados.
+
+![Vsta inicial del reporte Comprobantes](@assets/guias_usuarios/contabilidad/reportes/Comprobantes/reportes_Comprobantes_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Histórico** → **Comprobantes**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se compone de un panel de filtros sencillo y dos tablas interconectadas: una tabla maestra para los encabezados de los comprobantes y una tabla de detalle para los movimientos.
+
+### Panel de Filtros y Acciones
+
+<CardGrid>
+    <Card title="Filtro de Vigencia" icon="calendar">
+        - **Vigencia**: Este es el filtro principal. Selecciona el año o período fiscal que deseas consultar.
+    </Card>
+    <Card title="Acciones Principales" icon="bolt">
+        - **Botón `Cargar Datos`**: Ejecuta la consulta con la vigencia seleccionada y carga los resultados en la primera tabla.
+        - **Botón `Imprimir`** <i class="fa fa-print"></i>: Genera un reporte formateado del comprobante que esté seleccionado en la tabla de detalle.
+    </Card>
+</CardGrid>
+
+---
+
+### Tablas de Resultados
+
+Esta vista utiliza dos tablas para mostrar la información:
+
+#### 1. Tabla de Comprobantes (Maestro)
+
+Esta es la tabla superior (`tablaHistoricoComprobantes`). Se alimenta después de presionar **`Cargar Datos`**.
+
+* Muestra un listado de todos los comprobantes encontrados en la vigencia.
+* **Columnas**: `CLASE COMPROBANTE`, `NÚMERO COMPROBANTE`, `AÑO`, `MES`, `DIA`, `NIT` y `CONCEPTO`.
+* **Interacción**: Debes **seleccionar un registro** (haciendo clic en el radio botón <i class="fa fa-check-circle"></i> de la izquierda) para poder ver su detalle en la tabla inferior.
+* **Herramientas**: Incluye un buscador (`data-search="true"`) y opciones de exportación (`data-show-export="true"`).
+
+#### 2. Detalle del Comprobante (Detalle)
+
+Esta es la tabla inferior (`tabla_comprobantes`). Permanece vacía hasta que selecciones un comprobante de la tabla maestra.
+
+* Muestra el desglose contable (movimientos) del comprobante seleccionado.
+* **Columnas**: `Cuenta`, `Concepto`, `Débitos`, `Créditos` y `Nit/Cédula`.
+
+![Vsta inicial del reporte Comprobantes](@assets/guias_usuarios/contabilidad/reportes/Comprobantes/reportes_Comprobantes_02.png)
+
+#### 3. Cuadro de Totales y Verificación
+
+Debajo de la tabla de detalle, encontrarás un resumen que te permite validar el comprobante seleccionado:
+
+* **Total Débito**: Suma de la columna `Débitos`.
+* **Total Crédito**: Suma de la columna `Créditos`.
+* **Diferencia**: Resta entre el Total Débito y el Total Crédito.
+
+> Este cuadro es crucial para la auditoría, ya que un comprobante contablemente correcto debe tener una **Diferencia** de **$0.00**.
+
+![Vsta inicial del reporte Comprobantes](@assets/guias_usuarios/contabilidad/reportes/Comprobantes/reportes_Comprobantes_03.png)
+
+---
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista **Histórico y Comprobantes**.
+
+2.  **Seleccionar Vigencia**
+    Escoge el año fiscal que deseas consultar en el campo **Vigencia**.
+
+3.  **Cargar Comprobantes**
+    Haz clic en el botón **`Cargar Datos`**. La tabla superior se llenará con los encabezados de los comprobantes de esa vigencia.
+
+4.  **Consultar un Detalle**
+    Busca el comprobante que deseas revisar en la tabla superior y **selecciónalo** haciendo clic en el círculo de la primera columna.
+    
+    Inmediatamente, la tabla inferior se poblará con los movimientos de ese comprobante y se calcularán los **Totales** y la **Diferencia**.
+
+5.  **Exportar o Imprimir**
+    * **Para exportar el listado maestro**: Utiliza los botones de **Excel, CSV o TXT** disponibles en la barra de herramientas de la *tabla superior*.
+    * **Para imprimir un comprobante**: Asegúrate de tener un comprobante seleccionado (paso 4) y haz clic en el botón **`Imprimir`** <i class="fa fa-print"></i>.
+</Steps>
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos Importantes">
+* **Error al Imprimir**: Si intentas presionar el botón `Imprimir` sin haber seleccionado un comprobante de la tabla maestra, el sistema mostrará un mensaje de advertencia (`"Debe seleccionar un comprobante"`).
+* **Tablas Vacías**: Si al cambiar la **Vigencia** las tablas no se actualizan, recuerda presionar **`Cargar Datos`** nuevamente. El código muestra que al cambiar la vigencia, las tablas se limpian automáticamente.
+* **Comprobantes Descuadrados**: Si la **Diferencia** en el cuadro de totales no es `$0.00`, significa que el comprobante seleccionado tiene un desbalance contable. Esto no es un error del sistema, sino un indicador de un registro contable incorrecto que debe ser revisado.
+</Aside>
+
+## Notas Técnicas
+
+* **Interdependencia de Tablas**: La funcionalidad principal de esta vista es la interconexión. La tabla de detalle (`tabla_comprobantes`) depende al 100% de la selección (`check.bs.table`) en la tabla maestra (`tablaHistoricoComprobantes`).
+* **Exportación vs. Impresión**: Es vital entender que son dos funciones distintas:
+    * La **Exportación (Excel, CSV, TXT)** se aplica a la *tabla maestra* y descarga el listado completo de comprobantes cargados.
+    * La **Impresión** se aplica al *detalle seleccionado* y genera un reporte formateado (`reporte_administracion_comprobantes.php`) con los datos de la *tabla inferior*.
