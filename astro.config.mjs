@@ -26,6 +26,10 @@ export default defineConfig({
 				replacesTitle: false,
 			},
 			favicon: '/favicon.ico',
+			components: {
+				// Sobrescribir Head para incluir scripts de filtrado
+				Head: './src/components/Head.astro',
+			},
 			plugins: [
 				starlightThemeNova(),
 				starlightUtils({
@@ -62,27 +66,21 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "Guias",
-					items: [
-						{
-							label: 'Nomina',
-							autogenerate: { directory: 'guias/Nomina' },
-						},
-						{
-							label: 'Reportes Entidades',
-							autogenerate: { directory: 'guias/reportes_entidades' },
-						},
-						{
-							label: 'Contabilidad',
-							items:[
-								{ label: 'Macroprocesos',collapsed: true, autogenerate: { directory: 'guias/contabilidad/macroprocesos' } },
-								{ label: 'Auditoria',collapsed: true, autogenerate: { directory: 'guias/contabilidad/auditoria' } },
-								{ label: 'Reportes',collapsed: true, autogenerate: { directory: 'guias/contabilidad/reportes' } },
-							]
-						},
-					],
+					label: 'Nomina',
+					autogenerate: { directory: 'guias/Nomina' },
 				},
-
+				{
+					label: 'Reportes Entidades',
+					autogenerate: { directory: 'guias/reportes_entidades' },
+				},
+				{
+					label: 'Contabilidad',
+					items:[
+						{ label: 'Macroprocesos',collapsed: false, autogenerate: { directory: 'guias/contabilidad/macroprocesos' } },
+						{ label: 'Auditoria',collapsed: false, autogenerate: { directory: 'guias/contabilidad/auditoria' } },
+						{ label: 'Reportes',collapsed: false, autogenerate: { directory: 'guias/contabilidad/reportes' } },
+					]
+				},
 			],
 		}),
 	],

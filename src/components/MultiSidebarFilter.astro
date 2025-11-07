@@ -1,0 +1,114 @@
+---
+// Componente para filtrar el dropdown del multiSidebar
+---
+
+<script>
+  function filterMultiSidebarDropdown() {
+    const currentPath = window.location.pathname;
+    const isInDocumentacion = currentPath.includes('/documentacion/');
+    const isInGuias = currentPath.includes('/guias/');
+    
+    // Buscar el dropdown del multiSidebar (puede ser select, ul, o div con opciones)
+    const dropdownSelectors = [
+      '[data-multi-sidebar-switcher]',
+      '.multi-sidebar-switcher',
+      'select[aria-label*="sidebar"]',
+      'select[aria-label*="Sidebar"]',
+      'select',
+      '[role="listbox"]',
+      '.sidebar-switcher'
+    ];
+    
+    let dropdown = null;
+    for (const selector of dropdownSelectors) {
+      dropdown = document.querySelector(selector);
+      if (dropdown) {
+        console.log('✅ Dropdown encontrado:', selector);
+        break;
+      }
+    }
+    
+    if (!dropdown) {
+      console.warn('⚠️ No se encontró el dropdown del multiSidebar');
+      return;
+    }
+    
+    // Buscar las opciones dentro del dropdown
+    const options = dropdown.querySelectorAll('option, [role="option"], li, button');
+    
+    options.forEach((option, index) => {
+      const text = option.textContent?.toLowerCase() || '';
+      
+      // Si estamos en /guias/, ocultar la opción de Documentación
+      if (isInGuias && text.includes('documentación')) {
+        (option as HTMLElement).style.display = 'none';
+        (option as HTMLElement).setAttribute('hidden', 'true');
+        if (option instanceof HTMLOptionElement) {
+          option.disabled = true;
+        }
+      }
+      
+      // Si estamos en /documentacion/, ocultar las opciones de guías
+      if (isInDocumentacion && (
+        text.includes('nomina') || 
+        text.includes('nómina') || 
+        text.includes('reportes') || 
+        text.includes('contabilidad')
+      )) {
+        (option as HTMLElement).style.display = 'none';
+        (option as HTMLElement).setAttribute('hidden', 'true');
+        if (option instanceof HTMLOptionElement) {
+          option.disabled = true;
+        }
+        console.log(`  ❌ Ocultando: ${text.substring(0, 30)}`);
+      }
+      
+      // En página principal o index, mostrar todo
+      if (!isInDocumentacion && !isInGuias) {
+        (option as HTMLElement).style.display = '';
+        (option as HTMLElement).removeAttribute('hidden');
+        if (option instanceof HTMLOptionElement) {
+          option.disabled = false;
+        }
+      }
+    });
+  }
+  
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', filterMultiSidebarDropdown);
+  } else {
+    filterMultiSidebarDropdown();
+  }
+  
+  // También ejecutar después de navegaciones (View Transitions de Astro)
+  document.addEventListener('astro:page-load', filterMultiSidebarDropdown);
+  
+  // Ejecutar con delays para asegurar que el dropdown se haya renderizado
+  setTimeout(filterMultiSidebarDropdown, 100);
+  setTimeout(filterMultiSidebarDropdown, 500);
+  
+  // Observer para cuando el dropdown se renderice dinámicamente
+  const observer = new MutationObserver(() => {
+    filterMultiSidebarDropdown();
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+</script>
+
+<style is:global>
+  /* CSS adicional para forzar ocultación si JavaScript no funciona inmediatamente */
+  body[data-pathname*="/guias/"] [data-multi-sidebar-switcher] option:first-child,
+  body[data-pathname*="/guias/"] [role="option"]:first-child {
+    display: none !important;
+  }
+  
+  /* Ocultar opciones de guías cuando estamos en documentación */
+  body[data-pathname*="/documentacion/"] [data-multi-sidebar-switcher] option:not(:first-child),
+  body[data-pathname*="/documentacion/"] [role="option"]:not(:first-child) {
+    display: none !important;
+  }
+</style>

@@ -1,0 +1,117 @@
+---
+// Componente Search personalizado para filtrar resultados por sección
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+import Default from '@astrojs/starlight/components/Search.astro';
+
+// Obtener la URL actual
+const currentPath = Astro.url.pathname;
+const isInDocumentacion = currentPath.includes('/documentacion/');
+const isInGuias = currentPath.includes('/guias/');
+
+// Determinar el filtro de búsqueda según la sección
+let searchFilter = '';
+if (isInGuias) {
+  searchFilter = 'guias';
+} else if (isInDocumentacion) {
+  searchFilter = 'documentacion';
+}
+---
+
+<!-- Pasar el filtro como data attribute para usarlo en el script de búsqueda -->
+<div data-search-filter={searchFilter}>
+  <Default {...Astro.props} />
+</div>
+
+<script>
+  // Script para filtrar resultados de búsqueda según la sección
+  function setupSearchFilter() {
+    const searchContainer = document.querySelector('[data-search-filter]');
+    if (!searchContainer) return;
+    
+  const filterAttr = searchContainer.getAttribute('data-search-filter');
+  if (!filterAttr) return;
+  const activeFilter = filterAttr.toLowerCase();
+    
+    // Función para ocultar resultados que no coinciden con el filtro
+    function filterResults() {
+      const shouldShow = (href: string) => {
+        const value = href.toLowerCase();
+        if (activeFilter === 'guias') {
+          return value.includes('/guias/');
+        }
+        if (activeFilter === 'documentacion') {
+          return value.includes('/documentacion/');
+        }
+        return true;
+      };
+
+      const toggleVisibility = (element: Element | null, show: boolean) => {
+        if (!element) return;
+        (element as HTMLElement).style.display = show ? '' : 'none';
+        element.toggleAttribute('hidden', !show);
+      };
+
+      const resultBuckets: NodeListOf<Element>[] = [
+        document.querySelectorAll('.pagefind-ui__result'),
+        document.querySelectorAll('.pagefind-ui__suggestion'),
+        document.querySelectorAll('[data-pagefind-result]'),
+        document.querySelectorAll('[role="option"]')
+      ];
+
+      resultBuckets.forEach(bucket => {
+        bucket.forEach((result) => {
+          const link = result.querySelector('a[href]');
+          const reference = link?.getAttribute('href') || link?.textContent || '';
+          const show = shouldShow(reference);
+          toggleVisibility(result, show);
+          if (link) {
+            toggleVisibility(link, show);
+          }
+        });
+      });
+    }
+    
+    // Ejecutar inmediatamente
+    filterResults();
+    
+    // Observer para cuando cambien los resultados
+    const observer = new MutationObserver(() => {
+      setTimeout(filterResults, 100); // Pequeño delay para asegurar que los resultados estén renderizados
+    });
+    
+    // Observar cambios en todo el documento
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    
+    // También ejecutar cuando se haga input en la búsqueda
+    document.addEventListener('input', (e) => {
+      if ((e.target as HTMLElement).matches('[type="search"], .pagefind-ui__search-input, input[placeholder*="Search"]')) {
+        setTimeout(filterResults, 200);
+      }
+    });
+  }
+  
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSearchFilter);
+  } else {
+    setupSearchFilter();
+  }
+  
+  // También ejecutar cuando se abra el modal de búsqueda (si usa modal)
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      setTimeout(setupSearchFilter, 500);
+    }
+  });
+</script>
+
+<style is:global>
+  /* Asegurar que los resultados filtrados estén ocultos */
+  [data-search-filter="documentacion"] a[href*="/guias/"],
+  [data-search-filter="guias"] a[href*="/documentacion/"] {
+    display: none !important;
+  }
+</style>
