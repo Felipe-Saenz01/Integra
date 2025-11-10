@@ -18,40 +18,22 @@ if (isInGuias) {
 ---
 
 <!-- Pasar el filtro como data attribute para usarlo en el script de búsqueda -->
-<div data-search-filter={searchFilter}>
+<div data-search-filter-wrapper data-search-filter={searchFilter}>
   <Default {...Astro.props} />
 </div>
 
 <script>
   // Script para filtrar resultados de búsqueda según la sección
   function setupSearchFilter() {
-    const searchContainer = document.querySelector('[data-search-filter]');
+    const searchContainer = document.querySelector('[data-search-filter-wrapper]');
     if (!searchContainer) return;
-    
-  const filterAttr = searchContainer.getAttribute('data-search-filter');
-  if (!filterAttr) return;
-  const activeFilter = filterAttr.toLowerCase();
+    const filterAttr = searchContainer.getAttribute('data-search-filter');
+    if (!filterAttr) return;
+    const activeFilter = filterAttr.toLowerCase();
     
     // Función para ocultar resultados que no coinciden con el filtro
     function filterResults() {
-      const shouldShow = (href: string) => {
-        const value = href.toLowerCase();
-        if (activeFilter === 'guias') {
-          return value.includes('/guias/');
-        }
-        if (activeFilter === 'documentacion') {
-          return value.includes('/documentacion/');
-        }
-        return true;
-      };
-
-      const toggleVisibility = (element: Element | null, show: boolean) => {
-        if (!element) return;
-        (element as HTMLElement).style.display = show ? '' : 'none';
-        element.toggleAttribute('hidden', !show);
-      };
-
-      const resultBuckets: NodeListOf<Element>[] = [
+      const resultBuckets = [
         document.querySelectorAll('.pagefind-ui__result'),
         document.querySelectorAll('.pagefind-ui__suggestion'),
         document.querySelectorAll('[data-pagefind-result]'),
@@ -62,10 +44,21 @@ if (isInGuias) {
         bucket.forEach((result) => {
           const link = result.querySelector('a[href]');
           const reference = link?.getAttribute('href') || link?.textContent || '';
-          const show = shouldShow(reference);
-          toggleVisibility(result, show);
-          if (link) {
-            toggleVisibility(link, show);
+          const normalized = reference.toLowerCase();
+          let show = true;
+
+          if (activeFilter === 'guias') {
+            show = normalized.includes('/guias/');
+          } else if (activeFilter === 'documentacion') {
+            show = normalized.includes('/documentacion/');
+          }
+          if (result instanceof HTMLElement) {
+            result.style.display = show ? '' : 'none';
+            result.toggleAttribute('hidden', !show);
+          }
+          if (link instanceof HTMLElement) {
+            link.style.display = show ? '' : 'none';
+            link.toggleAttribute('hidden', !show);
           }
         });
       });
@@ -86,8 +79,9 @@ if (isInGuias) {
     });
     
     // También ejecutar cuando se haga input en la búsqueda
-    document.addEventListener('input', (e) => {
-      if ((e.target as HTMLElement).matches('[type="search"], .pagefind-ui__search-input, input[placeholder*="Search"]')) {
+    document.addEventListener('input', (event) => {
+      const target = event.target;
+      if (target instanceof HTMLElement && target.matches('[type="search"], .pagefind-ui__search-input, input[placeholder*="Search"]')) {
         setTimeout(filterResults, 200);
       }
     });
@@ -109,9 +103,13 @@ if (isInGuias) {
 </script>
 
 <style is:global>
+  [data-search-filter-wrapper] {
+    display: contents;
+  }
+
   /* Asegurar que los resultados filtrados estén ocultos */
-  [data-search-filter="documentacion"] a[href*="/guias/"],
-  [data-search-filter="guias"] a[href*="/documentacion/"] {
+  [data-search-filter-wrapper][data-search-filter="documentacion"] a[href*="/guias/"],
+  [data-search-filter-wrapper][data-search-filter="guias"] a[href*="/documentacion/"] {
     display: none !important;
   }
 </style>

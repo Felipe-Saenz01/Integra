@@ -29,6 +29,7 @@ export default defineConfig({
 			components: {
 				// Sobrescribir Head para incluir scripts de filtrado
 				Head: './src/components/Head.astro',
+				Search: './src/components/Search.astro'
 			},
 			plugins: [
 				starlightThemeNova(),
