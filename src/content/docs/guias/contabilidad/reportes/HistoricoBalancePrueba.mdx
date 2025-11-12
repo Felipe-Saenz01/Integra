@@ -1,0 +1,107 @@
+---
+title: Balance de Prueba Histórico
+description: Guía para generar un Balance de Prueba de vigencias anteriores, permitiendo auditar la igualdad de débitos y créditos de períodos cerrados.
+template: doc
+sidebar:
+  label: Balance de Prueba Histórico
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El **Balance de Prueba Histórico** es un reporte de auditoría que permite consultar la situación contable (saldos, débitos y créditos) de **vigencias o años fiscales anteriores**.
+
+A diferencia del balance de prueba estándar (que opera en el período actual), este módulo se especializa en consultar datos de períodos cerrados. Su objetivo es generar un listado de cuentas con sus saldos y movimientos, verificando que al final del período se mantenga el principio de partida doble (sumas iguales).
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_HistoricoBalancePrueba_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Histórico y Balance de prueba**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se divide en un panel de filtros detallado y una tabla de resultados que incluye validación de totales.
+
+### Panel de Filtros
+
+Este formulario (`formularioBalanceprueba`) permite definir con precisión los datos que se incluirán en el reporte.
+
+<CardGrid>
+    <Card title="Filtro de Período" icon="calendar">
+        - **Vigencia**: (Campo `#sistema`) Este es el filtro principal y obligatorio. Permite seleccionar el año fiscal cerrado que se desea consultar.
+        - **Mes-Desde**: (Campo `#MES_INICIAL`) Mes inicial del rango (valor 1-12).
+        - **Mes-Hasta**: (Campo `#MES_FINAL`) Mes final del rango (valor 1-12).
+    </Card>
+    <Card title="Rango de Cuentas" icon="document">
+        - **Cuenta Inicio**: (Campo `#CUENTA_INICIO`) Primera cuenta a incluir. Valor por defecto: `1`.
+        - **Cuenta Termina**: (Campo `#CUENTA_FINAL`) Última cuenta a incluir. Valor por defecto: `9999...`
+        - **Nivel (1-9)**: (Campo `#NIVEN`) Nivel de detalle de las cuentas a mostrar.
+    </Card>
+    <Card title="Opciones del Reporte" icon="check-circle">
+        - **Título Informe**: (Campo `#Titulo`) Permite personalizar el título del reporte. Por defecto es "BALANCE DE PRUEBA".
+        - **¿Saldo Anterior?**: (Checkbox `#SALDO_ANTERIOR`) Si se marca, incluirá los saldos del período anterior. **Activado por defecto**.
+        - **¿Discriminado?**: (Checkbox `#DISCRIMINADO`) Opción para un desglose adicional.
+    </Card>
+    <Card title="Datos Informativos" icon="building">
+        - **Centro Costo**: (Campo `#CENTRO_COSTO`) Se asigna automáticamente según el usuario logueado. Es un campo deshabilitado.
+        - **Nombre**: (Campo `#razon_social`) Nombre del centro de costo, se carga automáticamente.
+    </Card>
+</CardGrid>
+
+---
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con todos los filtros seleccionados y muestra los datos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y muestra una versión del balance optimizada para ser impresa.
+-   **Tabla de Resultados (`#tablaBalance`)**:
+    * Muestra el balance con las columnas: `CUENTA`, `DIA/MES`, `NOMBRE CUENTA`, `SALDO ANTERIOR`, `DEBITOS`, `CREDITOS` y `SALDO`.
+    * **Opciones de Exportación**: La tabla permite descargar los datos en formatos como **Excel, CSV o TXT** (`data-show-export="true"`).
+    * **Pie de Tabla (Validación)**: La tabla muestra un pie de página (`data-show-footer="true"`) con la leyenda **"SUMAS IGUALES -->"** y los totales de las columnas `DEBITOS` y `CREDITOS`, permitiendo verificar rápidamente que el balance está cuadrado.
+
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_HistoricoBalancePrueba_02.png)
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista del **Histórico y Balance de prueba**. Los datos del Centro de Costo se cargarán automáticamente.
+
+2.  **Seleccionar Vigencia**
+    Elige el año fiscal que deseas consultar en el campo **Vigencia**. Este es el paso más importante.
+
+3.  **Ajustar Filtros (Opcional)**
+    Modifica el rango de meses, el rango de cuentas o el nivel de detalle según sea necesario. El sistema funciona con los valores por defecto para un balance completo.
+
+4.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con los resultados.
+
+5.  **Verificar y Analizar**
+    Revisa la información en la tabla. Desplázate hasta el final de la tabla para ver el pie de página y confirma que los totales de **Débitos** y **Créditos** son idénticos.
+
+6.  **Exportar o Imprimir**
+    * Usa los botones de exportación (Excel, CSV, TXT) en la barra de la tabla si necesitas los datos.
+    * Usa el botón **`Imprimir`** <i class="fa fa-print"></i> para obtener el reporte formateado.
+</Steps>
+![Vsta inicial del reporte balance de prueba](@assets/guias_usuarios/contabilidad/reportes/BalancePrueba/reportes_HistoricoBalancePrueba_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos a Considerar">
+-   **Campo `Vigencia` es Obligatorio**: Esta es la principal diferencia con otros reportes. Debes seleccionar una vigencia para que el botón `Generar` funcione.
+-   **Uso de F2**: Para seleccionar cuentas específicas sin errores, puedes presionar la tecla **F2** en los campos `Cuenta Inicio` o `Cuenta Termina` para abrir el buscador del Plan Único de Cuentas (PUC).
+-   **Reporte Completo**: Para asegurar que el balance incluya todas las cuentas y cuadre correctamente, es recomendable dejar el rango de cuentas con sus valores por defecto (`Cuenta Inicio: 1`, `Cuenta Termina: 9999...`).
+-   **Campos Requeridos**: El formulario no se enviará si campos obligatorios (como `Mes-Desde`, `Mes-Hasta` o `Nivel`) están vacíos.
+</Aside>
+
+## Notas Técnicas
+
+-   El Centro de Costo y su nombre se cargan automáticamente al iniciar la vista, no requieren intervención del usuario.
+-   El botón `Imprimir` (`#Imprimir`) ejecuta un script del lado del servidor (`reporte_balance_prueba.php`) que toma los datos de la tabla (`$tablaBalance.bootstrapTable("getData")`) y los formatea en un documento profesional.
+-   Los totales del pie de página (`totales1` y `totales2`) se calculan dinámicamente en el navegador para verificar que las sumas sean iguales, cumpliendo el principio de partida doble.
