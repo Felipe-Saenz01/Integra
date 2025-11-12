@@ -1,0 +1,98 @@
+---
+title: Estado de Situación Financiera Histórico
+description: Guía para generar el Estado de Situación Financiera (Balance General) de vigencias o períodos anteriores.
+template: doc
+sidebar:
+  label: Estado de Situación Financiera Histórico
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El **Estado de Situación Financiera (E.S.F.) Histórico** es un reporte contable fundamental que muestra la situación de los Activos, Pasivos y Patrimonio de la entidad en una fecha de corte específica, perteneciente a **vigencias o años fiscales anteriores**.
+
+A diferencia de los reportes del período corriente, este módulo se especializa en consultar datos de períodos cerrados para fines de auditoría y análisis comparativo.
+
+![Vsta inicial del reporte Estado Situacion Financiera Historico](@assets/guias_usuarios/contabilidad/reportes/EstadoSituacionFinancieraHistorico/reportes_EstadoSituacionFinanciera_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Histórico y Estado de situación financiera**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz consiste en un formulario de filtros para definir el período de consulta y una tabla de resultados.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Filtro de Período" icon="calendar">
+        - **Vigencia**: (Campo `#sistema`) Obligatorio. Selecciona el año fiscal cerrado que deseas consultar.
+        - **Mes**: (Campo `#MES`) Obligatorio. Define el mes de corte para el reporte (1-12). Este reporte se genera para un solo mes.
+    </Card>
+    <Card title="Opciones del Reporte" icon="settings">
+        - **Nivel del Libro (1-4)**: (Campo `#NIVEN`) ObligatorIO. Define el nivel de detalle de las cuentas (de 1 a 4).
+        - **Titulo del Informe**: (Campo `#titulo`) Permite personalizar el título que aparecerá en el reporte impreso.
+    </Card>
+    <Card title="Datos Informativos" icon="building">
+        - **Centro Costo**: (Campo `#CENTRO_COSTO`) Se carga automáticamente basado en el usuario. Es un campo deshabilitado.
+        - **Razón Social**: (Campo `#Nombre`) Nombre asociado al centro de costo. Se carga automáticamente.
+    </Card>
+</CardGrid>
+
+---
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con los filtros seleccionados (`Vigencia`, `Mes`, `Nivel`) y carga los datos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y genera una versión del E.S.F. optimizada para impresión.
+-   **Tabla de Resultados (`#TablaFinanciera`)**:
+    * Muestra el balance estructurado.
+    * **Columnas**: `Cuenta`, `Nombre`, `Saldo Anterior`, `Debito`, `Credito` y `Saldo`.
+    * **Opciones de Exportación**: Permite descargar la tabla en formatos **Excel, CSV o TXT** (`data-show-export="true"`).
+    * **Pie de Tabla**: Muestra los totales calculados (`data-show-footer="true"`), permitiendo verificar el saldo final del reporte.
+
+![Vsta inicial del reporte Estado Situacion Financiera Historico](@assets/guias_usuarios/contabilidad/reportes/EstadoSituacionFinancieraHistorico/reportes_EstadoSituacionFinanciera_02.png)
+
+---
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista **Histórico y Estado de situación financiera**. Los campos de Centro de Costo y Razón Social se llenarán automáticamente.
+
+2.  **Seleccionar Período**
+    Elige la **Vigencia** (año) y el **Mes** de corte para tu reporte.
+
+3.  **Definir Detalle**
+    Ajusta el **Nivel del Libro** (1-4) según el detalle que necesites.
+
+4.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con los datos financieros.
+
+5.  **Analizar y Exportar**
+    Revisa la información en la tabla. Verifica los totales en el pie de página. Si necesitas los datos, usa las opciones de exportación (Excel, CSV, TXT).
+
+6.  **Imprimir (Opcional)**
+    Si requieres un documento formal, haz clic en el botón **`Imprimir`** <i class="fa fa-print"></i>.
+</Steps>
+![Vsta inicial del reporte Estado Situacion Financiera Historico](@assets/guias_usuarios/contabilidad/reportes/EstadoSituacionFinancieraHistorico/reportes_EstadoSituacionFinanciera_03.png)
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos Importantes">
+* **Campos Obligatorios**: El reporte no se generará si no seleccionas una **Vigencia**, un **Mes** y un **Nivel**.
+* **Reporte Mensual**: A diferencia de otros reportes que aceptan rangos, este E.S.F. Histórico se genera para un **único mes** de corte (el especificado en el campo `Mes`).
+* **Centro de Costo Automático**: No necesitas llenar los campos `Centro Costo` o `Razón Social`; el sistema los asigna automáticamente.
+</Aside>
+
+## Notas Técnicas
+
+-   El botón `Imprimir` ejecuta un script del lado del servidor (`reporte_Estadosituacion_Financiera.php`) que toma los datos de la tabla (`$TablaFinanciera.bootstrapTable("getData")`) y los formatea.
+-   El sistema envía el mes seleccionado como `MES_INICIAL` y `MES_FINAL` al servidor, confirmando que la consulta es para un solo mes.
+-   Las funciones de formato (`formatoNiven1`, `formatoNiven2`, etc.) aplican una lógica de visualización especial para mostrar los saldos en las columnas correspondientes según el nivel de la cuenta, dándole al reporte la estructura de un estado financiero formal.
