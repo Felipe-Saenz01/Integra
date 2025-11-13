@@ -1,0 +1,101 @@
+---
+title: Estado de Resultados Integral Histórico
+description: Guía para generar el Estado de Resultados (Ingresos, Gastos y Costos) de vigencias o períodos anteriores.
+template: doc
+sidebar:
+  label: Estado de Resultados Integral Histórico
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El **Estado de Resultados Integral (E.R.I.) Histórico** es un reporte financiero que detalla los ingresos, gastos y costos de la entidad para determinar el **resultado del ejercicio (utilidad o pérdida)**.
+
+Este módulo se especializa en consultar esta información en **vigencias o años fiscales anteriores**, permitiendo un análisis a una fecha de corte específica.
+
+![Vsta inicial del reporte Estado de Resultado Integral](@assets/guias_usuarios/contabilidad/reportes/EstadodeResultadosIntegralHistorico/reportes_EstadodeResultadosIntegralHistorico_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Histórico y ESTADO DE RESULTADOS INTEGRAL**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se compone de un formulario de filtros (`formResultadosIntegral`) para definir el período de consulta y una tabla de resultados.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Filtro de Período" icon="calendar">
+        - **Vigencia**: (Campo `#sistema`) Obligatorio. Selecciona el año fiscal cerrado que deseas consultar.
+        - **Mes**: (Campo `#MES`) Obligatorio. Define el mes de corte para el reporte (1-12). El reporte calculará los resultados *hasta* este mes.
+    </Card>
+    <Card title="Opciones del Reporte" icon="settings">
+        - **Nivel del Libro (1-4)**: (Campo `#NIVEN`) Obligatorio. Define el nivel de detalle de las cuentas (de 1 a 4).
+        - **Titulo del Informe**: (Campo `#titulo`) Permite personalizar el título que aparecerá en el reporte impreso.
+    </Card>
+    <Card title="Datos Informativos" icon="building">
+        - **Centro Costo**: (Campo `#CENTRO_COSTO`) Se carga automáticamente basado en el usuario. Es un campo deshabilitado.
+        - **Razón Social**: (Campo `#Nombre`) Nombre asociado al centro de costo. Se carga automáticamente.
+    </Card>
+</CardGrid>
+
+---
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con los filtros seleccionados (`Vigencia`, `Mes`, `Nivel`) y carga los datos en la tabla.
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y genera una versión del E.R.I. optimizada para impresión.
+-   **Tabla de Resultados (`#TablaIntegral`)**:
+    * Muestra el estado de resultados de forma jerárquica.
+    * **Columnas Principales**: `Cuenta` y `Nombre`. Las siguientes columnas (`SALDO_ANTERIOR`, `DEBITO`, `CREDITO`, `TOTAL`) se usan para mostrar los valores en un formato "escalonado", según el nivel de la cuenta.
+    * **Opciones de Exportación**: Permite descargar la tabla en formatos **Excel, CSV o TXT** (`data-show-export="true"`).
+    * **Pie de Tabla (Resultado)**: Muestra un pie de página (`data-show-footer="true"`) con la leyenda **"RESULTADO EJERCICIO"** y el **valor final de la utilidad o pérdida** calculado.
+
+![Vsta inicial del reporte Estado de Resultado Integral](@assets/guias_usuarios/contabilidad/reportes/EstadodeResultadosIntegralHistorico/reportes_EstadodeResultadosIntegralHistorico_02.png)
+
+---
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista **Histórico y ESTADO DE RESULTADOS INTEGRAL**. Los campos de Centro de Costo y Razón Social se llenarán automáticamente.
+
+2.  **Seleccionar Período**
+    Elige la **Vigencia** (año) y el **Mes** de corte para tu reporte.
+
+3.  **Definir Detalle**
+    Ajusta el **Nivel del Libro** (1-4) según el detalle que necesites.
+
+4.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con los datos de ingresos, gastos y costos.
+
+5.  **Analizar Resultado**
+    Revisa la información en la tabla. Desplázate hasta el final para ver el pie de página, donde encontrarás el **"RESULTADO EJERCICIO"** (la utilidad o pérdida).
+
+6.  **Exportar o Imprimir**
+    * Usa los botones de exportación (Excel, CSV, TXT) en la barra de la tabla si necesitas los datos.
+    * Usa el botón **`Imprimir`** <i class="fa fa-print"></i> para obtener el reporte financiero formal.
+</Steps>
+
+![Vsta inicial del reporte Estado de Resultado Integral](@assets/guias_usuarios/contabilidad/reportes/EstadodeResultadosIntegralHistorico/reportes_EstadodeResultadosIntegralHistorico_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Puntos Importantes">
+* **Campos Obligatorios**: El reporte no se generará si no seleccionas una **Vigencia**, un **Mes** y un **Nivel**.
+* **Corte Mensual**: Este reporte se genera con corte a un **único mes**. El sistema calculará los resultados acumulados desde el inicio de la vigencia hasta el mes seleccionado.
+* **Resultado del Ejercicio**: El dato clave de este reporte se encuentra en el pie de página (`data-show-footer="true"`), no es una simple suma de débitos y créditos, sino el cálculo final de la utilidad o pérdida.
+</Aside>
+
+## Notas Técnicas
+
+-   El botón `Imprimir` (`#Imprimir`) ejecuta un script del lado del servidor (`reporte_Estadoresultados_Integral.php`) que formatea los datos de la tabla (`$TablaIntegral.bootstrapTable("getData")`) en un reporte profesional.
+-   Al `Generar`, el sistema envía el `MES` seleccionado como `MES_INICIAL` y un `0` como `MES_FINAL`. Esto le indica al servidor (`Tran=3`) que debe calcular el resultado acumulado desde el inicio de la vigencia hasta el mes de corte.
+-   Las funciones `formatoNiven...` y `validarSaldo` son las encargadas de crear la estructura jerárquica del reporte, mostrando los saldos en diferentes columnas según el nivel de la cuenta para facilitar la lectura.
