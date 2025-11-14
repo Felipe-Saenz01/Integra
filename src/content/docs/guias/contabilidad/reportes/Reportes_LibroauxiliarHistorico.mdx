@@ -26,23 +26,23 @@ Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú princi
 
 ## Funcionalidades Principales
 
-La interfaz se centra en un formulario (`formularioLibroAuxiliar`) con filtros muy específicos para aislar una cuenta y un período de tiempo.
+La interfaz se centra en un formulario con filtros muy específicos para aislar una cuenta y un período de tiempo.
 
 ### Panel de Filtros
 
 <CardGrid>
     <Card title="Filtro de Período y Cuenta" icon="document">
-        - **Vigencia**: (Campo `#sistema`) Obligatorio. Selecciona el año fiscal cerrado que deseas consultar.
-        - **Cuenta**: (Campo `#CUENTA_INICIO`) **Campo obligatorio y central de este reporte**. Debes ingresar el código de la cuenta contable que deseas consultar.
-        - **Nombre Cuenta Auxiliar**: (Campo `#Nombre_cuenta`) Campo deshabilitado. Se llena automáticamente con el nombre de la cuenta después de ingresarla.
+        - **Vigencia**: Obligatorio. Selecciona el año fiscal cerrado que deseas consultar.
+        - **Cuenta**: **Campo obligatorio y central de este reporte**. Debes ingresar el código de la cuenta contable que deseas consultar.
+        - **Nombre Cuenta Auxiliar**: Campo deshabilitado. Se llena automáticamente con el nombre de la cuenta después de ingresarla.
     </Card>
     <Card title="Rango de Fechas" icon="calendar">
-        - **Fecha Desde**: (Campo `#MES_INICIAL`) Fecha de inicio para la consulta de movimientos.
-        - **Fecha Hasta**: (Campo `#MES_FINAL`) Fecha de fin para la consulta de movimientos.
+        - **Fecha Desde**: Fecha de inicio para la consulta de movimientos.
+        - **Fecha Hasta**: Fecha de fin para la consulta de movimientos.
     </Card>
     <Card title="Datos Informativos" icon="building">
-        - **Centro Costo**: (Campo `#CENTRO_COSTO`) Se carga automáticamente basado en el usuario. Es un campo deshabilitado.
-        - **Nombre Centro Costo**: (Campo `#Nombre`) Nombre asociado al centro de costo. Se carga automáticamente.
+        - **Centro Costo**: Se carga automáticamente basado en el usuario. Es un campo deshabilitado.
+        - **Nombre Centro Costo**: Nombre asociado al centro de costo. Se carga automáticamente.
     </Card>
 </CardGrid>
 
@@ -52,11 +52,11 @@ La interfaz se centra en un formulario (`formularioLibroAuxiliar`) con filtros m
 
 -   **Botón `Generar`**: Ejecuta la consulta con todos los filtros seleccionados (`Vigencia`, `Cuenta` y rango de fechas).
 -   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y genera una versión del libro auxiliar optimizada para impresión.
--   **Tabla de Resultados (`#TablalibroAuxiliar`)**:
+-   **Tabla de Resultados**:
     * Muestra el detalle de cada movimiento contable para la cuenta seleccionada.
     * **Columnas**: `Año`, `Mes`, `Dia`, `Comprobante`, `Concepto`, `Nit`, `Nombre Tercero`, `Inicial`, `Valor Debito`, `Valor Credito` y `Saldo`.
-    * **Opciones de Exportación**: Permite descargar la tabla en formatos **Excel, CSV o TXT** (`data-show-export="true"`).
-    * **Pie de Tabla (Totales)**: Muestra un pie de página (`data-show-footer="true"`) con la leyenda **"TOTALES"** y las sumas de las columnas `Valor Debito` y `Valor Credito`, permitiendo verificar el movimiento total del período.
+    * **Opciones de Exportación**: Permite descargar la tabla en formatos **Excel, CSV o TXT**.
+    * **Pie de Tabla (Totales)**: Muestra un pie de página con la leyenda **"TOTALES"** y las sumas de las columnas `Valor Debito` y `Valor Credito`, permitiendo verificar el movimiento total del período.
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarHistorico/reportes_libroauxiliar_02.png)
 
@@ -98,6 +98,5 @@ La interfaz se centra en un formulario (`formularioLibroAuxiliar`) con filtros m
 
 ## Notas Técnicas
 
--   El botón `Imprimir` (`#Imprimir`) ejecuta un script del lado del servidor (`reporte_LibroAuxiliar.php`) que toma los datos de la tabla (`$TablalibroAuxiliar.bootstrapTable("getData")`) y los formatea en un documento profesional.
--   El sistema valida el nivel de la cuenta (`NIVEL == "A"`) al salir del campo `Cuenta` (evento `focusout`), asegurando que solo se consulten cuentas de movimiento.
--   Al `Generar`, el sistema envía el código de transacción `Tran=15` al servidor.
+-   El botón `Imprimir` (`#Imprimir`) ejecuta un script del lado del servidor que toma los datos de la tabla y los formatea en un documento profesional.
+-   El sistema valida el nivel de la cuenta (`NIVEL == "A"`) al salir del campo `Cuenta`, asegurando que solo se consulten cuentas de movimiento
