@@ -1,0 +1,103 @@
+---
+title: Libro Auxiliar Histórico
+description: Guía para consultar el movimiento detallado (débito/crédito) de una cuenta contable específica en vigencias o períodos anteriores.
+template: doc
+sidebar:
+  label: Libro Auxiliar Histórico
+lastUpdated: 2025-10-17
+tableOfContents: false
+---
+
+import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
+
+El **Libro Auxiliar Histórico** es un reporte de auditoría que permite consultar el detalle de todos los movimientos (asientos contables) que ha afectado a **una cuenta auxiliar específica** dentro de un rango de fechas, en una **vigencia o año fiscal anterior**.
+
+A diferencia de otros reportes que muestran saldos generales, el libro auxiliar muestra cada transacción individual, permitiendo un rastreo detallado del origen y destino de los fondos para esa cuenta.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarHistorico/reportes_libroauxiliar_01.png)
+
+## Acceso y Navegación
+
+Para acceder a esta funcionalidad, sigue la siguiente ruta desde el menú principal del sistema. Se requieren permisos de acceso al módulo de contabilidad.
+
+<Aside type="note" title="Ruta de Navegación">
+  **Módulo Contabilidad** → **Reportes** → **Reportes Contabilidad** → **Histórico y Libro Auxiliar**
+</Aside>
+
+## Funcionalidades Principales
+
+La interfaz se centra en un formulario (`formularioLibroAuxiliar`) con filtros muy específicos para aislar una cuenta y un período de tiempo.
+
+### Panel de Filtros
+
+<CardGrid>
+    <Card title="Filtro de Período y Cuenta" icon="document">
+        - **Vigencia**: (Campo `#sistema`) Obligatorio. Selecciona el año fiscal cerrado que deseas consultar.
+        - **Cuenta**: (Campo `#CUENTA_INICIO`) **Campo obligatorio y central de este reporte**. Debes ingresar el código de la cuenta contable que deseas consultar.
+        - **Nombre Cuenta Auxiliar**: (Campo `#Nombre_cuenta`) Campo deshabilitado. Se llena automáticamente con el nombre de la cuenta después de ingresarla.
+    </Card>
+    <Card title="Rango de Fechas" icon="calendar">
+        - **Fecha Desde**: (Campo `#MES_INICIAL`) Fecha de inicio para la consulta de movimientos.
+        - **Fecha Hasta**: (Campo `#MES_FINAL`) Fecha de fin para la consulta de movimientos.
+    </Card>
+    <Card title="Datos Informativos" icon="building">
+        - **Centro Costo**: (Campo `#CENTRO_COSTO`) Se carga automáticamente basado en el usuario. Es un campo deshabilitado.
+        - **Nombre Centro Costo**: (Campo `#Nombre`) Nombre asociado al centro de costo. Se carga automáticamente.
+    </Card>
+</CardGrid>
+
+---
+
+### Barra de Acciones y Tabla de Resultados
+
+-   **Botón `Generar`**: Ejecuta la consulta con todos los filtros seleccionados (`Vigencia`, `Cuenta` y rango de fechas).
+-   **Botón `Imprimir`** <i class="fa fa-print"></i>: Prepara y genera una versión del libro auxiliar optimizada para impresión.
+-   **Tabla de Resultados (`#TablalibroAuxiliar`)**:
+    * Muestra el detalle de cada movimiento contable para la cuenta seleccionada.
+    * **Columnas**: `Año`, `Mes`, `Dia`, `Comprobante`, `Concepto`, `Nit`, `Nombre Tercero`, `Inicial`, `Valor Debito`, `Valor Credito` y `Saldo`.
+    * **Opciones de Exportación**: Permite descargar la tabla en formatos **Excel, CSV o TXT** (`data-show-export="true"`).
+    * **Pie de Tabla (Totales)**: Muestra un pie de página (`data-show-footer="true"`) con la leyenda **"TOTALES"** y las sumas de las columnas `Valor Debito` y `Valor Credito`, permitiendo verificar el movimiento total del período.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarHistorico/reportes_libroauxiliar_02.png)
+
+---
+
+## Flujo de Uso Paso a Paso
+
+<Steps>
+1.  **Acceder al Módulo**
+    Navega hasta la vista **Histórico y Libro Auxiliar**. Los campos de Centro de Costo se llenarán automáticamente.
+
+2.  **Seleccionar Vigencia**
+    Elige la **Vigencia** (año) que deseas auditar.
+
+3.  **Ingresar la Cuenta**
+    Escribe el número de la **Cuenta** que deseas consultar.
+    * *Sugerencia*: Puedes presionar la tecla **F2** para abrir el buscador del Plan Único de Cuentas (PUC) y seleccionar una.
+    * El sistema validará que la cuenta sea de nivel "Auxiliar".
+
+4.  **Definir Fechas**
+    Selecciona la **Fecha Desde** y **Fecha Hasta** para el período que quieres analizar.
+
+5.  **Generar Reporte**
+    Haz clic en el botón **`Generar`**. La tabla inferior se poblará con todos los asientos contables de esa cuenta en ese período y vigencia.
+
+6.  **Analizar y Exportar**
+    Revisa los movimientos en la tabla. Verifica los totales de débito y crédito en el pie de página. Si necesitas los datos, usa las opciones de exportación (Excel, CSV, TXT).
+</Steps>
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/contabilidad/reportes/LibroAuxiliarHistorico/reportes_libroauxiliar_03.png)
+
+## Errores Comunes y Recomendaciones
+
+<Aside type="caution" title="Validación de Cuenta Auxiliar">
+* **"La Cuenta No es Auxiliar"**: Este es el error más común. Este reporte **solo funciona** con cuentas de nivel de "Auxiliar" (cuentas de movimiento). Si seleccionas una cuenta de nivel superior (como "Activo" o "Pasivo Corriente"), el sistema mostrará este error y no te permitirá continuar.
+* **"La cuenta no existe en el Puc"**: Ocurre si digitas un número de cuenta que no está registrado en el sistema. Usa **F2** para evitar errores.
+* **Campos Requeridos**: El reporte no se generará si los campos `Vigencia`, `Cuenta`, `Fecha Desde` o `Fecha Hasta` están vacíos.
+</Aside>
+
+## Notas Técnicas
+
+-   El botón `Imprimir` (`#Imprimir`) ejecuta un script del lado del servidor (`reporte_LibroAuxiliar.php`) que toma los datos de la tabla (`$TablalibroAuxiliar.bootstrapTable("getData")`) y los formatea en un documento profesional.
+-   El sistema valida el nivel de la cuenta (`NIVEL == "A"`) al salir del campo `Cuenta` (evento `focusout`), asegurando que solo se consulten cuentas de movimiento.
+-   Al `Generar`, el sistema envía el código de transacción `Tran=15` al servidor.
