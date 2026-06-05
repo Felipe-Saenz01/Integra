@@ -1,0 +1,270 @@
+---
+title: "Proyección y Liquidación de Retroactivos de Nómina"
+description: "Guía funcional para calcular, consultar y generar retroactivos derivados de incrementos salariales y ajustes de nómina."
+sidebar:
+  label: "Proyección y Liquidación de Retroactivos"
+lastUpdated: 2026-06-01
+tableOfContents: false
+prev: false
+---
+
+# GUÍA DE USO – PROYECCIÓN Y LIQUIDACIÓN DE RETROACTIVOS DE NÓMINA
+
+## 1. Objetivo
+
+La funcionalidad de Proyección de Retroactivos permite calcular, consultar y generar los valores retroactivos derivados de incrementos salariales y ajustes aplicables a los funcionarios de la entidad, tomando como base la información histórica de nómina registrada en el sistema.
+
+Este proceso utiliza las liquidaciones históricas realizadas durante el año seleccionado, recalculando los conceptos afectados por los porcentajes de incremento definidos por la entidad, con el fin de obtener una proyección precisa de los valores retroactivos a reconocer.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_01.jpg)
+
+## 2. Consideraciones Previas
+
+Antes de ejecutar el proceso de proyección de retroactivos, se recomienda verificar que:
+
+- Las nóminas del período a analizar se encuentren correctamente liquidadas.
+- La información histórica de los funcionarios esté actualizada.
+- Los porcentajes de incremento hayan sido previamente definidos por la entidad.
+- Se disponga de las novedades o excepciones que deban aplicarse a funcionarios específicos o grupos de funcionarios.
+
+> **Importante:**
+>
+> La proyección se realiza utilizando la información histórica almacenada en el sistema para el año seleccionado. Por esta razón, cualquier ajuste o corrección pendiente en la información histórica debe realizarse antes de generar el cálculo de retroactivos.
+
+## 3. Descripción de los Campos
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_02.jpg)
+
+### Año
+
+Permite seleccionar el año sobre el cual se realizará el cálculo de retroactivos.
+
+El sistema tomará las liquidaciones históricas correspondientes al año seleccionado para efectuar el recálculo de los conceptos afectados.
+
+### Mes Hasta
+
+Permite indicar hasta qué mes se realizará el cálculo.
+
+El sistema tomará la información comprendida desde enero del año seleccionado hasta el mes elegido por el usuario.
+
+**Ejemplo:**
+
+Si se selecciona:
+
+- Año: 2026
+- Mes Hasta: Mayo
+
+El sistema analizará las liquidaciones comprendidas entre enero y mayo de 2026.
+
+### % Global
+
+Corresponde al porcentaje general de incremento que será aplicado a la mayoría de los conceptos salariales y prestacionales susceptibles de ajuste.
+
+Generalmente este porcentaje corresponde al incremento salarial aprobado por la entidad para la vigencia respectiva.
+
+**Ejemplo:**
+
+Si se registra un porcentaje global del 7%, el sistema recalculará los conceptos aplicables incrementando su valor en dicho porcentaje.
+
+### % Subsidio de Alimentación
+
+Permite definir el porcentaje de incremento específico para el subsidio de alimentación.
+
+Este campo se utiliza cuando la entidad determina un porcentaje diferente al incremento general para este concepto.
+
+### % Auxilio de Transporte
+
+Permite definir el porcentaje de incremento aplicable al auxilio de transporte.
+
+Este porcentaje puede ser diferente al porcentaje global, dependiendo de las disposiciones normativas vigentes.
+
+## 4. Reportes Disponibles
+
+La funcionalidad dispone de tres opciones de procesamiento.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_03.jpg)
+
+### 4.1 Retroactivo Detallado por Número de Documento, Mes y Concepto
+
+Esta opción genera un análisis detallado del cálculo retroactivo.
+
+La información se presenta en la tabla de resultados de la misma vista, mostrando entre otros datos:
+
+- Número de documento.
+- Nombre del funcionario.
+- Mes liquidado.
+- Concepto liquidado.
+- Base original.
+- Valor originalmente pagado.
+- Base recalculada.
+- Valor recalculado.
+- Valor del retroactivo generado.
+- Diferencia de base.
+
+Este reporte es útil para:
+
+- Revisar el comportamiento del cálculo.
+- Validar diferencias por funcionario.
+- Auditar conceptos específicos.
+- Verificar el impacto mensual del incremento.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_04.jpg)
+
+### 4.2 Retroactivo Consolidado por Funcionario y Concepto
+
+Esta opción agrupa la información calculada por funcionario y concepto.
+
+La tabla de resultados presenta la sumatoria de los valores retroactivos generados durante el período seleccionado.
+
+Entre los datos consultados se encuentran:
+
+- Número de documento.
+- Funcionario.
+- Concepto.
+- Rubro presupuestal.
+- Base acumulada.
+- Valor retroactivo acumulado.
+- Centro de costo.
+- Dependencia.
+- Cargo.
+- Grupo de nómina.
+
+Este reporte facilita:
+
+- La validación financiera.
+- La revisión presupuestal.
+- La consolidación de valores a reconocer por funcionario.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_05.jpg)
+
+### 4.3 Generar Liquidación de Retroactivo
+
+Esta opción genera la liquidación de retroactivos para su posterior procesamiento dentro del sistema.
+
+Al ejecutar esta opción:
+
+- Se calculan los valores retroactivos.
+- Se generan los registros correspondientes.
+- Se cargan los conceptos retroactivos a la liquidación.
+- La información queda disponible para revisión y ajustes posteriores.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_06.jpg)
+
+Una vez generada la liquidación, la entidad puede revisar y realizar modificaciones cuando sea necesario desde la ruta:
+
+**Nomina > Macroprocesos > Administracion de liquidacion**
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_07.jpg)
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_08.jpg)
+
+Ya en esta ruta se pueden realizar los ajustes que el funcionario encargado requiera o si necesita quitar conceptos liquidados por razones especificas de la entidad.
+
+## 5. Manejo de Excepciones y Porcentajes Diferenciales
+
+Existen casos en los cuales no todos los funcionarios reciben el mismo porcentaje de incremento.
+
+Por esta razón, cuando la entidad maneje incrementos diferenciales, deberá suministrar la información correspondiente antes de realizar la generación de retroactivos.
+
+La información requerida debe incluir:
+
+### Identificación del funcionario
+
+Cuando el incremento aplica únicamente a personas específicas:
+
+- Número de documento.
+- Nombre del funcionario.
+
+**Ejemplo:**
+
+Funcionario identificado con cédula 12345678 aplica incremento del 5%.
+
+### Identificación por cargo
+
+Cuando el incremento aplica a un grupo de funcionarios pertenecientes a un mismo cargo:
+
+- Código del cargo.
+- Nombre del cargo.
+- Porcentaje aplicable.
+
+**Ejemplo:**
+
+Todos los funcionarios del cargo Profesional Universitario aplican incremento del 8%.
+
+### Identificación por grupo o condición especial
+
+Cuando el incremento depende de una condición específica:
+
+- Dependencia.
+- Grupo de nómina.
+- Otra condición definida por la entidad.
+
+**Ejemplo:**
+
+Funcionarios del Grupo de Nómina Administrativa reciben un incremento del 6%.
+
+### Incrementos por períodos específicos
+
+Cuando un porcentaje aplica únicamente durante determinados meses, la entidad deberá informar:
+
+- Mes inicial.
+- Mes final.
+- Porcentaje aplicable.
+
+**Ejemplo:**
+
+- Incremento del 4% entre enero y marzo.
+- Incremento del 7% a partir de abril.
+
+> **Nota:**
+>
+> para estas Excepciones y Porcentajes Diferenciales en caso de que sean varias excepciones se podría realizar en un archivo Excel los casos y porcentajes como se discrimino anteriormente y se envié a la mesa de ayuda del sistema
+
+## 6. Validaciones Realizadas por el Sistema
+
+Durante el proceso de cálculo el sistema:
+
+- Toma la información histórica liquidada.
+- Excluye conceptos no sujetos a retroactivo.
+- Recalcula bases y valores.
+- Ajusta aportes y contribuciones cuando corresponda.
+- Evalúa posibles cambios en fondos de solidaridad.
+- Consolida diferencias entre valores históricos y valores recalculados.
+- Genera los valores retroactivos correspondientes.
+
+## 7. Resultados Esperados
+
+Al finalizar el proceso la entidad dispondrá de:
+
+- Detalle completo del retroactivo calculado.
+- Consolidado por funcionario y concepto.
+- Liquidación de retroactivos generada para revisión.
+- Información lista para ser incorporada al proceso de nómina.
+
+## 8. Impresión de la Liquidación de Retroactivos
+
+La vista dispone del botón:
+
+**Imprimir Liquidación de Retroactivos**
+
+Esta opción permite generar el documento de impresión asociado a la liquidación de retroactivos generada en el sistema.
+
+Se recomienda utilizar esta funcionalidad para:
+
+- Validación de resultados.
+- Revisión por parte de talento humano.
+- Control interno.
+- Archivo documental del proceso.
+
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_09.jpg)
+![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_10.jpg)
+
+## 9. Recomendaciones Generales
+
+- Verificar previamente los porcentajes autorizados por la entidad.
+- Validar los funcionarios que tengan condiciones especiales.
+- Revisar los resultados mediante el reporte detallado antes de generar la liquidación.
+- Utilizar el reporte consolidado para validar.
+- Generar la impresión final como soporte del proceso.
+- Realizar cualquier ajuste requerido antes de continuar con los procesos posteriores de nómina.
+
+La precisión del cálculo dependerá directamente de la calidad y consistencia de la información histórica registrada en el sistema.
