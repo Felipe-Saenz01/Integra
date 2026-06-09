@@ -14,22 +14,18 @@ prev: false
 
 La funcionalidad de Proyección de Retroactivos permite calcular, consultar y generar los valores retroactivos derivados de incrementos salariales y ajustes aplicables a los funcionarios de la entidad, tomando como base la información histórica de nómina registrada en el sistema.
 
-Este proceso utiliza las liquidaciones históricas realizadas durante el año seleccionado, recalculando los conceptos afectados por los porcentajes de incremento definidos por la entidad, con el fin de obtener una proyección precisa de los valores retroactivos a reconocer.
+Este proceso utiliza las liquidaciones históricas realizadas durante el año seleccionado, recalculándolos conceptos afectados por los porcentajes de incremento definidos por la entidad, con el fin de obtener una proyección precisa de los valores retroactivos a reconocer.
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_01.jpg)
 
 ## 2. Consideraciones Previas
-
 Antes de ejecutar el proceso de proyección de retroactivos, se recomienda verificar que:
-
-- Las nóminas del período a analizar se encuentren correctamente liquidadas.
-- La información histórica de los funcionarios esté actualizada.
-- Los porcentajes de incremento hayan sido previamente definidos por la entidad.
-- Se disponga de las novedades o excepciones que deban aplicarse a funcionarios específicos o grupos de funcionarios.
+-	Los porcentajes de incremento hayan sido previamente definidos por la entidad.
+-	Se disponga de las novedades o excepciones que deban aplicarse a funcionarios específicos o grupos de funcionarios.
 
 > **Importante:**
 >
-> La proyección se realiza utilizando la información histórica almacenada en el sistema para el año seleccionado. Por esta razón, cualquier ajuste o corrección pendiente en la información histórica debe realizarse antes de generar el cálculo de retroactivos.
+> La proyección se realiza utilizando la información histórica almacenada en el sistema. Por esta razón, cualquier ajuste o corrección pendiente en la información histórica debe informarse antes de generar el cálculo de retroactivos.
 
 ## 3. Descripción de los Campos
 
@@ -38,13 +34,11 @@ Antes de ejecutar el proceso de proyección de retroactivos, se recomienda verif
 ### Año
 
 Permite seleccionar el año sobre el cual se realizará el cálculo de retroactivos.
-
 El sistema tomará las liquidaciones históricas correspondientes al año seleccionado para efectuar el recálculo de los conceptos afectados.
 
 ### Mes Hasta
 
 Permite indicar hasta qué mes se realizará el cálculo.
-
 El sistema tomará la información comprendida desde enero del año seleccionado hasta el mes elegido por el usuario.
 
 **Ejemplo:**
@@ -70,17 +64,13 @@ Si se registra un porcentaje global del 7%, el sistema recalculará los concepto
 
 Permite definir el porcentaje de incremento específico para el subsidio de alimentación.
 
-Este campo se utiliza cuando la entidad determina un porcentaje diferente al incremento general para este concepto.
-
 ### % Auxilio de Transporte
 
 Permite definir el porcentaje de incremento aplicable al auxilio de transporte.
 
-Este porcentaje puede ser diferente al porcentaje global, dependiendo de las disposiciones normativas vigentes.
-
 ## 4. Reportes Disponibles
 
-La funcionalidad dispone de tres opciones de procesamiento.
+La funcionalidad dispone de tres opciones.
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_03.jpg)
 
@@ -88,14 +78,14 @@ La funcionalidad dispone de tres opciones de procesamiento.
 
 Esta opción genera un análisis detallado del cálculo retroactivo.
 
-La información se presenta en la tabla de resultados de la misma vista, mostrando entre otros datos:
+La información se presenta en la tabla de resultados, mostrando entre otros datos:
 
 - Número de documento.
 - Nombre del funcionario.
 - Mes liquidado.
 - Concepto liquidado.
-- Base original.
-- Valor originalmente pagado.
+- Base.
+- Valor pagado.
 - Base recalculada.
 - Valor recalculado.
 - Valor del retroactivo generado.
@@ -105,7 +95,7 @@ Este reporte es útil para:
 
 - Revisar el comportamiento del cálculo.
 - Validar diferencias por funcionario.
-- Auditar conceptos específicos.
+- Auditar conceptos liquidados.
 - Verificar el impacto mensual del incremento.
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_04.jpg)
@@ -113,9 +103,7 @@ Este reporte es útil para:
 ### 4.2 Retroactivo Consolidado por Funcionario y Concepto
 
 Esta opción agrupa la información calculada por funcionario y concepto.
-
 La tabla de resultados presenta la sumatoria de los valores retroactivos generados durante el período seleccionado.
-
 Entre los datos consultados se encuentran:
 
 - Número de documento.
@@ -146,7 +134,7 @@ Al ejecutar esta opción:
 - Se calculan los valores retroactivos.
 - Se generan los registros correspondientes.
 - Se cargan los conceptos retroactivos a la liquidación.
-- La información queda disponible para revisión y ajustes posteriores.
+- La información queda disponible para revisión y ajustes.
 
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_06.jpg)
 
@@ -157,7 +145,12 @@ Una vez generada la liquidación, la entidad puede revisar y realizar modificaci
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_07.jpg)
 ![Vsta inicial del reporte libro auxiliar](@assets/guias_usuarios/nomina/reportes/ProyectarRetroactivos/proyeccion_retroactivos_08.jpg)
 
-Ya en esta ruta se pueden realizar los ajustes que el funcionario encargado requiera o si necesita quitar conceptos liquidados por razones especificas de la entidad.
+Ya en esta ruta se pueden realizar los ajustes que el funcionario encargado requiera o si necesita quitar conceptos liquidados por razones específicas de la entidad.
+
+> **Nota:**
+>
+> tener presente que los ajustes que se realicen en esta ruta son ajustes manuales y al ser de este tipo se tiene que tener en cuenta si repercuten con el resto de la liquidación por lo tanto se tendría que ajustar los otros conceptos. Tener presente que estos ajustes en caso de que se realice nuevamente la liquidación de retroactivo se borrarían y rescribirían con los valores generados por el sistema, en caso de que sea necesario estos ajustes manuales se recomienda sea lo ultimo que se haga antes de causa0072, se recomienda no realizar ajustes manuales.
+
 
 ## 5. Manejo de Excepciones y Porcentajes Diferenciales
 
@@ -173,6 +166,7 @@ Cuando el incremento aplica únicamente a personas específicas:
 
 - Número de documento.
 - Nombre del funcionario.
+- Porcentaje aplicable.
 
 **Ejemplo:**
 
@@ -217,19 +211,18 @@ Cuando un porcentaje aplica únicamente durante determinados meses, la entidad d
 
 > **Nota:**
 >
-> para estas Excepciones y Porcentajes Diferenciales en caso de que sean varias excepciones se podría realizar en un archivo Excel los casos y porcentajes como se discrimino anteriormente y se envié a la mesa de ayuda del sistema
+> para estas Excepciones y Porcentajes Diferenciales en caso de que sean varias excepciones se debe realizar en un archivo Excel con los casos y porcentajes como se discrimino anteriormente y se envié a la mesa de ayuda del sistema
 
 ## 6. Validaciones Realizadas por el Sistema
 
 Durante el proceso de cálculo el sistema:
 
-- Toma la información histórica liquidada.
-- Excluye conceptos no sujetos a retroactivo.
-- Recalcula bases y valores.
-- Ajusta aportes y contribuciones cuando corresponda.
-- Evalúa posibles cambios en fondos de solidaridad.
-- Consolida diferencias entre valores históricos y valores recalculados.
-- Genera los valores retroactivos correspondientes.
+-	Toma la información histórica liquidada.
+-	Excluye conceptos no sujetos a retroactivo.
+-	Recalcula bases y valores.
+-	Consolida diferencias entre valores históricos y valores recalculados.
+-	Genera los valores retroactivos correspondientes.
+
 
 ## 7. Resultados Esperados
 
